@@ -16,19 +16,6 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`medical_inventory` /*!40100 DEFAULT CHA
 
 USE `medical_inventory`;
 
-/*Table structure for table `brand` */
-
-DROP TABLE IF EXISTS `brand`;
-
-CREATE TABLE `brand` (
-  `id` bigint(100) NOT NULL,
-  `name` varchar(500) NOT NULL,
-  `strength` varchar(500) NOT NULL,
-  `generic` varchar(500) NOT NULL,
-  `company` varchar(500) NOT NULL,
-  `price` varchar(500) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 /*Data for the table `brand` */
 
 insert  into `brand`(`id`,`name`,`strength`,`generic`,`company`,`price`) values 
@@ -19219,15 +19206,6 @@ insert  into `brand`(`id`,`name`,`strength`,`generic`,`company`,`price`) values
 (19185,'Zytiga','250 mg','3','164','Unit Price : ? 1,665.82'),
 (19186,'Zytix','250 mg','3','21','Unit Price : ? 580.00');
 
-/*Table structure for table `company` */
-
-DROP TABLE IF EXISTS `company`;
-
-CREATE TABLE `company` (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(500) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 /*Data for the table `company` */
 
 insert  into `company`(`id`,`name`) values 
@@ -19419,15 +19397,6 @@ insert  into `company`(`id`,`name`) values
 (186,'ZAS Corporation'),
 (187,'Zenith Pharmaceuticals Ltd.'),
 (188,'Ziska Pharmaceuticals Ltd.');
-
-/*Table structure for table `generic` */
-
-DROP TABLE IF EXISTS `generic`;
-
-CREATE TABLE `generic` (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(500) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `generic` */
 
@@ -20930,15 +20899,6 @@ insert  into `generic`(`id`,`name`) values
 (1496,'Zonisamide'),
 (1497,'Zopiclone'),
 (1498,'Zuclopenthixol');
-
-/*Table structure for table `indication` */
-
-DROP TABLE IF EXISTS `indication`;
-
-CREATE TABLE `indication` (
-  `id` bigint(20) NOT NULL,
-  `name` varchar(500) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `indication` */
 
@@ -22972,16 +22932,6 @@ insert  into `indication`(`id`,`name`) values
 (2027,'Zinc & folic acid deficiency'),
 (2028,'Zinc deficiency'),
 (2029,'Zollinger-Ellison syndrome');
-
-/*Table structure for table `indication_generic` */
-
-DROP TABLE IF EXISTS `indication_generic`;
-
-CREATE TABLE `indication_generic` (
-  `id` bigint(50) NOT NULL,
-  `indication` varchar(500) NOT NULL,
-  `generic` varchar(500) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `indication_generic` */
 
@@ -31958,33 +31908,9 @@ insert  into `indication_generic`(`id`,`indication`,`generic`) values
 (8985,'2029','1208'),
 (8986,'2029','1244');
 
-/*Table structure for table `purchase` */
-
-DROP TABLE IF EXISTS `purchase`;
-
-CREATE TABLE `purchase` (
-  `id` bigint(100) NOT NULL,
-  `brand` bigint(100) NOT NULL,
-  `supplier` bigint(100) DEFAULT NULL,
-  `company` bigint(100) NOT NULL,
-  `quantity` bigint(100) NOT NULL,
-  `total` bigint(100) NOT NULL,
-  `unit_price` bigint(100) DEFAULT NULL,
-  `date_time` datetime NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 /*Data for the table `purchase` */
 
-/*Table structure for table `supplier` */
-
-DROP TABLE IF EXISTS `supplier`;
-
-CREATE TABLE `supplier` (
-  `id` bigint(100) NOT NULL,
-  `name` varchar(500) NOT NULL,
-  `phone` varchar(15) DEFAULT NULL,
-  `address` varchar(500) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+/*Data for the table `sale` */
 
 /*Data for the table `supplier` */
 
