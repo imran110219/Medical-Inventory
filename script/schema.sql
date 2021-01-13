@@ -74,9 +74,8 @@ DROP TABLE IF EXISTS `purchase`;
 
 CREATE TABLE `purchase` (
   `id` INT(11) NOT NULL,
-  `brand` BIGINT(100) NOT NULL,
+  `brand_id` INT(11) NOT NULL,
   `supplier_id` INT(11) NOT NULL,
-  `company_id` INT(11) NOT NULL,
   `quantity` INT(11) NOT NULL,
   `total` DOUBLE NOT NULL,
   `unit_price` DOUBLE DEFAULT NULL,
@@ -88,7 +87,7 @@ CREATE TABLE `purchase` (
 DROP TABLE IF EXISTS `role`;
 
 CREATE TABLE `role` (
-  `id` BIGINT(11) NOT NULL,
+  `id` INT(11) NOT NULL,
   `name` VARCHAR(50) NOT NULL
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
@@ -97,10 +96,10 @@ CREATE TABLE `role` (
 DROP TABLE IF EXISTS `sale`;
 
 CREATE TABLE `sale` (
-  `id` BIGINT(100) NOT NULL,
-  `invoice` BIGINT(100) NOT NULL,
-  `brand` BIGINT(100) NOT NULL,
-  `quantity` BIGINT(100) NOT NULL,
+  `id` INT(11) NOT NULL,
+  `invoice_id` VARCHAR(13) NOT NULL,
+  `brand_id` INT(11) NOT NULL,
+  `quantity` INT(100) NOT NULL,
   `price` DOUBLE NOT NULL,
   `total` DOUBLE NOT NULL,
   `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -111,10 +110,10 @@ CREATE TABLE `sale` (
 DROP TABLE IF EXISTS `supplier`;
 
 CREATE TABLE `supplier` (
-  `id` BIGINT(100) NOT NULL,
+  `id` INT(11) NOT NULL,
   `name` VARCHAR(500) NOT NULL,
   `phone` VARCHAR(15) DEFAULT NULL,
-  `address` VARCHAR(500) DEFAULT NULL
+  `address` TEXT DEFAULT NULL
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `user` */
@@ -129,7 +128,31 @@ CREATE TABLE `user` (
   `email` VARCHAR(40) NOT NULL,
   `password` VARCHAR(100) NOT NULL,
   `phone` VARCHAR(100) NOT NULL,
-  `address` TEXT NOT NULL
+  `address` TEXT NOT NULL,
+  `role_id` INT(11) NOT NULL
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+/*Table structure for table `role` */
+
+DROP TABLE IF EXISTS `role`;
+
+CREATE TABLE `role` (
+  `id` INT(11) NOT NULL,
+  `name` VARCHAR(100) NOT NULL
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `invoice`;
+
+CREATE TABLE `invoice` (
+  `id` VARCHAR(13) NOT NULL,
+  `user_id` INT(11) NOT NULL,
+  `total` DOUBLE NOT NULL,
+  `vat` DOUBLE NOT NULL,
+  `discount` DOUBLE NOT NULL,
+  `payable` DOUBLE NOT NULL,
+  `paid` DOUBLE NOT NULL,
+  `returned` DOUBLE NOT NULL,
+  `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
