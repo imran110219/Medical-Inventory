@@ -16,7 +16,8 @@ INSERT  INTO `indication_generic`(`id`,`indication_id`,`generic_id`) VALUES
 (1,'1','1'),
 (2,'2','2'),
 (3,'1','3'),
-(4,'1','4');
+(4,'1','4'),
+(5,'3','2');
 
 
 INSERT  INTO `company`(`id`,`name`) VALUES 

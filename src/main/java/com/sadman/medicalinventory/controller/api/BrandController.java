@@ -4,6 +4,7 @@ import com.sadman.medicalinventory.exception.RecordNotFoundException;
 import com.sadman.medicalinventory.model.Brand;
 import com.sadman.medicalinventory.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -41,7 +42,7 @@ public class BrandController {
         return ResponseEntity.ok().body(brand);
     }
 
-    @PostMapping("/brands")
+    @PostMapping(value = "/brands", consumes = MediaType.ALL_VALUE)
     public Brand createBrand(@Valid @RequestBody Brand brand) {
         return service.createBrand(brand);
     }

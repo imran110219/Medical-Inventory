@@ -1,7 +1,6 @@
 ALTER TABLE `generic`
   ADD PRIMARY KEY (`id`);
-  
-  
+
 ALTER TABLE `company`
   ADD PRIMARY KEY (`id`);
   
@@ -24,7 +23,6 @@ ALTER TABLE `indication_generic`
   ADD KEY `indication_id` (`indication_id`),
   ADD KEY `generic_id` (`generic_id`);
   
-  
 ALTER TABLE `brand`
   ADD PRIMARY KEY (`id`),
   ADD KEY `generic_id` (`generic_id`),
@@ -42,6 +40,38 @@ ALTER TABLE `user`
 ALTER TABLE `supplier`
   ADD PRIMARY KEY (`id`);
   
+  
+ALTER TABLE `brand`
+  MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+ALTER TABLE `company`
+  MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+ALTER TABLE `generic`
+  MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  
+ALTER TABLE `indication`
+  MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+ALTER TABLE `indication_generic`
+  MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+ALTER TABLE `purchase`
+  MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+ALTER TABLE `role`
+  MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+ALTER TABLE `sale`
+  MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+ALTER TABLE `supplier`
+  MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+ALTER TABLE `user`
+  MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+
+
 ALTER TABLE `indication_generic`
   ADD CONSTRAINT `indication_generic_fk_indication` FOREIGN KEY (`indication_id`) REFERENCES `indication` (`id`),
   ADD CONSTRAINT `indication_generic_fk_generic` FOREIGN KEY (`generic_id`) REFERENCES `generic` (`id`);
