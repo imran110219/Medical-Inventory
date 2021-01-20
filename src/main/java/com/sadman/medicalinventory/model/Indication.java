@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @NoArgsConstructor
@@ -21,4 +23,12 @@ public class Indication {
 
     @Column(name="description")
     private String description;
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name = "indication_generic",
+            joinColumns = {@JoinColumn(name = "indication_id")},
+            inverseJoinColumns = {@JoinColumn(name = "generic_id")}
+    )
+    private Set<Generic> generics = new HashSet<>();
 }
