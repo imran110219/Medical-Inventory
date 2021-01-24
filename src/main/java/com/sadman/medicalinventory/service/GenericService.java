@@ -2,11 +2,14 @@ package com.sadman.medicalinventory.service;
 
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
 import com.sadman.medicalinventory.model.Generic;
+import com.sadman.medicalinventory.model.Indication;
 import com.sadman.medicalinventory.repository.GenericRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class GenericService {
@@ -20,6 +23,12 @@ public class GenericService {
 
     public Generic getGenericById(Long id) throws RecordNotFoundException {
         return repository.findById(id).orElseThrow(() -> new RecordNotFoundException(id));
+    }
+
+    public List<Indication> getIndicationsByGenericId(Long id) throws RecordNotFoundException {
+        Generic generic = getGenericById(id);
+        Set<Indication> indicationSet = generic.getIndications();
+        return new ArrayList<>(indicationSet);
     }
 
     public Generic createGeneric(Generic generic){

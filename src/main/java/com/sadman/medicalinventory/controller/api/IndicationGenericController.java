@@ -25,18 +25,6 @@ public class IndicationGenericController {
         return service.getAllIndicationGenerics();
     }
 
-    @GetMapping("/indicationgenerics/{id}/indications")
-    public List<Indication> getIndicationsByGenericId(@PathVariable(value = "id") Long genericId)
-    {
-        return service.getIndicationsByGenericId(genericId);
-    }
-
-    @GetMapping("/indicationgenerics/{id}/generics")
-    public List<Generic> getGenericsByIndicationId(@PathVariable(value = "id") Long indicationId)
-    {
-        return service.getGenericsByIndicationId(indicationId);
-    }
-
     @GetMapping("/indicationgenerics/{id}")
     public ResponseEntity<IndicationGeneric> getIndicationGenericById(@PathVariable(value = "id") Long indicationGenericId)
             throws RecordNotFoundException {

@@ -126,7 +126,7 @@ CREATE TABLE `user` (
   `lastname` VARCHAR(100) NOT NULL,
   `username` VARCHAR(40) NOT NULL,
   `email` VARCHAR(40) NOT NULL,
-  `password` VARCHAR(100) NOT NULL,
+  `password` VARCHAR(200) NOT NULL,
   `phone` VARCHAR(100) NOT NULL,
   `address` TEXT NOT NULL,
   `role_id` INT(11) NOT NULL

@@ -1,14 +1,15 @@
 package com.sadman.medicalinventory.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -24,11 +25,9 @@ public class Indication {
     @Column(name="description")
     private String description;
 
+    @ToString.Exclude
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
-    @JoinTable(
-            name = "indication_generic",
-            joinColumns = {@JoinColumn(name = "indication_id")},
-            inverseJoinColumns = {@JoinColumn(name = "generic_id")}
-    )
+    @JoinTable(name = "indication_generic", joinColumns = {@JoinColumn(name = "indication_id")}, inverseJoinColumns = {@JoinColumn(name = "generic_id")})
+    @JsonManagedReference
     private Set<Generic> generics = new HashSet<>();
 }

@@ -1,22 +1,18 @@
 //package com.sadman.medicalinventory;
 //
-//import com.sadman.medicalinventory.model.Brand;
-//import com.sadman.medicalinventory.model.Company;
 //import com.sadman.medicalinventory.model.Generic;
-//import com.sadman.medicalinventory.repository.BrandRepository;
-//import com.sadman.medicalinventory.repository.CompanyRepository;
-//import com.sadman.medicalinventory.repository.GenericRepository;
+//import com.sadman.medicalinventory.model.Indication;
 //import com.sadman.medicalinventory.service.BrandService;
 //import com.sadman.medicalinventory.service.CompanyService;
 //import com.sadman.medicalinventory.service.GenericService;
+//import com.sadman.medicalinventory.service.IndicationService;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.CommandLineRunner;
 //import org.springframework.boot.SpringApplication;
 //import org.springframework.boot.autoconfigure.SpringBootApplication;
 //
-//import java.util.ArrayList;
 //import java.util.List;
-//import java.util.Optional;
+//import java.util.Set;
 //
 //@SpringBootApplication
 //public class TestApplication implements CommandLineRunner {
@@ -26,6 +22,8 @@
 //    private CompanyService companyService;
 //    @Autowired
 //    private GenericService genericService;
+//    @Autowired
+//    private IndicationService indicationService;
 //
 //    public static void main(String[] args) {
 //        SpringApplication.run(TestApplication.class, args);
@@ -33,16 +31,15 @@
 //
 //    @Override
 //    public void run(String... strings) throws Exception {
-//        // save idCard along with persons
-//        Brand brand = new Brand();
 //        Generic generic = genericService.getGenericById(1L);
-//        Company company = companyService.getCompanyById(1L);
-////        brand.setId(6L);
-//        brand.setName("Napa Test");
-//        brand.setStrength("2 ML");
-//        brand.setGeneric(generic);
-//        brand.setCompany(company);
-//        brandService.createBrand(brand);
-//        System.out.println("Done!");
+//        Indication indication = indicationService.getIndicationById(1L);
+//        List<Generic> genericList = indicationService.getGenericsByIndicationId(1L);
+//        Set<Indication> indicationList = generic.getIndications();
+//        for (Generic g: genericList) {
+//            System.out.println(g.getName());
+//        }
+//        for (Indication i: indicationList) {
+//            System.out.println(i.getName());
+//        }
 //    }
 //}

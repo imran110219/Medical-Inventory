@@ -3,6 +3,7 @@ package com.sadman.medicalinventory.controller.api;
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
 import com.sadman.medicalinventory.model.Brand;
 import com.sadman.medicalinventory.model.Generic;
+import com.sadman.medicalinventory.model.Indication;
 import com.sadman.medicalinventory.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,7 @@ public class GenericController {
     GenericService service;
 
     @GetMapping("/generics")
-    public List<Generic> getAllGenerics(Model model)
-    {
+    public List<Generic> getAllGenerics(Model model) {
         return service.getAllGenerics();
     }
 
@@ -29,6 +29,12 @@ public class GenericController {
             throws RecordNotFoundException {
         Generic generic = service.getGenericById(genericId);
         return ResponseEntity.ok().body(generic);
+    }
+
+    @GetMapping("/generics/{id}/indications")
+    public List<Indication> getIndicationsByGenericId(@PathVariable(value = "id") Long genericId)
+            throws RecordNotFoundException {
+        return service.getIndicationsByGenericId(genericId);
     }
 
     @PostMapping("/generics")

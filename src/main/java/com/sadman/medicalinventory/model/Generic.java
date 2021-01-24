@@ -1,12 +1,15 @@
 package com.sadman.medicalinventory.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -22,6 +25,8 @@ public class Generic {
     @Column(name="description")
     private String description;
 
+    @ToString.Exclude
     @ManyToMany(mappedBy = "generics", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @JsonBackReference
     private Set<Indication> indications = new HashSet<>();
 }

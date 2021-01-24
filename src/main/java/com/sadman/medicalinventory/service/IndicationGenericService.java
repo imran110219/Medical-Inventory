@@ -20,16 +20,6 @@ public class IndicationGenericService {
         return repository.findAll();
     }
 
-    public List<IndicationGeneric> getIndicationsByGenericId(Long genericId)
-    {
-        return repository.getIndicationsByGenericId(genericId);
-    }
-
-    public List<IndicationGeneric> getGenericsByIndicationId(Long indicationId)
-    {
-        return repository.getGenericsByIndicationId(indicationId);
-    }
-
     public IndicationGeneric getIndicationGenericById(Long id) throws RecordNotFoundException {
         return repository.findById(id).orElseThrow(() -> new RecordNotFoundException(id));
     }

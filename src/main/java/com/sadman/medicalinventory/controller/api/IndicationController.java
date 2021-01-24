@@ -32,6 +32,12 @@ public class IndicationController {
         return ResponseEntity.ok().body(indication);
     }
 
+    @GetMapping("/indications/{id}/generics")
+    public List<Generic> getGenericsByIndicationId(@PathVariable(value = "id") Long indicationId)
+            throws RecordNotFoundException {
+        return service.getGenericsByIndicationId(indicationId);
+    }
+
     @PostMapping("/indications")
     public Indication createIndication(@Valid @RequestBody Indication indication) {
         return service.createIndication(indication);
