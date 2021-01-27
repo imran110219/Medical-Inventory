@@ -68,6 +68,22 @@ CREATE TABLE `indication_generic` (
   `generic_id` INT(11) NOT NULL
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
+/*Table structure for table `invoice` */
+
+DROP TABLE IF EXISTS `invoice`;
+
+CREATE TABLE `invoice` (
+  `id` VARCHAR(13) NOT NULL,
+  `user_id` INT(11) NOT NULL,
+  `total` DOUBLE NOT NULL,
+  `vat` DOUBLE NOT NULL,
+  `discount` DOUBLE NOT NULL,
+  `payable` DOUBLE NOT NULL,
+  `paid` DOUBLE NOT NULL,
+  `returned` DOUBLE NOT NULL,
+  `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
 /*Table structure for table `purchase` */
 
 DROP TABLE IF EXISTS `purchase`;
@@ -129,30 +145,15 @@ CREATE TABLE `user` (
   `password` VARCHAR(200) NOT NULL,
   `phone` VARCHAR(100) NOT NULL,
   `address` TEXT NOT NULL,
-  `role_id` INT(11) NOT NULL
+  `active` bit(1) DEFAULT NULL
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
-/*Table structure for table `role` */
+/*Table structure for table `user_role` */
 
-DROP TABLE IF EXISTS `role`;
-
-CREATE TABLE `role` (
+CREATE TABLE `user_role` (
   `id` INT(11) NOT NULL,
-  `name` VARCHAR(100) NOT NULL
-) ENGINE=INNODB DEFAULT CHARSET=utf8;
-
-DROP TABLE IF EXISTS `invoice`;
-
-CREATE TABLE `invoice` (
-  `id` VARCHAR(13) NOT NULL,
   `user_id` INT(11) NOT NULL,
-  `total` DOUBLE NOT NULL,
-  `vat` DOUBLE NOT NULL,
-  `discount` DOUBLE NOT NULL,
-  `payable` DOUBLE NOT NULL,
-  `paid` DOUBLE NOT NULL,
-  `returned` DOUBLE NOT NULL,
-  `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+  `role_id` INT(11) NOT NULL
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

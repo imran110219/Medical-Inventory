@@ -34,13 +34,16 @@ ALTER TABLE `purchase`
   ADD KEY `supplier_id` (`supplier_id`);
   
 ALTER TABLE `user`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `user_role`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
   ADD KEY `role_id` (`role_id`);
   
 ALTER TABLE `supplier`
   ADD PRIMARY KEY (`id`);
-  
-  
+
 ALTER TABLE `brand`
   MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
@@ -79,9 +82,10 @@ ALTER TABLE `indication_generic`
 ALTER TABLE `brand`
   ADD CONSTRAINT `brand_fk_generic` FOREIGN KEY (`generic_id`) REFERENCES `generic` (`id`),
   ADD CONSTRAINT `brand_fk_company` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`);
-  
-ALTER TABLE `user`
-  ADD CONSTRAINT `user_fk_role` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`);
+
+ALTER TABLE `user_role`
+  ADD CONSTRAINT `user_role_fk_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `user_role_fk_role` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`);
   
 ALTER TABLE `purchase`
   ADD CONSTRAINT `purchase_fk_brand` FOREIGN KEY (`brand_id`) REFERENCES `brand` (`id`),

@@ -34,4 +34,8 @@ INSERT  INTO `indication`(`id`,`name`) VALUES
 (4,'Abscesses'),
 (5,'Absence seizures');
 
+INSERT  INTO `user`(`id`,`firstname`,`lastname`,`username`,`email`,`password`,`phone`,`address`,active) VALUES 
+(1,'John','Player','john','john@gmail.com','123456','01912070224','Dhaka',''),
+(2,'Sadman','Sobhan','imran','imran@gmail.com','123456','01912070224','Dhaka','');
+
 

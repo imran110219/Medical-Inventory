@@ -3,6 +3,7 @@ package com.sadman.medicalinventory.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -29,7 +30,9 @@ public class User {
     private String phone;
     @Column(name = "address")
     private String address;
-    @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "role_id")
-    private Role role;
+    @Column(name = "active")
+    private Boolean active;
+    @ManyToMany(cascade = CascadeType.MERGE)
+    @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles;
 }
