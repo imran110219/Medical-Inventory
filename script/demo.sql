@@ -34,8 +34,16 @@ INSERT  INTO `indication`(`id`,`name`) VALUES
 (4,'Abscesses'),
 (5,'Absence seizures');
 
-INSERT  INTO `user`(`id`,`firstname`,`lastname`,`username`,`email`,`password`,`phone`,`address`,active) VALUES 
+INSERT  INTO `user`(`id`,`firstname`,`lastname`,`username`,`email`,`password`,`phone`,`address`,`active`) VALUES
 (1,'John','Player','john','john@gmail.com','123456','01912070224','Dhaka',''),
-(2,'Sadman','Sobhan','imran','imran@gmail.com','123456','01912070224','Dhaka','');
+(2,'Sadman','Sobhan','imran','imran@gmail.com','123456','01912070224','Dhaka',''),
+(3,'Md','Amin','amin','amin@gmail.com','123456','01912070224','Dhaka','');
+
+INSERT INTO `invoice` (`id`, `user_id`, `total`, `vat`, `discount`, `payable`, `paid`, `returned`, `datetime`) VALUES
+('1491729973342', 2, 760, 19, 5, 774, 800, 26, '2017-01-09 15:26:13'),
+('1491730560516', 2, 370, 9.25, 5, 374.25, 375, 0.75, '2017-01-09 15:36:00'),
+('1492165305284', 2, 270, 6.75, 5, 271.75, 280, 8.25, '2017-01-14 16:21:45'),
+('1492189349464', 2, 490, 12.25, 5, 497.25, 500, 2.75, '2017-02-14 23:02:29'),
+('1492189946488', 2, 190, 4.75, 5, 189.75, 200, 10.25, '2017-02-14 23:12:26');
 
 
