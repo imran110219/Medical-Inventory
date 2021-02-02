@@ -20,8 +20,7 @@ public class BrandController {
     BrandService service;
 
     @GetMapping("/brands")
-    public List<Brand> getAllBrands(Model model)
-    {
+    public List<Brand> getAllBrands(Model model) {
         return service.getAllBrands();
     }
 

@@ -2,7 +2,6 @@ package com.sadman.medicalinventory.service;
 
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
 import com.sadman.medicalinventory.model.Role;
-import com.sadman.medicalinventory.model.Sale;
 import com.sadman.medicalinventory.model.User;
 import com.sadman.medicalinventory.repository.RoleRepository;
 import com.sadman.medicalinventory.repository.UserRepository;
@@ -19,33 +18,27 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-//    private RoleRepository roleRepository;
+    @Autowired
+    private RoleRepository roleRepository;
+//    @Autowired
 //    private BCryptPasswordEncoder bCryptPasswordEncoder;
 
-//    @Autowired
-//    public UserService(UserRepository userRepository,
-//                       RoleRepository roleRepository,
-//                       BCryptPasswordEncoder bCryptPasswordEncoder) {
-//        this.userRepository = userRepository;
-//        this.roleRepository = roleRepository;
-//        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
-//    }
+    public User findUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 
-//    public User findUserByEmail(String email) {
-//        return userRepository.findByEmail(email);
-//    }
+    public User findUserByUserName(String userName) {
+        return userRepository.findByUserName(userName);
+    }
 
-//    public User findUserByUserName(String userName) {
-//        return userRepository.findByUserName(userName);
-//    }
-
-//    public User saveUser(User user) {
+    public User saveUser(User user) {
 //        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-//        user.setActive(true);
-//        Role userRole = roleRepository.findByName("ADMIN");
-//        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
-//        return userRepository.save(user);
-//    }
+        user.setPassword(user.getPassword());
+        user.setActive(true);
+        Role userRole = roleRepository.findByName("ADMIN");
+        user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
+        return userRepository.save(user);
+    }
 
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -56,7 +49,7 @@ public class UserService {
     }
 
     public User createUser(User user){
-        return userRepository.save(user);
+        return saveUser(user);
     }
 
     public User updateUser(User newUser, Long id)
@@ -68,14 +61,16 @@ public class UserService {
                     user.setEmail(newUser.getEmail());
                     user.setUserName(newUser.getUserName());
                     user.setRoles(newUser.getRoles());
+//                    user.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
                     user.setPassword(newUser.getPassword());
                     user.setPhone(newUser.getPhone());
                     user.setAddress(newUser.getAddress());
+                    user.setActive(newUser.getActive());
                     return userRepository.save(user);
                 })
                 .orElseGet(() -> {
                     newUser.setId(id);
-                    return userRepository.save(newUser);
+                    return saveUser(newUser);
                 });
     }
 

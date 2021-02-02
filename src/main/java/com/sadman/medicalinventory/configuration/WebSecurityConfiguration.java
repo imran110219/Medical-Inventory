@@ -2,6 +2,7 @@
 //
 //import com.sadman.medicalinventory.service.CustomUserDetailsService;
 //import org.springframework.beans.factory.annotation.Autowired;
+//import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
 //import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 //import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,51 +10,49 @@
 //import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 //import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 //import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-//import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+//import org.springframework.security.crypto.password.PasswordEncoder;
 //
 //@Configuration
 //@EnableWebSecurity
 //public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 //
 //    @Autowired
-//    private BCryptPasswordEncoder bCryptPasswordEncoder;
-//
-//    @Autowired
 //    private CustomUserDetailsService userDetailsService;
+//
+//    @Bean
+//    public PasswordEncoder passwordEncoder() {
+//        return new BCryptPasswordEncoder();
+//    }
 //
 //    @Override
 //    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 //        auth
 //                .userDetailsService(userDetailsService)
-//                .passwordEncoder(bCryptPasswordEncoder);
+//                .passwordEncoder(passwordEncoder());
 //    }
 //
 //    @Override
 //    protected void configure(HttpSecurity http) throws Exception {
 //
-//        String loginPage = "/login";
-//        String logoutPage = "/logout";
+//        http
+//                .httpBasic()
+//                .and()
+//                .authorizeRequests()
+//                .antMatchers("/api/brands/**").hasRole("ADMIN")
+//                .antMatchers("/api/companies/**").hasRole("ADMIN")
+//                .antMatchers("/api/generics/**").hasRole("ADMIN")
+//                .antMatchers("/api/indications/**").hasRole("ADMIN")
+//                .antMatchers("/api/indicationgenerics/**").hasRole("ADMIN")
+//                .antMatchers("/api/invoices/**").hasRole("ADMIN")
+//                .antMatchers("/api/roles/**").hasRole("ADMIN")
+//                .antMatchers("/api/sales/**").hasRole("ADMIN")
+//                .antMatchers("/api/users/**").hasRole("ADMIN")
 //
-//        http.
-//                authorizeRequests()
-//                .antMatchers("/").permitAll()
-//                .antMatchers(loginPage).permitAll()
-//                .antMatchers("/registration").permitAll()
-//                .antMatchers("/admin/**").hasAuthority("ADMIN")
-//                .anyRequest()
-//                .authenticated()
-//                .and().csrf().disable()
-//                .formLogin()
-//                .loginPage(loginPage)
-//                .loginPage("/")
-//                .failureUrl("/login?error=true")
-//                .defaultSuccessUrl("/admin/home")
-//                .usernameParameter("user_name")
-//                .passwordParameter("password")
-//                .and().logout()
-//                .logoutRequestMatcher(new AntPathRequestMatcher(logoutPage))
-//                .logoutSuccessUrl(loginPage).and().exceptionHandling();
+//                .and()
+//                .csrf().disable()
+//                .formLogin().disable();
 //    }
+//
 //
 //    @Override
 //    public void configure(WebSecurity web) throws Exception {

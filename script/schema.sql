@@ -91,7 +91,7 @@ DROP TABLE IF EXISTS `purchase`;
 CREATE TABLE `purchase` (
   `id` INT(11) NOT NULL,
   `brand_id` INT(11) NOT NULL,
-  `supplier_id` INT(11) NOT NULL,
+  `supplier_id` INT(11) DEFAULT NULL,
   `quantity` INT(11) NOT NULL,
   `total` DOUBLE NOT NULL,
   `unit_price` DOUBLE DEFAULT NULL,

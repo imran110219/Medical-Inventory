@@ -24,7 +24,7 @@ public class Purchase {
     private Supplier supplier;
     @Column(name = "quantity")
     private double quantity;
-    @Column(name = "price")
+    @Column(name = "unit_price")
     private double price;
     @Column(name = "total")
     private double total;
