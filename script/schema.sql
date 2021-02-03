@@ -98,13 +98,16 @@ CREATE TABLE `purchase` (
   `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
-/*Table structure for table `role` */
+/*Table structure for table `stock` */
 
-DROP TABLE IF EXISTS `role`;
+DROP TABLE IF EXISTS `stock`;
 
-CREATE TABLE `role` (
+CREATE TABLE `stock` (
   `id` INT(11) NOT NULL,
-  `name` VARCHAR(50) NOT NULL
+  `purchase_id` INT(11) NOT NULL,
+  `quantity` INT(11) NOT NULL,
+   `expired_datetime` DATETIME NOT NULL,
+  `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `sale` */
@@ -145,7 +148,16 @@ CREATE TABLE `user` (
   `password` VARCHAR(200) NOT NULL,
   `phone` VARCHAR(100) NOT NULL,
   `address` TEXT NOT NULL,
-  `active` bit(1) DEFAULT NULL
+  `active` BIT(1) DEFAULT NULL
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+/*Table structure for table `role` */
+
+DROP TABLE IF EXISTS `role`;
+
+CREATE TABLE `role` (
+  `id` INT(11) NOT NULL,
+  `name` VARCHAR(50) NOT NULL
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `user_role` */
