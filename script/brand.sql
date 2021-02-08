@@ -18,7 +18,7 @@ USE `test`;
 
 /*Data for the table `brand` */
 
-insert  into `brand`(`id`,`name`,`strength`,`generic`,`company`,`price`) values 
+insert  into `brand`(`id`,`name`,`strength`,`generic`,`manufacturer`,`price`) values
 (1,'1stCef','500 mg','259','92','12.00'),
 (2,'3-C','200 mg','265','48','35.00'),
 (3,'3-C','100 mg/5 ml','265','48','195.00'),

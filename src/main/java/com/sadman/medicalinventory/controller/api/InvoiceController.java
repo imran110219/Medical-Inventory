@@ -1,9 +1,7 @@
 package com.sadman.medicalinventory.controller.api;
 
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
-import com.sadman.medicalinventory.model.Company;
 import com.sadman.medicalinventory.model.Invoice;
-import com.sadman.medicalinventory.service.CompanyService;
 import com.sadman.medicalinventory.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

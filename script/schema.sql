@@ -25,15 +25,15 @@ CREATE TABLE `brand` (
   `name` VARCHAR(100) NOT NULL,
   `strength` VARCHAR(500) NOT NULL,
   `generic_id` INT(11) NOT NULL,
-  `company_id` INT(11) NOT NULL,
+  `manufacturer_id` INT(11) NOT NULL,
   `price` DOUBLE NOT NULL
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
-/*Table structure for table `company` */
+/*Table structure for table `manufacturer` */
 
-DROP TABLE IF EXISTS `company`;
+DROP TABLE IF EXISTS `manufacturer`;
 
-CREATE TABLE `company` (
+CREATE TABLE `manufacturer` (
   `id` INT(11) NOT NULL,
   `name` VARCHAR(100) NOT NULL,
   `address` TEXT DEFAULT NULL

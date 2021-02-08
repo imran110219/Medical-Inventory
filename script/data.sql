@@ -7,7 +7,6 @@ MySQL - 5.7.22-log : Database - medical_inventory
 /*!40101 SET NAMES utf8 */;
 
 /*!40101 SET SQL_MODE=''*/;
-
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
@@ -18,7 +17,7 @@ USE `medical_inventory`;
 
 /*Data for the table `brand` */
 
-INSERT  INTO `brand`(`id`,`name`,`strength`,`generic_id`,`company_id`,`price`) VALUES 
+INSERT  INTO `brand`(`id`,`name`,`strength`,`generic_id`,`manufacturer_id`,`price`) VALUES
 (1,'1stCef','500 mg','259','92','12.00'),
 (2,'3-C','200 mg','265','48','35.00'),
 (3,'3-C','100 mg/5 ml','265','48','195.00'),
@@ -19206,9 +19205,9 @@ INSERT  INTO `brand`(`id`,`name`,`strength`,`generic_id`,`company_id`,`price`) V
 (19185,'Zytiga','250 mg','3','164','1,665.82'),
 (19186,'Zytix','250 mg','3','21','580.00');
 
-/*Data for the table `company` */
+/*Data for the table `manufacturer` */
 
-INSERT  INTO `company`(`id`,`name`) VALUES 
+INSERT  INTO `manufacturer`(`id`,`name`) VALUES
 (1,'Abbott Laboratories'),
 (2,'ACI Limited'),
 (3,'ACME Laboratories Ltd.'),

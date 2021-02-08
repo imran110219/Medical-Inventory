@@ -1,7 +1,7 @@
 ALTER TABLE `generic`
   ADD PRIMARY KEY (`id`);
 
-ALTER TABLE `company`
+ALTER TABLE `manufacturer`
   ADD PRIMARY KEY (`id`);
   
 ALTER TABLE `indication`
@@ -26,7 +26,7 @@ ALTER TABLE `indication_generic`
 ALTER TABLE `brand`
   ADD PRIMARY KEY (`id`),
   ADD KEY `generic_id` (`generic_id`),
-  ADD KEY `company_id` (`company_id`);
+  ADD KEY `manufacturer_id` (`manufacturer_id`);
   
 ALTER TABLE `purchase`
   ADD PRIMARY KEY (`id`),
@@ -51,7 +51,7 @@ ALTER TABLE `supplier`
 ALTER TABLE `brand`
   MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
-ALTER TABLE `company`
+ALTER TABLE `manufacturer`
   MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 ALTER TABLE `generic`
@@ -79,7 +79,7 @@ ALTER TABLE `supplier`
   MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 ALTER TABLE `user`
-  MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 
 ALTER TABLE `indication_generic`
@@ -88,7 +88,7 @@ ALTER TABLE `indication_generic`
   
 ALTER TABLE `brand`
   ADD CONSTRAINT `brand_fk_generic` FOREIGN KEY (`generic_id`) REFERENCES `generic` (`id`),
-  ADD CONSTRAINT `brand_fk_company` FOREIGN KEY (`company_id`) REFERENCES `company` (`id`);
+  ADD CONSTRAINT `brand_fk_manufacturer` FOREIGN KEY (`manufacturer_id`) REFERENCES `manufacturer` (`id`);
 
 ALTER TABLE `user_role`
   ADD CONSTRAINT `user_role_fk_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),

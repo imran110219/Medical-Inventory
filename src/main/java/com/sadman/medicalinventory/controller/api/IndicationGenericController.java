@@ -20,8 +20,7 @@ public class IndicationGenericController {
     IndicationGenericService service;
 
     @GetMapping("/indicationgenerics")
-    public List<IndicationGeneric> getAllIndicationGenerics(Model model)
-    {
+    public List<IndicationGeneric> getAllIndicationGenerics(Model model) {
         return service.getAllIndicationGenerics();
     }
 

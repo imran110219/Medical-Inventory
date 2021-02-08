@@ -18,8 +18,7 @@ public class SaleController {
     SaleService service;
 
     @GetMapping("/sales")
-    public List<Sale> getAllSales(Model model)
-    {
+    public List<Sale> getAllSales(Model model) {
         return service.getAllSales();
     }
 

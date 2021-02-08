@@ -1,7 +1,6 @@
 package com.sadman.medicalinventory.service;
 
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
-import com.sadman.medicalinventory.model.Company;
 import com.sadman.medicalinventory.model.Sale;
 import com.sadman.medicalinventory.repository.SaleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,8 +13,7 @@ public class SaleService {
     @Autowired
     SaleRepository repository;
 
-    public List<Sale> getAllSales()
-    {
+    public List<Sale> getAllSales() {
         return repository.findAll();
     }
 
@@ -27,8 +25,7 @@ public class SaleService {
         return repository.save(sale);
     }
 
-    public Sale updateSale(Sale newSale, Long id)
-    {
+    public Sale updateSale(Sale newSale, Long id) {
         return repository.findById(id)
                 .map(sale -> {
                     sale.setBrand(newSale.getBrand());

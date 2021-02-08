@@ -27,8 +27,8 @@ public class Brand {
     private Generic generic;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "company_id")
-    private Company company;
+    @JoinColumn(name = "manufacturer_id")
+    private Manufacturer manufacturer;
 
     @Column(name = "price")
     private double price;

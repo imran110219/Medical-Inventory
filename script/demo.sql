@@ -1,4 +1,4 @@
-INSERT  INTO `brand`(`id`,`name`,`strength`,`generic_id`,`company_id`,`price`) VALUES 
+INSERT  INTO `brand`(`id`,`name`,`strength`,`generic_id`,`manufacturer_id`,`price`) VALUES
 (1,'1stCef','500 mg',1,2,12.00),
 (2,'3-C','200 mg',2,3,35.00),
 (3,'3-C','100 mg/5 ml',4,5,195.00),
@@ -20,7 +20,7 @@ INSERT  INTO `indication_generic`(`id`,`indication_id`,`generic_id`) VALUES
 (5,'3','2');
 
 
-INSERT  INTO `company`(`id`,`name`) VALUES 
+INSERT  INTO `manufacturer`(`id`,`name`) VALUES
 (1,'Abbott Laboratories'),
 (2,'ACI Limited'),
 (3,'ACME Laboratories Ltd.'),
@@ -38,6 +38,11 @@ INSERT  INTO `user`(`id`,`firstname`,`lastname`,`username`,`email`,`password`,`p
 (1,'John','Player','john','john@gmail.com','123456','01912070224','Dhaka',''),
 (2,'Sadman','Sobhan','imran','imran@gmail.com','123456','01912070224','Dhaka',''),
 (3,'Md','Amin','amin','amin@gmail.com','123456','01912070224','Dhaka','');
+
+insert  into `role`(`id`,`name`) values
+(1,'SUPER_ADMIN'),
+(2,'ADMIN'),
+(3,'USER');
 
 INSERT  INTO `user_role`(`id`,`user_id`,`role_id`) VALUES
 (1,'1','1'),

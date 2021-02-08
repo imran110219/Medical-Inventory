@@ -2,12 +2,10 @@ package com.sadman.medicalinventory.service;
 
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
 import com.sadman.medicalinventory.model.Brand;
-import com.sadman.medicalinventory.model.Company;
 import com.sadman.medicalinventory.repository.BrandRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -44,7 +42,7 @@ public class BrandService {
                 .map(brand -> {
                     brand.setName(newBrand.getName());
                     brand.setStrength(newBrand.getStrength());
-                    brand.setCompany(newBrand.getCompany());
+                    brand.setManufacturer(newBrand.getManufacturer());
                     brand.setGeneric(newBrand.getGeneric());
                     brand.setPrice(newBrand.getPrice());
                     return repository.save(brand);

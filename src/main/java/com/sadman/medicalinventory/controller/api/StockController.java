@@ -18,8 +18,7 @@ public class StockController {
     StockService service;
 
     @GetMapping("/stocks")
-    public List<Stock> getAllStocks(Model model)
-    {
+    public List<Stock> getAllStocks(Model model) {
         return service.getAllStocks();
     }
 

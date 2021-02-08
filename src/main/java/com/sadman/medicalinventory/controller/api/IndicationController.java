@@ -20,8 +20,7 @@ public class IndicationController {
     IndicationService service;
 
     @GetMapping("/indications")
-    public List<Indication> getAllIndications(Model model)
-    {
+    public List<Indication> getAllIndications(Model model) {
         return service.getAllIndications();
     }
 
