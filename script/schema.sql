@@ -21,12 +21,23 @@ USE `medical_inventory`;
 DROP TABLE IF EXISTS `brand`;
 
 CREATE TABLE `brand` (
+    `id` INT(11) NOT NULL,
+    `name` VARCHAR(100) NOT NULL,
+    `strength` VARCHAR(100) NOT NULL,
+    `location` VARCHAR(100) DEFAULT NULL,
+    `dosage_form_id` INT(11) NOT NULL,
+    `generic_id` INT(11) NOT NULL,
+    `manufacturer_id` INT(11) NOT NULL,
+    `price` DOUBLE NOT NULL
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+/*Table structure for table `dosage_form` */
+
+DROP TABLE IF EXISTS `dosage_form`;
+
+CREATE TABLE `dosage_form` (
   `id` INT(11) NOT NULL,
-  `name` VARCHAR(100) NOT NULL,
-  `strength` VARCHAR(500) NOT NULL,
-  `generic_id` INT(11) NOT NULL,
-  `manufacturer_id` INT(11) NOT NULL,
-  `price` DOUBLE NOT NULL
+  `name` VARCHAR(100) NOT NULL
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `manufacturer` */
@@ -38,6 +49,7 @@ CREATE TABLE `manufacturer` (
   `name` VARCHAR(100) NOT NULL,
   `address` TEXT DEFAULT NULL
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
 /*Table structure for table `generic` */
 
 DROP TABLE IF EXISTS `generic`;

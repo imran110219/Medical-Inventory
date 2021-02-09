@@ -1,9 +1,21 @@
-INSERT  INTO `brand`(`id`,`name`,`strength`,`generic_id`,`manufacturer_id`,`price`) VALUES
-(1,'1stCef','500 mg',1,2,12.00),
-(2,'3-C','200 mg',2,3,35.00),
-(3,'3-C','100 mg/5 ml',4,5,195.00),
-(4,'3-C','400 mg',1,5,20.00),
-(5,'3-F','500 mg',2,4,14.00);
+INSERT  INTO `brand`(`id`,`name`,`strength`,`location`,dosage_form_id,`generic_id`,`manufacturer_id`,`price`) VALUES
+(1,'1stCef','500 mg','A',1,1,2,12.00),
+(2,'3-C','200 mg','A',1,2,3,35.00),
+(3,'3-C','100 mg/5 ml','A',1,4,5,195.00),
+(4,'3-C','400 mg','A',1,1,5,20.00),
+(5,'3-F','500 mg','A',1,2,4,14.00);
+
+INSERT  INTO `dosage_form`(`id`,`name`) VALUES
+(1,'Capsule'),
+(2,'Gel'),
+(3,'IM Injection'),
+(4,'IV Infusion'),
+(5,'IV Injection'),
+(6,'Ophthalmic Ointment'),
+(7,'Ophthalmic Solution'),
+(8,'Pediatric Drops'),
+(9,'Syrup'),
+(10,'Tablet');
 
 INSERT  INTO `generic`(`id`,`name`) VALUES 
 (1,'5-Fluorouracil [5-FU]'),
@@ -18,7 +30,6 @@ INSERT  INTO `indication_generic`(`id`,`indication_id`,`generic_id`) VALUES
 (3,'1','3'),
 (4,'1','4'),
 (5,'3','2');
-
 
 INSERT  INTO `manufacturer`(`id`,`name`) VALUES
 (1,'Abbott Laboratories'),
@@ -89,3 +100,13 @@ insert  into `sale`(`id`,`invoice_id`,`brand_id`,`quantity`,`price`,`total`,`dat
 (8,'1492189946488',2,2,40,80,'2021-02-02 15:30:07'),
 (9,'1491730560516',2,2,40,80,'2021-02-02 15:30:07'),
 (10,'1491730560516',3,2,5,10,'2021-02-02 15:31:14');
+
+
+
+
+
+
+
+
+
+

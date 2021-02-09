@@ -1,6 +1,9 @@
 ALTER TABLE `generic`
   ADD PRIMARY KEY (`id`);
 
+ALTER TABLE `dosage_form`
+  ADD PRIMARY KEY (`id`);
+
 ALTER TABLE `manufacturer`
   ADD PRIMARY KEY (`id`);
   
@@ -25,6 +28,7 @@ ALTER TABLE `indication_generic`
   
 ALTER TABLE `brand`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `dosage_form_id` (`dosage_form_id`),
   ADD KEY `generic_id` (`generic_id`),
   ADD KEY `manufacturer_id` (`manufacturer_id`);
   
@@ -49,6 +53,9 @@ ALTER TABLE `supplier`
   ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `brand`
+  MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+ALTER TABLE `dosage_form`
   MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 ALTER TABLE `manufacturer`
@@ -87,6 +94,7 @@ ALTER TABLE `indication_generic`
   ADD CONSTRAINT `indication_generic_fk_generic` FOREIGN KEY (`generic_id`) REFERENCES `generic` (`id`);
   
 ALTER TABLE `brand`
+  ADD CONSTRAINT `brand_fk_dosage_form` FOREIGN KEY (`dosage_form_id`) REFERENCES `dosage_form` (`id`),
   ADD CONSTRAINT `brand_fk_generic` FOREIGN KEY (`generic_id`) REFERENCES `generic` (`id`),
   ADD CONSTRAINT `brand_fk_manufacturer` FOREIGN KEY (`manufacturer_id`) REFERENCES `manufacturer` (`id`);
 
