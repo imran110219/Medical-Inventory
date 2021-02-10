@@ -24,7 +24,7 @@ CREATE TABLE `brand` (
     `id` INT(11) NOT NULL,
     `name` VARCHAR(100) NOT NULL,
     `strength` VARCHAR(100) NOT NULL,
-    `location` VARCHAR(100) DEFAULT NULL,
+    `location_id` INT(11) DEFAULT NULL,
     `dosage_form_id` INT(11) NOT NULL,
     `generic_id` INT(11) NOT NULL,
     `manufacturer_id` INT(11) NOT NULL,
@@ -37,7 +37,24 @@ DROP TABLE IF EXISTS `dosage_form`;
 
 CREATE TABLE `dosage_form` (
   `id` INT(11) NOT NULL,
-  `name` VARCHAR(100) NOT NULL
+  `name` VARCHAR(200) NOT NULL
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+/*Table structure for table `location` */
+
+DROP TABLE IF EXISTS `location`;
+
+CREATE TABLE `location` (
+  `id` INT(11) NOT NULL,
+  `name` VARCHAR(200) NOT NULL
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+/*Table structure for table `brand_location` */
+
+CREATE TABLE `brand_location` (
+  `id` INT(11) NOT NULL,
+  `brand_id` INT(11) NOT NULL,
+  `location_id` INT(11) NOT NULL
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `manufacturer` */

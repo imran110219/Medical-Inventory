@@ -1,7 +1,12 @@
+-- Add Key
+
 ALTER TABLE `generic`
   ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `dosage_form`
+  ADD PRIMARY KEY (`id`);
+
+ALTER TABLE `location`
   ADD PRIMARY KEY (`id`);
 
 ALTER TABLE `manufacturer`
@@ -28,9 +33,15 @@ ALTER TABLE `indication_generic`
   
 ALTER TABLE `brand`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `location_id` (`location_id`),
   ADD KEY `dosage_form_id` (`dosage_form_id`),
   ADD KEY `generic_id` (`generic_id`),
   ADD KEY `manufacturer_id` (`manufacturer_id`);
+
+ALTER TABLE `brand_location`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `brand_id` (`brand_id`),
+  ADD KEY `location_id` (`location_id`);
   
 ALTER TABLE `purchase`
   ADD PRIMARY KEY (`id`),
@@ -52,8 +63,13 @@ ALTER TABLE `user_role`
 ALTER TABLE `supplier`
   ADD PRIMARY KEY (`id`);
 
+-- Enable Auto Increment
+
 ALTER TABLE `brand`
   MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+ALTER TABLE `location`
+  MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 ALTER TABLE `dosage_form`
   MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
@@ -69,6 +85,9 @@ ALTER TABLE `indication`
 
 ALTER TABLE `indication_generic`
   MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+ALTER TABLE `brand_location`
+  MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 ALTER TABLE `purchase`
   MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
@@ -88,6 +107,7 @@ ALTER TABLE `supplier`
 ALTER TABLE `user`
   MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
+-- Add Foreign Key
 
 ALTER TABLE `indication_generic`
   ADD CONSTRAINT `indication_generic_fk_indication` FOREIGN KEY (`indication_id`) REFERENCES `indication` (`id`),
@@ -97,6 +117,10 @@ ALTER TABLE `brand`
   ADD CONSTRAINT `brand_fk_dosage_form` FOREIGN KEY (`dosage_form_id`) REFERENCES `dosage_form` (`id`),
   ADD CONSTRAINT `brand_fk_generic` FOREIGN KEY (`generic_id`) REFERENCES `generic` (`id`),
   ADD CONSTRAINT `brand_fk_manufacturer` FOREIGN KEY (`manufacturer_id`) REFERENCES `manufacturer` (`id`);
+
+ALTER TABLE `brand_location`
+  ADD CONSTRAINT `brand_location_fk_brand` FOREIGN KEY (`brand_id`) REFERENCES `brand` (`id`),
+  ADD CONSTRAINT `brand_location_fk_location` FOREIGN KEY (`location_id`) REFERENCES `location` (`id`);
 
 ALTER TABLE `user_role`
   ADD CONSTRAINT `user_role_fk_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),

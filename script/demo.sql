@@ -1,9 +1,9 @@
 INSERT  INTO `brand`(`id`,`name`,`strength`,`location`,dosage_form_id,`generic_id`,`manufacturer_id`,`price`) VALUES
-(1,'1stCef','500 mg','A',1,1,2,12.00),
-(2,'3-C','200 mg','A',1,2,3,35.00),
-(3,'3-C','100 mg/5 ml','A',1,4,5,195.00),
-(4,'3-C','400 mg','A',1,1,5,20.00),
-(5,'3-F','500 mg','A',1,2,4,14.00);
+(1,'1stCef','500 mg',1,1,1,2,12.00),
+(2,'3-C','200 mg',2,1,2,3,35.00),
+(3,'3-C','100 mg/5 ml',3,1,4,5,195.00),
+(4,'3-C','400 mg',4,1,1,5,20.00),
+(5,'3-F','500 mg',5,1,2,4,14.00);
 
 INSERT  INTO `dosage_form`(`id`,`name`) VALUES
 (1,'Capsule'),
@@ -11,11 +11,14 @@ INSERT  INTO `dosage_form`(`id`,`name`) VALUES
 (3,'IM Injection'),
 (4,'IV Infusion'),
 (5,'IV Injection'),
-(6,'Ophthalmic Ointment'),
-(7,'Ophthalmic Solution'),
-(8,'Pediatric Drops'),
-(9,'Syrup'),
-(10,'Tablet');
+(6,'Ophthalmic Ointment');
+
+INSERT  INTO `location`(`id`,`name`) VALUES
+(1,'Shelf A'),
+(2,'Shelf B'),
+(3,'Shelf C'),
+(4,'Shelf D'),
+(5,'Shelf E');
 
 INSERT  INTO `generic`(`id`,`name`) VALUES 
 (1,'5-Fluorouracil [5-FU]'),
