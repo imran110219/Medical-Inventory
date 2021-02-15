@@ -24,7 +24,7 @@ ALTER TABLE `invoice`
 ALTER TABLE `sale`
   ADD PRIMARY KEY (`id`),
   ADD KEY `invoice_id` (`invoice_id`),
-  ADD KEY `brand_id` (`brand_id`);
+  ADD KEY `stock_id` (`stock_id`);
 
 ALTER TABLE `indication_generic`
   ADD PRIMARY KEY (`id`),
@@ -33,15 +33,9 @@ ALTER TABLE `indication_generic`
   
 ALTER TABLE `brand`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `location_id` (`location_id`),
   ADD KEY `dosage_form_id` (`dosage_form_id`),
   ADD KEY `generic_id` (`generic_id`),
   ADD KEY `manufacturer_id` (`manufacturer_id`);
-
-ALTER TABLE `brand_location`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `brand_id` (`brand_id`),
-  ADD KEY `location_id` (`location_id`);
   
 ALTER TABLE `purchase`
   ADD PRIMARY KEY (`id`),
@@ -50,8 +44,14 @@ ALTER TABLE `purchase`
 
 ALTER TABLE `stock`
   ADD PRIMARY KEY (`id`),
+  ADD KEY `location_id` (`location_id`),
   ADD KEY `purchase_id` (`purchase_id`);
-  
+
+ALTER TABLE `return`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `invoice_id` (`invoice_id`),
+  ADD KEY `purchase_id` (`purchase_id`);
+
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
 
@@ -86,14 +86,14 @@ ALTER TABLE `indication`
 ALTER TABLE `indication_generic`
   MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
-ALTER TABLE `brand_location`
-  MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
-
 ALTER TABLE `purchase`
   MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 ALTER TABLE `stock`
   MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+ALTER TABLE `return`
+  MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
 
 ALTER TABLE `role`
   MODIFY `id` INT(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
@@ -118,10 +118,6 @@ ALTER TABLE `brand`
   ADD CONSTRAINT `brand_fk_generic` FOREIGN KEY (`generic_id`) REFERENCES `generic` (`id`),
   ADD CONSTRAINT `brand_fk_manufacturer` FOREIGN KEY (`manufacturer_id`) REFERENCES `manufacturer` (`id`);
 
-ALTER TABLE `brand_location`
-  ADD CONSTRAINT `brand_location_fk_brand` FOREIGN KEY (`brand_id`) REFERENCES `brand` (`id`),
-  ADD CONSTRAINT `brand_location_fk_location` FOREIGN KEY (`location_id`) REFERENCES `location` (`id`);
-
 ALTER TABLE `user_role`
   ADD CONSTRAINT `user_role_fk_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`),
   ADD CONSTRAINT `user_role_fk_role` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`);
@@ -131,11 +127,16 @@ ALTER TABLE `purchase`
   ADD CONSTRAINT `purchase_fk_supplier` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`id`);
 
 ALTER TABLE `stock`
+  ADD CONSTRAINT `stock_fk_location` FOREIGN KEY (`location_id`) REFERENCES `purchase` (`id`),
   ADD CONSTRAINT `stock_fk_purchase` FOREIGN KEY (`purchase_id`) REFERENCES `purchase` (`id`);
+
+ALTER TABLE `return`
+  ADD CONSTRAINT `return_fk_invoice` FOREIGN KEY (`invoice_id`) REFERENCES `invoice` (`id`),
+  ADD CONSTRAINT `return_fk_purchase` FOREIGN KEY (`purchase_id`) REFERENCES `purchase` (`id`);
   
 ALTER TABLE `sale`
   ADD CONSTRAINT `sale_fk_invoice` FOREIGN KEY (`invoice_id`) REFERENCES `invoice` (`id`),
-  ADD CONSTRAINT `sale_fk_brand` FOREIGN KEY (`brand_id`) REFERENCES `brand` (`id`);
+  ADD CONSTRAINT `sale_fk_stock` FOREIGN KEY (`stock_id`) REFERENCES `stock` (`id`);
   
 ALTER TABLE `invoice`
   ADD CONSTRAINT `invoice_fk_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);

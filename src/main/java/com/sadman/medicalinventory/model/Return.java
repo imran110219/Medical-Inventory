@@ -10,26 +10,22 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "sale")
-public class Sale {
+@Table(name="return")
+public class Return {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private long id;
-
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "invoice_id")
     private Invoice invoice;
-
     @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "stock_id")
-    private Stock stock;
-
-    @Column(name = "quantity")
-    private double quantity;
-    @Column(name = "price")
-    private double price;
+    @JoinColumn(name = "purchase_id")
+    private Purchase purchase;
     @Column(name = "total")
     private double total;
+    @Column(name = "wastage")
+    private Boolean wastage;
     @Column(name = "datetime", insertable=false)
     private String date;
 }

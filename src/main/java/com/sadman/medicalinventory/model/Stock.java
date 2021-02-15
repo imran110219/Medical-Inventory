@@ -17,8 +17,13 @@ public class Stock {
     @Column(name = "id")
     private long id;
     @OneToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "location_id")
+    private Location location;
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "purchase_id")
     private Purchase purchase;
+    @Column(name = "batch_no")
+    private String batchNo;
     @Column(name = "quantity")
     private double quantity;
     @Column(name = "expired_datetime")

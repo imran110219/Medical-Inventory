@@ -23,10 +23,6 @@ public class Brand {
     @Column(name="strength")
     private String strength;
 
-    @ManyToMany(cascade = CascadeType.MERGE)
-    @JoinTable(name = "brand_location", joinColumns = @JoinColumn(name = "brand_id"), inverseJoinColumns = @JoinColumn(name = "location_id"))
-    private Set<Location> locations;
-
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "generic_id")
     private Generic generic;

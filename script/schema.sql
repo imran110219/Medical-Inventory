@@ -24,7 +24,6 @@ CREATE TABLE `brand` (
     `id` INT(11) NOT NULL,
     `name` VARCHAR(100) NOT NULL,
     `strength` VARCHAR(100) NOT NULL,
-    `location_id` INT(11) DEFAULT NULL,
     `dosage_form_id` INT(11) NOT NULL,
     `generic_id` INT(11) NOT NULL,
     `manufacturer_id` INT(11) NOT NULL,
@@ -47,14 +46,6 @@ DROP TABLE IF EXISTS `location`;
 CREATE TABLE `location` (
   `id` INT(11) NOT NULL,
   `name` VARCHAR(200) NOT NULL
-) ENGINE=INNODB DEFAULT CHARSET=utf8;
-
-/*Table structure for table `brand_location` */
-
-CREATE TABLE `brand_location` (
-  `id` INT(11) NOT NULL,
-  `brand_id` INT(11) NOT NULL,
-  `location_id` INT(11) NOT NULL
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `manufacturer` */
@@ -134,8 +125,10 @@ DROP TABLE IF EXISTS `stock`;
 CREATE TABLE `stock` (
   `id` INT(11) NOT NULL,
   `purchase_id` INT(11) NOT NULL,
+  `location_id` INT(11) DEFAULT NULL,
+  `batch_no` VARCHAR(14) NOT NULL,
   `quantity` INT(11) NOT NULL,
-   `expired_datetime` DATETIME NOT NULL,
+  `expired_datetime` DATETIME NOT NULL,
   `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
@@ -146,10 +139,23 @@ DROP TABLE IF EXISTS `sale`;
 CREATE TABLE `sale` (
   `id` INT(11) NOT NULL,
   `invoice_id` VARCHAR(13) NOT NULL,
-  `brand_id` INT(11) NOT NULL,
-  `quantity` INT(100) NOT NULL,
+  `stock_id` INT(11) NOT NULL,
+  `quantity` INT(11) NOT NULL,
   `price` DOUBLE NOT NULL,
   `total` DOUBLE NOT NULL,
+  `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+/*Table structure for table `return` */
+
+DROP TABLE IF EXISTS `return`;
+
+CREATE TABLE `return` (
+  `id` INT(11) NOT NULL,
+  `invoice_id` VARCHAR(13) DEFAULT NULL,
+  `purchase_id` INT(11) DEFAULT NULL,
+  `total` DOUBLE NOT NULL,
+  `wastage` BIT(1) DEFAULT NULL,
   `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
