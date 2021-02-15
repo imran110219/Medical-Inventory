@@ -24,6 +24,10 @@ public class Brand {
     private String strength;
 
     @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "dosage_form_id")
+    private DosageForm dosageForm;
+
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "generic_id")
     private Generic generic;
 
