@@ -1,9 +1,9 @@
 INSERT  INTO `brand`(`id`,`name`,`strength`,dosage_form_id,`generic_id`,`manufacturer_id`,`price`) VALUES
 (1,'1stCef','500 mg',1,1,2,12.00),
-(2,'3-C','200 mg',1,2,3,35.00),
-(3,'3-C','100 mg/5 ml',1,4,5,195.00),
+(2,'3-C','200 mg',2,2,3,35.00),
+(3,'3-C','100 mg/5 ml',3,4,5,195.00),
 (4,'3-C','400 mg',1,1,5,20.00),
-(5,'3-F','500 mg',1,2,4,14.00);
+(5,'3-F','500 mg',2,2,4,14.00);
 
 INSERT  INTO `dosage_form`(`id`,`name`) VALUES
 (1,'Capsule'),
