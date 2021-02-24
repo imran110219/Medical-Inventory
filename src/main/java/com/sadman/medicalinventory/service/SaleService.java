@@ -28,7 +28,7 @@ public class SaleService {
     public Sale updateSale(Sale newSale, Long id) {
         return repository.findById(id)
                 .map(sale -> {
-                    sale.setBrand(newSale.getBrand());
+                    sale.setStock(newSale.getStock());
                     sale.setInvoice(newSale.getInvoice());
                     sale.setPrice(newSale.getPrice());
                     sale.setQuantity(newSale.getQuantity());

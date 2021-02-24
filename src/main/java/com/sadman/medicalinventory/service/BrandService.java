@@ -18,14 +18,14 @@ public class BrandService {
         return repository.findAll();
     }
 
-    public List<Brand> getBrandsByCompanyId(Long companyId)
+    public List<Brand> getBrandsByCompanyId(Long manufacturerId)
     {
-        return repository.getBrandsByCompanyId(companyId);
+        return repository.getBrandsByManufacturerId(manufacturerId);
     }
 
-    public List<Brand> getBrandsByGenericId(Long companyId)
+    public List<Brand> getBrandsByGenericId(Long manufacturerId)
     {
-        return repository.getBrandsByGenericId(companyId);
+        return repository.getBrandsByGenericId(manufacturerId);
     }
 
     public Brand getBrandById(Long id) throws RecordNotFoundException {
