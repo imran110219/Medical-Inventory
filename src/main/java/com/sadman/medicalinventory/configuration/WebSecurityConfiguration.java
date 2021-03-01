@@ -46,7 +46,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/").permitAll()
                 .antMatchers(loginPage).permitAll()
 //                .antMatchers("/registration").permitAll()
-                .antMatchers("/admin/**").hasAuthority("ADMIN")
+//                .antMatchers("/admin/**").hasAuthority("ADMIN")
 
                 .anyRequest()
                 .authenticated()
@@ -55,7 +55,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .loginPage(loginPage).permitAll()
                 .loginPage("/")
                 .failureUrl("/login?error=true")
-                .defaultSuccessUrl("/admin/home")
+                .defaultSuccessUrl("/dashboard")
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .and().logout()
@@ -69,7 +69,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web
                 .ignoring()
-                .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**");
+                .antMatchers("/resources/**", "/static/**", "/lib/**", "/css/**", "/js/**", "/images/**");
     }
 
 }

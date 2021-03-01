@@ -20,9 +20,10 @@ public class UserController {
         return modelAndView;
     }
 
-    @GetMapping(value="/admin/home")
+    @GetMapping(value="/dashboard")
     public ModelAndView home(){
         ModelAndView modelAndView = new ModelAndView();
+//        modelAndView.setViewName("dashboard");
         modelAndView.setViewName("admin/home");
         return modelAndView;
     }
