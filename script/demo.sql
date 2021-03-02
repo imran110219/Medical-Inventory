@@ -53,15 +53,15 @@ INSERT  INTO `user`(`id`,`firstname`,`lastname`,`username`,`email`,`password`,`p
 (2,'Sadman','Sobhan','imran','imran@gmail.com','123456','01912070224','Dhaka',''),
 (3,'Md','Amin','amin','amin@gmail.com','123456','01912070224','Dhaka','');
 
-insert  into `role`(`id`,`name`) values
+INSERT  INTO `role`(`id`,`name`) VALUES
 (1,'SUPER_ADMIN'),
 (2,'ADMIN'),
 (3,'USER');
 
 INSERT  INTO `user_role`(`id`,`user_id`,`role_id`) VALUES
 (1,'1','1'),
-(2,'2','1'),
-(3,'3','1');
+(2,'2','2'),
+(3,'3','3');
 
 INSERT INTO `invoice` (`id`, `user_id`, `total`, `vat`, `discount`, `payable`, `paid`, `returned`, `datetime`) VALUES
 ('1491729973342', 2, 760, 19, 5, 774, 800, 26, '2017-01-09 15:26:13'),
@@ -70,13 +70,13 @@ INSERT INTO `invoice` (`id`, `user_id`, `total`, `vat`, `discount`, `payable`, `
 ('1492189349464', 2, 490, 12.25, 5, 497.25, 500, 2.75, '2017-02-14 23:02:29'),
 ('1492189946488', 2, 190, 4.75, 5, 189.75, 200, 10.25, '2017-02-14 23:12:26');
 
-insert  into `supplier`(`id`,`name`,`phone`,`address`) values
+INSERT  INTO `supplier`(`id`,`name`,`phone`,`address`) VALUES
 (1,'Maruf Hossain','01911202020','Dhaka'),
 (2,'Ali Hasan','01711303030','Dhaka'),
 (3,'Mohiuddin Jahangir','01811404040','Dhaka'),
 (4,'Ali Banat','01611808080','Dhaka');
 
-insert  into `purchase`(`id`,`brand_id`,`supplier_id`,`quantity`,`total`,`unit_price`,`datetime`) values
+INSERT  INTO `purchase`(`id`,`brand_id`,`supplier_id`,`quantity`,`total`,`unit_price`,`datetime`) VALUES
 (1,1,1,10,90,9,'2021-02-02 15:22:02'),
 (2,2,2,5,500,100,'2021-02-02 15:22:24'),
 (3,3,3,20,2000,100,'2021-02-02 15:23:00'),

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AdminLTE 3 | Fixed Sidebar</title>
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome -->
+    <!--  <link rel="stylesheet" href="../../plugins/fontawesome-free/css/all.min.css">-->
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/plugins/fontawesome-free/css/all.min.css}"/>
+    <!-- overlayScrollbars -->
+    <!--    <link rel="stylesheet" href="../../plugins/overlayScrollbars/css/OverlayScrollbars.min.css">-->
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/plugins/overlayScrollbars/css/OverlayScrollbars.min.css}"/>
+    <!-- Theme style -->
+    <!--  <link rel="stylesheet" href="../../dist/css/adminlte.min.css">-->
+    <link rel="stylesheet" type="text/css" th:href="@{/lib/dist/css/adminlte.min.css}"/>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+<!-- Site wrapper -->
+<div class="wrapper">
+    <div class="content-wrapper">
+        <!-- Main content -->
+        <section class="content" layout:fragment="content">
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <!-- Default box -->
+                        <div class="card" th:switch="${users}">
+                            <div class="card-header">
+                                <div class="col-sm-2 col-md-1">
+                                    <button type="button" class="btn btn-block btn-success btn-sm">Add</button>
+                                </div>
+                            </div>
+
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="example1" class="table table-bordered table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Active</th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td>John</td>
+                                        <td>Doe</td>
+                                        <td>john@gmail.com</td>
+                                        <td>Admin</td>
+                                        <td>
+                                            <input type="checkbox" id="active_checkbox" name="active_checkbox"
+                                                   disabled>
+                                        </td>
+                                        <td>
+                                            <button type="button"
+                                                    class="btn btn-block btn-primary btn-sm">Edit
+                                            </button>
+                                        </td>
+                                        <td>
+                                            <button type="button"
+                                                    class="btn btn-block btn-danger btn-sm">Delete
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th>First Name</th>
+                                        <th>Last Name</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Active</th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                </div>
+            </div>
+
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<!--<script src="../../plugins/jquery/jquery.min.js"></script>-->
+<script type="text/javascript" th:src="@{/lib/plugins/jquery/jquery.min.js}"></script>
+<!-- Bootstrap 4 -->
+<!--<script src="../../plugins/bootstrap/js/bootstrap.bundle.min.js"></script>-->
+<script type="text/javascript" th:src="@{/lib/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- overlayScrollbars -->
+<!--<script src="../../plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js"></script>-->
+<script type="text/javascript" th:src="@{/lib/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js}"></script>
+<!-- AdminLTE App -->
+<!--<script src="../../dist/js/adminlte.min.js"></script>-->
+<script type="text/javascript" th:src="@{/lib/dist/js/adminlte.min.js}"></script>
+<!-- AdminLTE for demo purposes -->
+<!--<script src="../../dist/js/demo.js"></script>-->
+<script type="text/javascript" th:src="@{/lib/dist/js/demo.js}"></script>
+</body>
+</html>
