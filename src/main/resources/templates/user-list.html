@@ -59,7 +59,7 @@
                                         <th>Last Name</th>
                                         <th>Email</th>
                                         <th>Username</th>
-                                        <th>Active</th>
+                                        <th>Status</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
                                     </tr>
@@ -71,12 +71,9 @@
                                         <td th:text="${user.email}"></td>
                                         <td th:text="${user.userName}"></td>
                                         <td>
-                                            <div class="form-check">
-                                                <input type="checkbox" class="form-check-input" id="active_checkbox"
-                                                       name="active_checkbox"
-                                                       th:checked="${user.active}"
-                                                       disabled>
-                                            </div>
+                                            <span th:class="${user.active} ? 'badge badge-success' : 'badge badge-danger'"
+                                                  th:text="${user.active}? 'active' : 'inactive'">
+                                            </span>
                                         </td>
                                         <td>
                                             <button type="button"
@@ -96,7 +93,7 @@
                                         <th>Last Name</th>
                                         <th>Email</th>
                                         <th>Username</th>
-                                        <th>Active</th>
+                                        <th>Status</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
                                     </tr>
