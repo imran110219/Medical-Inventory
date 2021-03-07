@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class IndicationController {
+public class IndicationApiController {
     @Autowired
     IndicationService service;
 
