@@ -30,7 +30,6 @@ public class UserController {
         List<User> list = service.getAllUsers();
         model.addAttribute("users", list);
         return "user-list";
-//        return "users";
     }
 
     @GetMapping(value="/dashboard")

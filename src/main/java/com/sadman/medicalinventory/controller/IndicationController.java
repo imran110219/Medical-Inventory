@@ -20,7 +20,6 @@ public class IndicationController {
     public String getAllIndications(Model model) {
         List<Indication> list = service.getAllIndications();
         model.addAttribute("indications", list);
-//        return "indication-list";
-        return "indications";
+        return "indication-list";
     }
 }

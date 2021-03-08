@@ -15,7 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class GenericController {
+public class GenericApiController {
     @Autowired
     GenericService service;
 

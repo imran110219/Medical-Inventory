@@ -13,34 +13,34 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class ManufacturerController {
+public class ManufacturerApiController {
     @Autowired
     ManufacturerService service;
 
     @GetMapping("/manufacturers")
-    public List<Manufacturer> getAllCompanies(Model model) {
-        return service.getAllCompanies();
+    public List<Manufacturer> getAllManufacturers(Model model) {
+        return service.getAllManufacturers();
     }
 
     @GetMapping("/manufacturers/{id}")
-    public ResponseEntity<Manufacturer> getCompanyById(@PathVariable(value = "id") Long companyId)
+    public ResponseEntity<Manufacturer> getManufacturerById(@PathVariable(value = "id") Long companyId)
             throws RecordNotFoundException {
-        Manufacturer manufacturer = service.getCompanyById(companyId);
+        Manufacturer manufacturer = service.getManufacturerById(companyId);
         return ResponseEntity.ok().body(manufacturer);
     }
 
     @PostMapping("/manufacturers")
-    public Manufacturer createCompany(@Valid @RequestBody Manufacturer manufacturer) {
-        return service.createCompany(manufacturer);
+    public Manufacturer createManufacturer(@Valid @RequestBody Manufacturer manufacturer) {
+        return service.createManufacturer(manufacturer);
     }
 
     @PutMapping("/manufacturers/edit/{id}")
-    public Manufacturer editCompanyById(@RequestBody Manufacturer newManufacturer, @PathVariable(value = "id") Long companyId) {
-        return service.updateCompany(newManufacturer, companyId);
+    public Manufacturer editManufacturerById(@RequestBody Manufacturer newManufacturer, @PathVariable(value = "id") Long companyId) {
+        return service.updateManufacturer(newManufacturer, companyId);
     }
 
     @DeleteMapping("/manufacturers/delete/{id}")
-    public void deleteCompanyById(@PathVariable(value = "id") Long companyId){
-        service.deleteCompanyById(companyId);
+    public void deleteManufacturerById(@PathVariable(value = "id") Long companyId){
+        service.deleteManufacturerById(companyId);
     }
 }

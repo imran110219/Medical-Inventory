@@ -5,10 +5,6 @@
       layout:decorate="~{fragments/layout}">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Fixed Sidebar</title>
-
     <th:block layout:fragment="link">
         <!-- DataTables -->
         <link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
@@ -42,19 +38,17 @@
 
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped" th:switch="${indications}">
+                                <table id="example1" class="table table-bordered table-striped" th:switch="${dosageforms}">
                                     <thead>
                                     <tr>
                                         <th>Name</th>
-                                        <th>Description</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="indication : ${indications}">
-                                        <td th:text="${indication.name}"></td>
-                                        <td th:text="${indication.description}"></td>
+                                    <tr th:each="dosageform : ${dosageforms}">
+                                        <td th:text="${dosageform.name}"></td>
                                         <td>
                                             <button type="button"
                                                     class="btn btn-block btn-primary btn-sm">Edit</button>
@@ -68,7 +62,6 @@
                                     <tfoot>
                                     <tr>
                                         <th>Name</th>
-                                        <th>Description</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
                                     </tr>
@@ -86,7 +79,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add Indication</h4>
+                            <h4 class="modal-title">Add Dosage Form</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -98,13 +91,6 @@
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" id="inputname" name="name"
                                                placeholder="Enter Indication">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputdescription">Description</label>
-                                    <div class="col-sm-9">
-                                            <textarea id="inputdescription" name="description" class="form-control" rows="4"
-                                                      cols="50" placeholder="Enter Indication Description"></textarea>
                                     </div>
                                 </div>
                                 <div class="modal-footer justify-content-between">
@@ -166,17 +152,11 @@
                 rules: {
                     name: {
                         required: true
-                    },
-                    description: {
-                        required: true
                     }
                 },
                 messages: {
                     name: {
                         required: "Please enter name"
-                    },
-                    description: {
-                        required: "Please enter description"
                     }
                 },
                 errorElement: 'span',

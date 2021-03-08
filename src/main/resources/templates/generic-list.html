@@ -42,7 +42,7 @@
 
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped" th:switch="${indications}">
+                                <table id="example1" class="table table-bordered table-striped" th:switch="${generics}">
                                     <thead>
                                     <tr>
                                         <th>Name</th>
@@ -52,9 +52,9 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="indication : ${indications}">
-                                        <td th:text="${indication.name}"></td>
-                                        <td th:text="${indication.description}"></td>
+                                    <tr th:each="generic : ${generics}">
+                                        <td th:text="${generic.name}"></td>
+                                        <td th:text="${generic.description}"></td>
                                         <td>
                                             <button type="button"
                                                     class="btn btn-block btn-primary btn-sm">Edit</button>

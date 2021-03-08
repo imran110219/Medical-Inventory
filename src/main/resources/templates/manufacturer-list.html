@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
       xmlns="http://www.w3.org/1999/xhtml"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/layout}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AdminLTE 3 | Fixed Sidebar</title>
+
     <th:block layout:fragment="link">
         <!-- DataTables -->
         <link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
@@ -18,7 +20,11 @@
 <body class="hold-transition sidebar-mini layout-fixed">
 <!-- Site wrapper -->
 <div class="wrapper">
+
+
+    <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper">
+
         <!-- Main content -->
         <section class="content" layout:fragment="content">
 
@@ -30,55 +36,39 @@
                             <div class="card-header">
                                 <div class="col-sm-2 col-md-1">
                                     <button type="button" class="btn btn-block btn-success btn-sm"
-                                            data-toggle="modal" data-target="#modal-default">Add
-                                    </button>
+                                            data-toggle="modal" data-target="#modal-default">Add</button>
                                 </div>
                             </div>
 
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped" th:switch="${users}">
+                                <table id="example1" class="table table-bordered table-striped" th:switch="${manufacturers}">
                                     <thead>
                                     <tr>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Email</th>
-                                        <th>Username</th>
-                                        <th>Status</th>
+                                        <th>Name</th>
+                                        <th>Address</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="user : ${users}">
-                                        <td th:text="${user.firstName}"></td>
-                                        <td th:text="${user.lastName}"></td>
-                                        <td th:text="${user.email}"></td>
-                                        <td th:text="${user.userName}"></td>
+                                    <tr th:each="manufacturer : ${manufacturers}">
+                                        <td th:text="${manufacturer.name}"></td>
+                                        <td th:text="${manufacturer.address}"></td>
                                         <td>
-                                            <span th:class="${user.active} ? 'badge badge-success' : 'badge badge-danger'"
-                                                  th:text="${user.active}? 'active' : 'inactive'">
-                                            </span>
+                                            <button type="button"
+                                                    class="btn btn-block btn-primary btn-sm">Edit</button>
                                         </td>
                                         <td>
                                             <button type="button"
-                                                    class="btn btn-block btn-primary btn-sm">Edit
-                                            </button>
-                                        </td>
-                                        <td>
-                                            <button type="button"
-                                                    class="btn btn-block btn-danger btn-sm">Delete
-                                            </button>
+                                                    class="btn btn-block btn-danger btn-sm">Delete</button>
                                         </td>
                                     </tr>
                                     </tbody>
                                     <tfoot>
                                     <tr>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Email</th>
-                                        <th>Username</th>
-                                        <th>Status</th>
+                                        <th>Name</th>
+                                        <th>Address</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
                                     </tr>
@@ -96,53 +86,18 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add User</h4>
+                            <h4 class="modal-title">Add Manufacturer</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form id="quickForm">
-                            <div class="modal-body">
+                        <div class="modal-body">
+                            <form id="quickForm">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputfirstname">First Name</label>
+                                    <label class="col-sm-3 col-form-label" for="inputname">Name</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="inputfirstname" name="firstname"
-                                               placeholder="Enter First Name">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputlastname">Last Name</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="inputlastname" name="lastname"
-                                               placeholder="Enter Last Name">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputusername">Username</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="inputusername" name="username"
-                                               placeholder="Enter Username">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputemail">Email</label>
-                                    <div class="col-sm-9">
-                                        <input type="email" class="form-control" id="inputemail" name="email"
-                                               placeholder="Enter Email">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputpassword">Password</label>
-                                    <div class="col-sm-9">
-                                        <input type="password" class="form-control" id="inputpassword"
-                                               name="password" placeholder="Enter Password">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputphone">Phone</label>
-                                    <div class="col-sm-9">
-                                        <input type="tel" class="form-control" id="inputphone" name="phone"
-                                               placeholder="Enter Phone">
+                                        <input type="text" class="form-control" id="inputname" name="name"
+                                               placeholder="Enter Indication">
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -152,13 +107,12 @@
                                                placeholder="Enter Address">
                                     </div>
                                 </div>
-                            </div>
-                            <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Save</button>
-                            </div>
-                        </form>
-
+                                <div class="modal-footer justify-content-between">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
                     <!-- /.modal-content -->
                 </div>
@@ -169,6 +123,12 @@
         <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
+
+    <!-- Control Sidebar -->
+    <aside class="control-sidebar control-sidebar-dark">
+        <!-- Control sidebar content goes here -->
+    </aside>
+    <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
 <th:block layout:fragment="script">
@@ -204,55 +164,19 @@
 
             $('#quickForm').validate({
                 rules: {
-                    firstname: {
+                    name: {
                         required: true
-                    },
-                    lastname: {
-                        required: true
-                    },
-                    username: {
-                        required: true
-                    },
-                    email: {
-                        required: true,
-                        email: true,
-                    },
-                    password: {
-                        required: true,
-                        minlength: 5
-                    },
-                    phone: {
-                        required: true,
-                        phone: true
                     },
                     address: {
                         required: true
                     }
                 },
                 messages: {
-                    firstname: {
-                        required: "Please enter a first name"
-                    },
-                    lastname: {
-                        required: "Please enter a last name"
-                    },
-                    username: {
-                        required: "Please enter a username"
-                    },
-                    email: {
-                        required: "Please enter a email address",
-                        email: "Please enter a vaild email address"
-                    },
-                    password: {
-                        required: "Please provide a password",
-                        minlength: "Your password must be at least 5 characters long"
-                    },
-                    phone: {
-                        required: "Please enter a phone number",
-                        phone: "Please enter a vaild phone number"
+                    name: {
+                        required: "Please enter name"
                     },
                     address: {
-                        required: "Please enter a address"
+                        required: "Please enter description"
                     }
                 },
                 errorElement: 'span',
@@ -271,4 +195,5 @@
     </script>
 </th:block>
 </body>
+
 </html>

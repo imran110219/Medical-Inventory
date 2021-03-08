@@ -13,19 +13,19 @@ public class ManufacturerService {
     @Autowired
     ManufacturerRepository repository;
 
-    public List<Manufacturer> getAllCompanies() {
+    public List<Manufacturer> getAllManufacturers() {
         return repository.findAll();
     }
 
-    public Manufacturer getCompanyById(Long id) throws RecordNotFoundException {
+    public Manufacturer getManufacturerById(Long id) throws RecordNotFoundException {
         return repository.findById(id).orElseThrow(() -> new RecordNotFoundException(id));
     }
 
-    public Manufacturer createCompany(Manufacturer manufacturer){
+    public Manufacturer createManufacturer(Manufacturer manufacturer){
         return repository.save(manufacturer);
     }
 
-    public Manufacturer updateCompany(Manufacturer newManufacturer, Long id) {
+    public Manufacturer updateManufacturer(Manufacturer newManufacturer, Long id) {
         return repository.findById(id)
                 .map(company -> {
                     company.setName(newManufacturer.getName());
@@ -38,7 +38,7 @@ public class ManufacturerService {
                 });
     }
 
-    public void deleteCompanyById(Long id){
+    public void deleteManufacturerById(Long id){
         repository.deleteById(id);
     }
 }
