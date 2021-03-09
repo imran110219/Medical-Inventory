@@ -115,6 +115,18 @@
                                                placeholder="Enter strength">
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="inputdosageform">Dosage Form</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control select2" id="inputdosageform" name="dosageform" style="width: 100%;">
+                                            <option value="" disabled selected>Select Dosage Form</option>
+                                            <option th:each="dosageform : ${dosageforms}" th:value="${dosageform.id}" th:text="${dosageform.name}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+
                                 <div class="modal-footer justify-content-between">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-primary">Save</button>
