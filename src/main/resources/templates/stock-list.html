@@ -5,6 +5,10 @@
       layout:decorate="~{fragments/layout}">
 
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AdminLTE 3 | Fixed Sidebar</title>
+
     <th:block layout:fragment="link">
         <!-- DataTables -->
         <link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
@@ -38,29 +42,19 @@
 
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped" th:switch="${brands}">
+                                <table id="example1" class="table table-bordered table-striped" th:switch="${generics}">
                                     <thead>
                                     <tr>
                                         <th>Name</th>
-                                        <th>Strength</th>
-                                        <th>DosageForm</th>
-                                        <th>Generic</th>
-                                        <th>Manufacturer</th>
-                                        <th>Purchase Price</th>
-                                        <th>Sale Price</th>
+                                        <th>Description</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="brand : ${brands}">
-                                        <td th:text="${brand.name}"></td>
-                                        <td th:text="${brand.strength}"></td>
-                                        <td th:text="${brand.dosageForm.name}"></td>
-                                        <td th:text="${brand.generic.name}"></td>
-                                        <td th:text="${brand.manufacturer.name}"></td>
-                                        <td th:text="${brand.purchasePrice}"></td>
-                                        <td th:text="${brand.salePrice}"></td>
+                                    <tr th:each="generic : ${generics}">
+                                        <td th:text="${generic.name}"></td>
+                                        <td th:text="${generic.description}"></td>
                                         <td>
                                             <button type="button"
                                                     class="btn btn-block btn-primary btn-sm">Edit</button>
@@ -74,12 +68,7 @@
                                     <tfoot>
                                     <tr>
                                         <th>Name</th>
-                                        <th>Strength</th>
-                                        <th>DosageForm</th>
-                                        <th>Generic</th>
-                                        <th>Manufacturer</th>
-                                        <th>Purchase Price</th>
-                                        <th>Sale Price</th>
+                                        <th>Description</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
                                     </tr>
@@ -97,7 +86,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add Brand</h4>
+                            <h4 class="modal-title">Add Indication</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -108,58 +97,16 @@
                                     <label class="col-sm-3 col-form-label" for="inputname">Name</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" id="inputname" name="name"
-                                               placeholder="Enter Brand">
+                                               placeholder="Enter Indication">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputstrength">Strength</label>
+                                    <label class="col-sm-3 col-form-label" for="inputdescription">Description</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="inputstrength" name="strength"
-                                               placeholder="Enter Strength">
+                                            <textarea id="inputdescription" name="description" class="form-control" rows="4"
+                                                      cols="50" placeholder="Enter Indication Description"></textarea>
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputdosageform">Dosage Form</label>
-                                    <div class="col-sm-9">
-                                        <select class="form-control select2" id="inputdosageform" name="dosageform" style="width: 100%;">
-                                            <option value="" disabled selected>Select Dosage Form</option>
-                                            <option th:each="dosageform : ${dosageforms}" th:value="${dosageform.id}" th:text="${dosageform.name}"></option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputgeneric">Generic</label>
-                                    <div class="col-sm-9">
-                                        <select class="form-control select2" id="inputgeneric" name="generic" style="width: 100%;">
-                                            <option value="" disabled selected>Select Generic</option>
-                                            <option th:each="generic : ${generics}" th:value="${generic.id}" th:text="${generic.name}"></option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputmanufacturer">Manufacturer</label>
-                                    <div class="col-sm-9">
-                                        <select class="form-control select2" id="inputmanufacturer" name="manufacturer" style="width: 100%;">
-                                            <option value="" disabled selected>Select Manufacturer</option>
-                                            <option th:each="manufacturer : ${manufacturers}" th:value="${manufacturer.id}" th:text="${manufacturer.name}"></option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputpurchaseprice">Purchase Price</label>
-                                    <div class="col-sm-9">
-                                        <input type="number" class="form-control" id="inputpurchaseprice" name="purchaseprice"
-                                               placeholder="Enter Purchase Price">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputsaleeprice">Sale Price</label>
-                                    <div class="col-sm-9">
-                                        <input type="number" class="form-control" id="inputsaleeprice" name="saleeprice"
-                                               placeholder="Enter Sale Price">
-                                    </div>
-                                </div>
-
                                 <div class="modal-footer justify-content-between">
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                     <button type="submit" class="btn btn-primary">Save</button>
@@ -220,22 +167,7 @@
                     name: {
                         required: true
                     },
-                    strength: {
-                        required: true
-                    },
-                    dosageform : {
-                        required: true
-                    },
-                    generic : {
-                        required: true
-                    },
-                    manufacturer : {
-                        required: true
-                    },
-                    purchaseprice : {
-                        required: true
-                    },
-                    saleprice : {
+                    description: {
                         required: true
                     }
                 },
@@ -243,23 +175,8 @@
                     name: {
                         required: "Please enter name"
                     },
-                    strength: {
-                        required: "Please enter strength"
-                    },
-                    dosageform : {
-                        required: "Please select dosage form"
-                    },
-                    generic : {
-                        required: "Please select generic"
-                    },
-                    manufacturer : {
-                        required: "Please select manufacturer"
-                    },
-                    purchaseprice : {
-                        required: "Please enter purchase price"
-                    },
-                    saleprice : {
-                        required: "Please enter sale price"
+                    description: {
+                        required: "Please enter description"
                     }
                 },
                 errorElement: 'span',

@@ -35,6 +35,9 @@ public class Brand {
     @JoinColumn(name = "manufacturer_id")
     private Manufacturer manufacturer;
 
-    @Column(name = "price")
-    private double price;
+    @Column(name = "purchase_price")
+    private double purchasePrice;
+
+    @Column(name = "sale_price")
+    private double salePrice;
 }

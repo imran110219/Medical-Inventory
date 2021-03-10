@@ -27,7 +27,8 @@ CREATE TABLE `brand` (
     `dosage_form_id` INT(11) NOT NULL,
     `generic_id` INT(11) NOT NULL,
     `manufacturer_id` INT(11) NOT NULL,
-    `price` DOUBLE NOT NULL
+    `purchase_price` DOUBLE NOT NULL,
+    `sale_price` DOUBLE NOT NULL
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `dosage_form` */

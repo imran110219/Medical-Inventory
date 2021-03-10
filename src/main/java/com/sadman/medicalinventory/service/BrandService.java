@@ -44,7 +44,8 @@ public class BrandService {
                     brand.setStrength(newBrand.getStrength());
                     brand.setManufacturer(newBrand.getManufacturer());
                     brand.setGeneric(newBrand.getGeneric());
-                    brand.setPrice(newBrand.getPrice());
+                    brand.setPurchasePrice(newBrand.getPurchasePrice());
+                    brand.setSalePrice(newBrand.getSalePrice());
                     return repository.save(brand);
                 })
                 .orElseGet(() -> {
