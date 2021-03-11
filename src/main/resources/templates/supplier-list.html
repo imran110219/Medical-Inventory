@@ -42,25 +42,21 @@
 
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped" th:switch="${stocks}">
+                                <table id="example1" class="table table-bordered table-striped" th:switch="${suppliers}">
                                     <thead>
                                     <tr>
-                                        <th>Brand Name</th>
-                                        <th>Batch No</th>
-                                        <th>Location</th>
-                                        <th>Quantity</th>
-                                        <th>Expiry Date</th>
+                                        <th>Name</th>
+                                        <th>Phone</th>
+                                        <th>Address</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="stock : ${stocks}">
-                                        <td th:text="${stock.purchase.brand.name}"></td>
-                                        <td th:text="${stock.purchase.batchNo}"></td>
-                                        <td th:text="${stock.location.name}"></td>
-                                        <td th:text="${stock.quantity}"></td>
-                                        <td th:text="${stock.purchase.expiryDate}"></td>
+                                    <tr th:each="supplier : ${suppliers}">
+                                        <td th:text="${supplier.name}"></td>
+                                        <td th:text="${supplier.phone}"></td>
+                                        <td th:text="${supplier.address}"></td>
                                         <td>
                                             <button type="button"
                                                     class="btn btn-block btn-primary btn-sm">Edit</button>
@@ -73,11 +69,9 @@
                                     </tbody>
                                     <tfoot>
                                     <tr>
-                                        <th>Brand Name</th>
-                                        <th>Batch No</th>
-                                        <th>Location</th>
-                                        <th>Quantity</th>
-                                        <th>Expiry Date</th>
+                                        <th>Name</th>
+                                        <th>Phone</th>
+                                        <th>Address</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
                                     </tr>
@@ -95,7 +89,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add Stock</h4>
+                            <h4 class="modal-title">Add Supplier</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -106,14 +100,21 @@
                                     <label class="col-sm-3 col-form-label" for="inputname">Name</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" id="inputname" name="name"
-                                               placeholder="Enter Indication">
+                                               placeholder="Enter Name">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputdescription">Description</label>
+                                    <label class="col-sm-3 col-form-label" for="inputphone">Phone No</label>
                                     <div class="col-sm-9">
-                                            <textarea id="inputdescription" name="description" class="form-control" rows="4"
-                                                      cols="50" placeholder="Enter Indication Description"></textarea>
+                                        <input type="text" class="form-control" id="inputphone" name="phone"
+                                               placeholder="Enter Phone No">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="inputaddress">Address</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="inputaddress" name="address"
+                                               placeholder="Enter Address">
                                     </div>
                                 </div>
                                 <div class="modal-footer justify-content-between">

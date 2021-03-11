@@ -30,7 +30,7 @@ public class SaleService {
                 .map(sale -> {
                     sale.setStock(newSale.getStock());
                     sale.setInvoice(newSale.getInvoice());
-                    sale.setPrice(newSale.getPrice());
+                    sale.setUnitPrice(newSale.getUnitPrice());
                     sale.setQuantity(newSale.getQuantity());
                     sale.setTotal(newSale.getTotal());
                     return repository.save(sale);

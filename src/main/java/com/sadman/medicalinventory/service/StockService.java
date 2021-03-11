@@ -31,8 +31,8 @@ public class StockService {
         return repository.findById(id)
                 .map(stock -> {
                     stock.setPurchase(newStock.getPurchase());
+                    stock.setLocation(newStock.getLocation());
                     stock.setQuantity(newStock.getQuantity());
-                    stock.setExpiredDate(newStock.getExpiredDate());
                     return repository.save(stock);
                 })
                 .orElseGet(() -> {

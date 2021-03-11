@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class SupplierController {
+public class SupplierApiController {
     @Autowired
     SupplierService service;
 

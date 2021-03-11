@@ -34,10 +34,12 @@ public class PurchaseService {
         return repository.findById(id)
                 .map(purchase -> {
                     purchase.setBrand(newPurchase.getBrand());
-                    purchase.setPrice(newPurchase.getPrice());
+                    purchase.setSupplier(newPurchase.getSupplier());
+                    purchase.setBatchNo(newPurchase.getBatchNo());
+                    purchase.setUnitPrice(newPurchase.getUnitPrice());
                     purchase.setQuantity(newPurchase.getQuantity());
                     purchase.setTotal(newPurchase.getTotal());
-                    purchase.setSupplier(newPurchase.getSupplier());
+                    purchase.setExpiryDate(newPurchase.getExpiryDate());
                     return repository.save(purchase);
                 })
                 .orElseGet(() -> {

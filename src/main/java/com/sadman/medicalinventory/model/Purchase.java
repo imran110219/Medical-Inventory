@@ -22,12 +22,16 @@ public class Purchase {
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;
+    @Column(name = "batch_no")
+    private String batchNo;
     @Column(name = "quantity")
     private double quantity;
     @Column(name = "unit_price")
-    private double price;
+    private double unitPrice;
     @Column(name = "total")
     private double total;
+    @Column(name = "expiry_datetime")
+    private String expiryDate;
     @Column(name = "datetime", insertable=false)
     private String date;
 }

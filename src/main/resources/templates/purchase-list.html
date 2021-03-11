@@ -42,25 +42,29 @@
 
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped" th:switch="${stocks}">
+                                <table id="example1" class="table table-bordered table-striped" th:switch="${purchases}">
                                     <thead>
                                     <tr>
                                         <th>Brand Name</th>
+                                        <th>Supplier Name</th>
                                         <th>Batch No</th>
-                                        <th>Location</th>
                                         <th>Quantity</th>
+                                        <th>Unit Price</th>
+                                        <th>Total</th>
                                         <th>Expiry Date</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="stock : ${stocks}">
-                                        <td th:text="${stock.purchase.brand.name}"></td>
-                                        <td th:text="${stock.purchase.batchNo}"></td>
-                                        <td th:text="${stock.location.name}"></td>
-                                        <td th:text="${stock.quantity}"></td>
-                                        <td th:text="${stock.purchase.expiryDate}"></td>
+                                    <tr th:each="purchase : ${purchases}">
+                                        <td th:text="${purchase.brand.name}"></td>
+                                        <td th:text="${purchase.supplier.name}"></td>
+                                        <td th:text="${purchase.batchNo}"></td>
+                                        <td th:text="${purchase.quantity}"></td>
+                                        <td th:text="${purchase.unitPrice}"></td>
+                                        <td th:text="${purchase.total}"></td>
+                                        <td th:text="${purchase.expiryDate}"></td>
                                         <td>
                                             <button type="button"
                                                     class="btn btn-block btn-primary btn-sm">Edit</button>
@@ -74,9 +78,11 @@
                                     <tfoot>
                                     <tr>
                                         <th>Brand Name</th>
+                                        <th>Supplier Name</th>
                                         <th>Batch No</th>
-                                        <th>Location</th>
                                         <th>Quantity</th>
+                                        <th>Unit Price</th>
+                                        <th>Total</th>
                                         <th>Expiry Date</th>
                                         <th>Edit</th>
                                         <th>Delete</th>
@@ -95,7 +101,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add Stock</h4>
+                            <h4 class="modal-title">Add Purchase</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>

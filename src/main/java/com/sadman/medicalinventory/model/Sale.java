@@ -26,8 +26,8 @@ public class Sale {
 
     @Column(name = "quantity")
     private double quantity;
-    @Column(name = "price")
-    private double price;
+    @Column(name = "unit_price")
+    private double unitPrice;
     @Column(name = "total")
     private double total;
     @Column(name = "datetime", insertable=false)

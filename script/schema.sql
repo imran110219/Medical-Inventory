@@ -113,9 +113,11 @@ CREATE TABLE `purchase` (
   `id` INT(11) NOT NULL,
   `brand_id` INT(11) NOT NULL,
   `supplier_id` INT(11) DEFAULT NULL,
+  `batch_no` VARCHAR(14) NOT NULL,
   `quantity` INT(11) NOT NULL,
   `total` DOUBLE NOT NULL,
   `unit_price` DOUBLE DEFAULT NULL,
+  `expiry_datetime` DATETIME NOT NULL,
   `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
@@ -127,9 +129,7 @@ CREATE TABLE `stock` (
   `id` INT(11) NOT NULL,
   `purchase_id` INT(11) NOT NULL,
   `location_id` INT(11) DEFAULT NULL,
-  `batch_no` VARCHAR(14) NOT NULL,
   `quantity` INT(11) NOT NULL,
-  `expired_datetime` DATETIME NOT NULL,
   `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
@@ -142,7 +142,7 @@ CREATE TABLE `sale` (
   `invoice_id` VARCHAR(13) NOT NULL,
   `stock_id` INT(11) NOT NULL,
   `quantity` INT(11) NOT NULL,
-  `price` DOUBLE NOT NULL,
+  `unit_price` DOUBLE NOT NULL,
   `total` DOUBLE NOT NULL,
   `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
