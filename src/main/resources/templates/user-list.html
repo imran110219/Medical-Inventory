@@ -55,7 +55,7 @@
                                         <td th:text="${user.lastName}"></td>
                                         <td th:text="${user.email}"></td>
                                         <td th:text="${user.userName}"></td>
-                                        <td>
+                                        <td style="text-align: center">
                                             <span th:class="${user.active} ? 'badge badge-success' : 'badge badge-danger'"
                                                   th:text="${user.active}? 'active' : 'inactive'">
                                             </span>
@@ -101,54 +101,54 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form id="quickForm">
+                        <form id="quickForm" th:action="@{/users/add}" th:object="${user}" method="post">
                             <div class="modal-body">
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label" for="inputfirstname">First Name</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="inputfirstname" name="firstname"
+                                        <input type="text" th:field="*{firstName}" class="form-control" id="inputfirstname" name="firstname"
                                                placeholder="Enter First Name">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label" for="inputlastname">Last Name</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="inputlastname" name="lastname"
+                                        <input type="text" th:field="*{lastName}" class="form-control" id="inputlastname" name="lastname"
                                                placeholder="Enter Last Name">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label" for="inputusername">Username</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="inputusername" name="username"
+                                        <input type="text" th:field="*{userName}" class="form-control" id="inputusername" name="username"
                                                placeholder="Enter Username">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label" for="inputemail">Email</label>
                                     <div class="col-sm-9">
-                                        <input type="email" class="form-control" id="inputemail" name="email"
+                                        <input type="email" th:field="*{email}" class="form-control" id="inputemail" name="email"
                                                placeholder="Enter Email">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label" for="inputpassword">Password</label>
                                     <div class="col-sm-9">
-                                        <input type="password" class="form-control" id="inputpassword"
+                                        <input type="password" th:field="*{password}" class="form-control" id="inputpassword"
                                                name="password" placeholder="Enter Password">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label" for="inputphone">Phone</label>
                                     <div class="col-sm-9">
-                                        <input type="tel" class="form-control" id="inputphone" name="phone"
+                                        <input type="tel" th:field="*{phone}" class="form-control" id="inputphone" name="phone"
                                                placeholder="Enter Phone">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label" for="inputaddress">Address</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="inputaddress" name="address"
+                                        <input type="text" th:field="*{address}" class="form-control" id="inputaddress" name="address"
                                                placeholder="Enter Address">
                                     </div>
                                 </div>
