@@ -3,14 +3,9 @@ package com.sadman.medicalinventory.controller;
 import com.sadman.medicalinventory.model.User;
 import com.sadman.medicalinventory.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -29,9 +24,8 @@ public class UserController {
 
     @RequestMapping(value = "/users")
     public String getAllUsers(Model model) {
-        User user = new User();
         List<User> list = service.getAllUsers();
-        model.addAttribute("user", user);
+        model.addAttribute("userEntity", new User());
         model.addAttribute("users", list);
         return "user-list";
     }
@@ -39,7 +33,17 @@ public class UserController {
     @PostMapping(value="/users/add")
     public String addUser(User user){
         service.createUser(user);
-        return "redirect:/";
+        return "redirect:/users";
+    }
+
+    @PutMapping("/users/edit/{id}")
+    public User editUserById(@RequestBody User newUser, @PathVariable(value = "id") Long userId) {
+        return service.updateUser(newUser, userId);
+    }
+
+    @DeleteMapping("/users/delete/{id}")
+    public void deleteUserById(@PathVariable(value = "id") Long userId){
+        service.deleteUserById(userId);
     }
 
     @GetMapping(value="/dashboard")

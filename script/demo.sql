@@ -51,7 +51,8 @@ INSERT  INTO `indication`(`id`,`name`) VALUES
 INSERT  INTO `user`(`id`,`firstname`,`lastname`,`username`,`email`,`password`,`phone`,`address`,`active`) VALUES
 (1,'John','Player','john','john@gmail.com','$2a$10$cBi8wPjrntyeUmf0I1dYLe8lIiVnl4D52VILNkXRl4kYpUf1h2StG','01912070224','Dhaka',''),
 (2,'Sadman','Sobhan','imran','imran@gmail.com','$2a$10$cBi8wPjrntyeUmf0I1dYLe8lIiVnl4D52VILNkXRl4kYpUf1h2StG','01912070224','Dhaka',''),
-(3,'Md','Amin','amin','amin@gmail.com','$2a$10$cBi8wPjrntyeUmf0I1dYLe8lIiVnl4D52VILNkXRl4kYpUf1h2StG','01912070224','Dhaka','');
+(3,'Md','Amin','amin','amin@gmail.com','$2a$10$cBi8wPjrntyeUmf0I1dYLe8lIiVnl4D52VILNkXRl4kYpUf1h2StG','01912070224','Dhaka',''),
+(4,'Md','Masud','masud','masud@gmail.com','$2a$10$cBi8wPjrntyeUmf0I1dYLe8lIiVnl4D52VILNkXRl4kYpUf1h2StG','01912070224','Dhaka','');
 
 INSERT  INTO `role`(`id`,`name`) VALUES
 (1,'SUPER_ADMIN'),
@@ -61,7 +62,8 @@ INSERT  INTO `role`(`id`,`name`) VALUES
 INSERT  INTO `user_role`(`id`,`user_id`,`role_id`) VALUES
 (1,'1','1'),
 (2,'2','2'),
-(3,'3','3');
+(3,'3','3'),
+(4,'4','1');
 
 INSERT INTO `invoice` (`id`, `user_id`, `total`, `vat`, `discount`, `payable`, `paid`, `returned`, `datetime`) VALUES
 ('1491729973342', 2, 760, 19, 5, 774, 800, 26, '2017-01-09 15:26:13'),

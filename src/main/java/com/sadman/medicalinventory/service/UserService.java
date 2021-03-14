@@ -6,7 +6,8 @@ import com.sadman.medicalinventory.model.User;
 import com.sadman.medicalinventory.repository.RoleRepository;
 import com.sadman.medicalinventory.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -20,8 +21,8 @@ public class UserService {
     private UserRepository userRepository;
     @Autowired
     private RoleRepository roleRepository;
-//    @Autowired
-//    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email);
@@ -32,8 +33,8 @@ public class UserService {
     }
 
     public User saveUser(User user) {
-//        user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
-        user.setPassword(user.getPassword());
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
+//        user.setPassword(user.getPassword());
         user.setActive(true);
         Role userRole = roleRepository.findByName("ADMIN");
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
@@ -61,8 +62,8 @@ public class UserService {
                     user.setEmail(newUser.getEmail());
                     user.setUserName(newUser.getUserName());
                     user.setRoles(newUser.getRoles());
-//                    user.setPassword(bCryptPasswordEncoder.encode(newUser.getPassword()));
-                    user.setPassword(newUser.getPassword());
+                    user.setPassword(passwordEncoder.encode(newUser.getPassword()));
+//                    user.setPassword(newUser.getPassword());
                     user.setPhone(newUser.getPhone());
                     user.setAddress(newUser.getAddress());
                     user.setActive(newUser.getActive());

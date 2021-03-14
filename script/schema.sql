@@ -21,7 +21,7 @@ USE `medical_inventory`;
 DROP TABLE IF EXISTS `brand`;
 
 CREATE TABLE `brand` (
-    `id` INT(11) NOT NULL,
+    `id` INT(11),
     `name` VARCHAR(100) NOT NULL,
     `strength` VARCHAR(100) NOT NULL,
     `dosage_form_id` INT(11) NOT NULL,
@@ -36,7 +36,7 @@ CREATE TABLE `brand` (
 DROP TABLE IF EXISTS `dosage_form`;
 
 CREATE TABLE `dosage_form` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11),
   `name` VARCHAR(200) NOT NULL
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
@@ -45,7 +45,7 @@ CREATE TABLE `dosage_form` (
 DROP TABLE IF EXISTS `location`;
 
 CREATE TABLE `location` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11),
   `name` VARCHAR(200) NOT NULL
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
@@ -54,7 +54,7 @@ CREATE TABLE `location` (
 DROP TABLE IF EXISTS `manufacturer`;
 
 CREATE TABLE `manufacturer` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11),
   `name` VARCHAR(100) NOT NULL,
   `address` TEXT DEFAULT NULL
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
@@ -64,7 +64,7 @@ CREATE TABLE `manufacturer` (
 DROP TABLE IF EXISTS `generic`;
 
 CREATE TABLE `generic` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11),
   `name` VARCHAR(100) NOT NULL,
   `description` TEXT DEFAULT NULL
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
@@ -74,7 +74,7 @@ CREATE TABLE `generic` (
 DROP TABLE IF EXISTS `indication`;
 
 CREATE TABLE `indication` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11),
   `name` VARCHAR(100) NOT NULL,
   `description` TEXT DEFAULT NULL
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
@@ -84,7 +84,7 @@ CREATE TABLE `indication` (
 DROP TABLE IF EXISTS `indication_generic`;
 
 CREATE TABLE `indication_generic` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11),
   `indication_id` INT(11) NOT NULL,
   `generic_id` INT(11) NOT NULL
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
@@ -94,7 +94,7 @@ CREATE TABLE `indication_generic` (
 DROP TABLE IF EXISTS `invoice`;
 
 CREATE TABLE `invoice` (
-  `id` VARCHAR(13) NOT NULL,
+  `id` VARCHAR(13),
   `user_id` INT(11) NOT NULL,
   `total` DOUBLE NOT NULL,
   `vat` DOUBLE NOT NULL,
@@ -110,7 +110,7 @@ CREATE TABLE `invoice` (
 DROP TABLE IF EXISTS `purchase`;
 
 CREATE TABLE `purchase` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11),
   `brand_id` INT(11) NOT NULL,
   `supplier_id` INT(11) DEFAULT NULL,
   `batch_no` VARCHAR(14) NOT NULL,
@@ -126,7 +126,7 @@ CREATE TABLE `purchase` (
 DROP TABLE IF EXISTS `stock`;
 
 CREATE TABLE `stock` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11),
   `purchase_id` INT(11) NOT NULL,
   `location_id` INT(11) DEFAULT NULL,
   `quantity` INT(11) NOT NULL,
@@ -138,7 +138,7 @@ CREATE TABLE `stock` (
 DROP TABLE IF EXISTS `sale`;
 
 CREATE TABLE `sale` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11),
   `invoice_id` VARCHAR(13) NOT NULL,
   `stock_id` INT(11) NOT NULL,
   `quantity` INT(11) NOT NULL,
@@ -152,7 +152,7 @@ CREATE TABLE `sale` (
 DROP TABLE IF EXISTS `return`;
 
 CREATE TABLE `return` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11),
   `invoice_id` VARCHAR(13) DEFAULT NULL,
   `purchase_id` INT(11) DEFAULT NULL,
   `total` DOUBLE NOT NULL,
@@ -165,7 +165,7 @@ CREATE TABLE `return` (
 DROP TABLE IF EXISTS `supplier`;
 
 CREATE TABLE `supplier` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11),
   `name` VARCHAR(500) NOT NULL,
   `phone` VARCHAR(15) DEFAULT NULL,
   `address` TEXT DEFAULT NULL
@@ -176,7 +176,7 @@ CREATE TABLE `supplier` (
 DROP TABLE IF EXISTS `user`;
 
 CREATE TABLE `user` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11),
   `firstname` VARCHAR(100) NOT NULL,
   `lastname` VARCHAR(100) NOT NULL,
   `username` VARCHAR(40) NOT NULL,
@@ -192,14 +192,14 @@ CREATE TABLE `user` (
 DROP TABLE IF EXISTS `role`;
 
 CREATE TABLE `role` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11),
   `name` VARCHAR(50) NOT NULL
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*Table structure for table `user_role` */
 
 CREATE TABLE `user_role` (
-  `id` INT(11) NOT NULL,
+  `id` INT(11),
   `user_id` INT(11) NOT NULL,
   `role_id` INT(11) NOT NULL
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
