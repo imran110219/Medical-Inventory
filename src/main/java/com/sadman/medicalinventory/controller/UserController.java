@@ -25,7 +25,7 @@ public class UserController {
     @RequestMapping(value = "/users")
     public String getAllUsers(Model model) {
         List<User> list = service.getAllUsers();
-        model.addAttribute("userEntity", new User());
+        model.addAttribute("user", new User());
         model.addAttribute("users", list);
         return "user-list";
     }
