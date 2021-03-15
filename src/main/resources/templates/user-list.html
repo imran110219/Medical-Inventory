@@ -228,6 +228,16 @@
             $(document).on("click", "#confirmDelete", function () {
                 var userId = document.getElementById("userId").value;
                 console.log(userId);
+                $.ajax({
+                    type:"DELETE",
+                    url:"/users/delete/" + userId,
+                    success: function(data){
+                        console.log(data);
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                });
             });
 
             $("#example1").DataTable({
