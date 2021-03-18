@@ -12,6 +12,8 @@
         <link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
         <link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
         <link rel="stylesheet" href="/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+        <!-- Toastr -->
+        <link rel="stylesheet" href="/plugins/toastr/toastr.min.css">
     </th:block>
 </head>
 
@@ -37,7 +39,7 @@
 
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped" th:switch="${users}">
+                                <table id="userTable" class="table table-bordered table-striped" th:switch="${users}">
                                     <thead>
                                     <tr>
                                         <th>First Name</th>
@@ -50,7 +52,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr id="userRow" th:each="user : ${users}">
+                                    <tr th:id="${user.id}" th:each="user : ${users}">
                                         <td th:text="${user.firstName}"></td>
                                         <td th:text="${user.lastName}"></td>
                                         <td th:text="${user.email}"></td>
@@ -177,7 +179,7 @@
                         </div>
                         <div class="modal-body">
                             <p>Delete this user?</p>
-                            <input type="hidden" id="userId" th:attr="name='userId'"/>
+                            <input type="hidden" id="userId"/>
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -213,6 +215,8 @@
     <script src="/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <!-- Toastr -->
+    <script src="/plugins/toastr/toastr.min.js"></script>
     <script>
         $(function () {
 
@@ -223,8 +227,6 @@
 
             $(document).on("click", "#confirmDelete", function () {
                 var userId = document.getElementById("userId").value;
-                console.log(userId);
-                alert(userId);
 
                 $.ajax({
                     type:"DELETE",
@@ -232,7 +234,8 @@
                     success: function(data){
                         console.log(data);
                         $('#modal-delete').modal('hide');
-                        document.getElementById('userRow').remove();
+                        $('table#userTable tr#'+userId).remove();
+                        toastr.error(data);
                     },
                     error: function(err) {
                         console.log(err);
@@ -240,10 +243,10 @@
                 });
             });
 
-            $("#example1").DataTable({
+            $("#userTable").DataTable({
                 "responsive": true, "lengthChange": false, "autoWidth": false,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            }).buttons().container().appendTo('#userTable_wrapper .col-md-6:eq(0)');
 
             $.validator.setDefaults({
                 submitHandler: function () {
