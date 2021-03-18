@@ -3,11 +3,14 @@ package com.sadman.medicalinventory.controller;
 import com.sadman.medicalinventory.model.User;
 import com.sadman.medicalinventory.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.xml.ws.ResponseWrapper;
 import java.util.List;
 
 @Controller
@@ -42,8 +45,10 @@ public class UserController {
     }
 
     @DeleteMapping("/users/delete/{id}")
-    public void deleteUserById(@PathVariable(value = "id") Long userId){
+    @ResponseBody
+    public ResponseEntity<String> deleteUserById(@PathVariable(value = "id") Long userId){
         service.deleteUserById(userId);
+        return new ResponseEntity<>("Deleted Successfully", HttpStatus.OK);
     }
 
     @GetMapping(value="/dashboard")

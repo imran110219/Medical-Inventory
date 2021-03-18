@@ -50,7 +50,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="user : ${users}">
+                                    <tr id="userRow" th:each="user : ${users}">
                                         <td th:text="${user.firstName}"></td>
                                         <td th:text="${user.lastName}"></td>
                                         <td th:text="${user.email}"></td>
@@ -177,15 +177,11 @@
                         </div>
                         <div class="modal-body">
                             <p>Delete this user?</p>
-<!--                            <input id="userId" type="hidden" th:field="*{userId}" />-->
-                            <input type="hidden" id="userId" th:field="*{userId}" th:attr="name='userId'"/>
-                            <span id="idHolder"></span>
+                            <input type="hidden" id="userId" th:attr="name='userId'"/>
                         </div>
                         <div class="modal-footer justify-content-between">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-
-                            <button id="confirmDelete" type="submit" class="btn btn-primary">Save changes</button>
-                            <a class="btn btn-primary" th:href="@{/users/delete/{userId}}">Yes</a>
+                            <button id="confirmDelete" type="submit" class="btn btn-primary">Yes</button>
                         </div>
                     </div>
                     <!-- /.modal-content -->
@@ -222,7 +218,6 @@
 
             $(document).on("click", "#btnDelete", function () {
                 var userId = $(this).data('user-id');
-                $('#idHolder').html( userId );
                 $('#userId').val(userId);
             });
 
@@ -230,16 +225,19 @@
                 var userId = document.getElementById("userId").value;
                 console.log(userId);
                 alert(userId);
-                // $.ajax({
-                //     type:"DELETE",
-                //     url:"/users/delete/" + userId,
-                //     success: function(data){
-                //         console.log(data);
-                //     },
-                //     error: function(err) {
-                //         console.log(err);
-                //     }
-                // });
+
+                $.ajax({
+                    type:"DELETE",
+                    url:"/users/delete/" + userId,
+                    success: function(data){
+                        console.log(data);
+                        $('#modal-delete').modal('hide');
+                        document.getElementById('userRow').remove();
+                    },
+                    error: function(err) {
+                        console.log(err);
+                    }
+                });
             });
 
             $("#example1").DataTable({
