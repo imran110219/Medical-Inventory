@@ -69,7 +69,8 @@
                                         </td>
                                         <td>
                                             <button type="button" id="btnDelete" class="btn btn-block btn-danger btn-sm"
-                                                    data-toggle="modal" data-target="#modal-delete" th:attrappend="data-user-id=${user.id}">Delete
+                                                    data-toggle="modal" data-target="#modal-delete"
+                                                    th:attrappend="data-user-id=${user.id}">Delete
                                             </button>
                                         </td>
                                     </tr>
@@ -103,61 +104,68 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form id="quickForm" th:action="@{/users/add}" th:object="${user}" method="post">
+                        <form id="addForm" th:action="@{/users/add}" th:object="${user}" method="post">
                             <div class="modal-body">
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label" for="inputfirstname">First Name</label>
                                     <div class="col-sm-9">
-                                        <input type="text" th:field="*{firstName}" class="form-control" id="inputfirstname" name="firstname"
+                                        <input type="text" th:field="*{firstName}" class="form-control"
+                                               id="inputfirstname" name="firstname"
                                                placeholder="Enter First Name">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label" for="inputlastname">Last Name</label>
                                     <div class="col-sm-9">
-                                        <input type="text" th:field="*{lastName}" class="form-control" id="inputlastname" name="lastname"
+                                        <input type="text" th:field="*{lastName}" class="form-control"
+                                               id="inputlastname" name="lastname"
                                                placeholder="Enter Last Name">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label" for="inputusername">Username</label>
                                     <div class="col-sm-9">
-                                        <input type="text" th:field="*{userName}" class="form-control" id="inputusername" name="username"
+                                        <input type="text" th:field="*{userName}" class="form-control"
+                                               id="inputusername" name="username"
                                                placeholder="Enter Username">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label" for="inputemail">Email</label>
                                     <div class="col-sm-9">
-                                        <input type="email" th:field="*{email}" class="form-control" id="inputemail" name="email"
+                                        <input type="email" th:field="*{email}" class="form-control" id="inputemail"
+                                               name="email"
                                                placeholder="Enter Email">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label" for="inputpassword">Password</label>
                                     <div class="col-sm-9">
-                                        <input type="password" th:field="*{password}" class="form-control" id="inputpassword"
+                                        <input type="password" th:field="*{password}" class="form-control"
+                                               id="inputpassword"
                                                name="password" placeholder="Enter Password">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label" for="inputphone">Phone</label>
                                     <div class="col-sm-9">
-                                        <input type="tel" th:field="*{phone}" class="form-control" id="inputphone" name="phone"
+                                        <input type="tel" th:field="*{phone}" class="form-control" id="inputphone"
+                                               name="phone"
                                                placeholder="Enter Phone">
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label" for="inputaddress">Address</label>
                                     <div class="col-sm-9">
-                                        <input type="text" th:field="*{address}" class="form-control" id="inputaddress" name="address"
+                                        <input type="text" th:field="*{address}" class="form-control" id="inputaddress"
+                                               name="address"
                                                placeholder="Enter Address">
                                     </div>
                                 </div>
                             </div>
                             <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Save</button>
+                                <button id="btnAdd" type="submit" class="btn btn-primary">Save</button>
                             </div>
                         </form>
 
@@ -167,6 +175,85 @@
                 <!-- /.modal-dialog -->
             </div>
             <!-- /.modal -->
+            <div class="modal fade" id="modal-edit">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Edit User</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+<!--                        <form id="editForm" th:action="@{/users/add}" th:object="${user}" method="post">-->
+                            <div class="modal-body">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="inputfirstname">First Name</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" th:field="*{firstName}" class="form-control"
+                                               id="inputfirstname" name="firstname"
+                                               placeholder="Enter First Name">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="inputlastname">Last Name</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" th:field="*{lastName}" class="form-control"
+                                               id="inputlastname" name="lastname"
+                                               placeholder="Enter Last Name">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="inputusername">Username</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" th:field="*{userName}" class="form-control"
+                                               id="inputusername" name="username"
+                                               placeholder="Enter Username">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="inputemail">Email</label>
+                                    <div class="col-sm-9">
+                                        <input type="email" th:field="*{email}" class="form-control" id="inputemail"
+                                               name="email"
+                                               placeholder="Enter Email">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="inputpassword">Password</label>
+                                    <div class="col-sm-9">
+                                        <input type="password" th:field="*{password}" class="form-control"
+                                               id="inputpassword"
+                                               name="password" placeholder="Enter Password">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="inputphone">Phone</label>
+                                    <div class="col-sm-9">
+                                        <input type="tel" th:field="*{phone}" class="form-control" id="inputphone"
+                                               name="phone"
+                                               placeholder="Enter Phone">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="inputaddress">Address</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" th:field="*{address}" class="form-control" id="inputaddress"
+                                               name="address"
+                                               placeholder="Enter Address">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button id="btnAdd" type="submit" class="btn btn-primary">Save</button>
+                            </div>
+<!--                        </form>-->
+
+                    </div>
+                    <!-- /.modal-content -->
+                </div>
+                <!-- /.modal-dialog -->
+            </div>
 
             <div class="modal fade" id="modal-delete">
                 <div class="modal-dialog modal-sm">
@@ -220,6 +307,10 @@
     <script>
         $(function () {
 
+            $(document).on("click", "#btnAdd", function () {
+                toastr.success('User is added successfuly');
+            });
+
             $(document).on("click", "#btnDelete", function () {
                 var userId = $(this).data('user-id');
                 $('#userId').val(userId);
@@ -229,15 +320,15 @@
                 var userId = document.getElementById("userId").value;
 
                 $.ajax({
-                    type:"DELETE",
-                    url:"/users/delete/" + userId,
-                    success: function(data){
+                    type: "DELETE",
+                    url: "/users/delete/" + userId,
+                    success: function (data) {
                         console.log(data);
                         $('#modal-delete').modal('hide');
-                        $('table#userTable tr#'+userId).remove();
+                        $('table#userTable tr#' + userId).remove();
                         toastr.error(data);
                     },
-                    error: function(err) {
+                    error: function (err) {
                         console.log(err);
                     }
                 });
@@ -254,7 +345,7 @@
                 }
             });
 
-            $('#quickForm').validate({
+            $('#addForm').validate({
                 rules: {
                     firstname: {
                         required: true
