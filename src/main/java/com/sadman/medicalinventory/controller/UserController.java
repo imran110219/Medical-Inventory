@@ -47,8 +47,9 @@ public class UserController {
     }
 
     @PutMapping("/users/edit/{id}")
-    public User editUserById(@RequestBody User newUser, @PathVariable(value = "id") Long userId) {
-        return service.updateUser(newUser, userId);
+    public ResponseEntity<String> editUserById(@RequestBody User newUser, @PathVariable(value = "id") Long userId) {
+        service.updateUser(newUser, userId);
+        return new ResponseEntity<>("Edited Successfully", HttpStatus.OK);
     }
 
     @DeleteMapping("/users/delete/{id}")

@@ -182,6 +182,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
+<!--                        <form id="editForm" th:object="${user}">-->
                             <div class="modal-body" th:object="${user}">
                                 <input type="hidden" id="inputid1"/>
                                 <div class="form-group row">
@@ -245,6 +246,7 @@
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                                 <button id="confirmEdit" type="submit" class="btn btn-primary">Save</button>
                             </div>
+<!--                        </form>-->
                     </div>
                     <!-- /.modal-content -->
                 </div>
@@ -300,7 +302,7 @@
     <script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <!-- Toastr -->
     <script src="/plugins/toastr/toastr.min.js"></script>
-    <script>
+    <script th:inline="javascript">
         $(function () {
 
             $(document).on("click", "#btnAdd", function () {
@@ -318,6 +320,7 @@
                     success: function (data) {
                         // console.log(data);
                         // console.log(data.firstName);
+                        $('#inputid1').val(data.id);
                         $('#inputfirstname1').val(data.firstName);
                         $('#inputlastname1').val(data.lastName);
                         $('#inputusername1').val(data.userName);
@@ -334,14 +337,35 @@
             $(document).on("click", "#confirmEdit", function () {
                 var userId = document.getElementById("inputid1").value;
 
+                var formData = {
+                    firstName: $("#inputfirstname1").val(),
+                    lastName: $("#inputlastname1").val(),
+                    userName: $("#inputusername1").val(),
+                    email: $("#inputemail1").val(),
+                    phone: $("#inputphone1").val(),
+                    address: $("#inputaddress1").val(),
+                };
+
+                // var form = $('#editForm')[0];
+                //
+                // var data = new FormData(form);
+                // console.log(data.keys());
+
+                // var test = /*[[${user}]]*/ {};
+                // console.log(test);
+                console.log(userId);
+                // alert(userId);
+
+                // console.log(formData);
+
                 $.ajax({
-                    type: "PUT",
+                    type: "POST",
                     url: "/users/edit/" + userId,
+                    data: JSON.stringify(formData),
+                    dataType: 'json',
+                    contentType: 'application/json',
                     success: function (data) {
                         console.log(data);
-                        $('#modal-delete').modal('hide');
-                        $('table#userTable tr#' + userId).remove();
-                        toastr.error(data);
                     },
                     error: function (err) {
                         console.log(err);
