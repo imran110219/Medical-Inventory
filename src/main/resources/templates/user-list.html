@@ -63,8 +63,9 @@
                                             </span>
                                         </td>
                                         <td>
-                                            <button type="button"
-                                                    class="btn btn-block btn-primary btn-sm">Edit
+                                            <button type="button" id="btnEdit" class="btn btn-block btn-primary btn-sm"
+                                                    data-toggle="modal" data-target="#modal-edit"
+                                                    th:attrappend="data-user-id=${user.id}">Edit
                                             </button>
                                         </td>
                                         <td>
@@ -181,60 +182,60 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-<!--                        <form id="editForm" th:action="@{/users/add}" th:object="${user}" method="post">-->
-                            <div class="modal-body">
+                            <div class="modal-body" th:object="${user}">
+                                <input type="hidden" id="inputid1"/>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputfirstname">First Name</label>
+                                    <label class="col-sm-3 col-form-label" for="inputfirstname1">First Name</label>
                                     <div class="col-sm-9">
                                         <input type="text" th:field="*{firstName}" class="form-control"
-                                               id="inputfirstname" name="firstname"
+                                               id="inputfirstname1" name="firstname"
                                                placeholder="Enter First Name">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputlastname">Last Name</label>
+                                    <label class="col-sm-3 col-form-label" for="inputlastname1">Last Name</label>
                                     <div class="col-sm-9">
                                         <input type="text" th:field="*{lastName}" class="form-control"
-                                               id="inputlastname" name="lastname"
+                                               id="inputlastname1" name="lastname"
                                                placeholder="Enter Last Name">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputusername">Username</label>
+                                    <label class="col-sm-3 col-form-label" for="inputusername1">Username</label>
                                     <div class="col-sm-9">
                                         <input type="text" th:field="*{userName}" class="form-control"
-                                               id="inputusername" name="username"
+                                               id="inputusername1" name="username"
                                                placeholder="Enter Username">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputemail">Email</label>
+                                    <label class="col-sm-3 col-form-label" for="inputemail1">Email</label>
                                     <div class="col-sm-9">
-                                        <input type="email" th:field="*{email}" class="form-control" id="inputemail"
+                                        <input type="email" th:field="*{email}" class="form-control" id="inputemail1"
                                                name="email"
                                                placeholder="Enter Email">
                                     </div>
                                 </div>
+<!--                                <div class="form-group row">-->
+<!--                                    <label class="col-sm-3 col-form-label" for="inputpassword1">Password</label>-->
+<!--                                    <div class="col-sm-9">-->
+<!--                                        <input type="password" th:field="*{password}" class="form-control"-->
+<!--                                               id="inputpassword1"-->
+<!--                                               name="password" placeholder="Enter Password">-->
+<!--                                    </div>-->
+<!--                                </div>-->
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputpassword">Password</label>
+                                    <label class="col-sm-3 col-form-label" for="inputphone1">Phone</label>
                                     <div class="col-sm-9">
-                                        <input type="password" th:field="*{password}" class="form-control"
-                                               id="inputpassword"
-                                               name="password" placeholder="Enter Password">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputphone">Phone</label>
-                                    <div class="col-sm-9">
-                                        <input type="tel" th:field="*{phone}" class="form-control" id="inputphone"
+                                        <input type="tel" th:field="*{phone}" class="form-control" id="inputphone1"
                                                name="phone"
                                                placeholder="Enter Phone">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputaddress">Address</label>
+                                    <label class="col-sm-3 col-form-label" for="inputaddress1">Address</label>
                                     <div class="col-sm-9">
-                                        <input type="text" th:field="*{address}" class="form-control" id="inputaddress"
+                                        <input type="text" th:field="*{address}" class="form-control" id="inputaddress1"
                                                name="address"
                                                placeholder="Enter Address">
                                     </div>
@@ -242,10 +243,8 @@
                             </div>
                             <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button id="btnAdd" type="submit" class="btn btn-primary">Save</button>
+                                <button id="confirmEdit" type="submit" class="btn btn-primary">Save</button>
                             </div>
-<!--                        </form>-->
-
                     </div>
                     <!-- /.modal-content -->
                 </div>
@@ -306,6 +305,48 @@
 
             $(document).on("click", "#btnAdd", function () {
                 toastr.success('User is added successfuly');
+            });
+
+            $(document).on("click", "#btnEdit", function () {
+                var userId = $(this).data('user-id');
+
+                // var contents =
+                $.ajax({
+                    type:'GET',
+                    url: "/users/" + userId,
+                    dataType: "json",
+                    success: function (data) {
+                        // console.log(data);
+                        // console.log(data.firstName);
+                        $('#inputfirstname1').val(data.firstName);
+                        $('#inputlastname1').val(data.lastName);
+                        $('#inputusername1').val(data.userName);
+                        $('#inputemail1').val(data.email);
+                        $('#inputphone1').val(data.phone);
+                        $('#inputaddress1').val(data.address);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
+
+            $(document).on("click", "#confirmEdit", function () {
+                var userId = document.getElementById("inputid1").value;
+
+                $.ajax({
+                    type: "PUT",
+                    url: "/users/edit/" + userId,
+                    success: function (data) {
+                        console.log(data);
+                        $('#modal-delete').modal('hide');
+                        $('table#userTable tr#' + userId).remove();
+                        toastr.error(data);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
             });
 
             $(document).on("click", "#btnDelete", function () {

@@ -62,7 +62,7 @@ public class UserService {
                     user.setEmail(newUser.getEmail());
                     user.setUserName(newUser.getUserName());
                     user.setRoles(newUser.getRoles());
-                    user.setPassword(passwordEncoder.encode(newUser.getPassword()));
+//                    user.setPassword(passwordEncoder.encode(newUser.getPassword()));
 //                    user.setPassword(newUser.getPassword());
                     user.setPhone(newUser.getPhone());
                     user.setAddress(newUser.getAddress());

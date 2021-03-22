@@ -1,5 +1,6 @@
 package com.sadman.medicalinventory.controller;
 
+import com.sadman.medicalinventory.exception.RecordNotFoundException;
 import com.sadman.medicalinventory.model.User;
 import com.sadman.medicalinventory.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +37,13 @@ public class UserController {
     public String addUser(User user){
         service.createUser(user);
         return "redirect:/users";
+    }
+
+    @GetMapping("/users/{id}")
+    public ResponseEntity<User> getUserById(@PathVariable(value = "id") Long userId)
+            throws RecordNotFoundException {
+        User user = service.getUserById(userId);
+        return ResponseEntity.ok(user);
     }
 
     @PutMapping("/users/edit/{id}")
