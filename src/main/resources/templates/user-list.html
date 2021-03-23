@@ -53,10 +53,10 @@
                                     </thead>
                                     <tbody>
                                     <tr th:id="${user.id}" th:each="user : ${users}">
-                                        <td th:text="${user.firstName}"></td>
-                                        <td th:text="${user.lastName}"></td>
-                                        <td th:text="${user.email}"></td>
-                                        <td th:text="${user.userName}"></td>
+                                        <td th:id="'firstName'+${user.id}" th:text="${user.firstName}"></td>
+                                        <td th:id="'lastName'+${user.id}" th:text="${user.lastName}"></td>
+                                        <td th:id="'email'+${user.id}" th:text="${user.email}"></td>
+                                        <td th:id="'userName'+${user.id}" th:text="${user.userName}"></td>
                                         <td style="text-align: center">
                                             <span th:class="${user.active} ? 'badge badge-success' : 'badge badge-danger'"
                                                   th:text="${user.active}? 'active' : 'inactive'">
@@ -343,29 +343,25 @@
                     userName: $("#inputusername1").val(),
                     email: $("#inputemail1").val(),
                     phone: $("#inputphone1").val(),
-                    address: $("#inputaddress1").val(),
+                    address: $("#inputaddress1").val()
                 };
-
-                // var form = $('#editForm')[0];
-                //
-                // var data = new FormData(form);
-                // console.log(data.keys());
-
-                // var test = /*[[${user}]]*/ {};
-                // console.log(test);
-                console.log(userId);
-                // alert(userId);
-
                 // console.log(formData);
 
                 $.ajax({
-                    type: "POST",
+                    type: "PUT",
                     url: "/users/edit/" + userId,
                     data: JSON.stringify(formData),
-                    dataType: 'json',
+                    // dataType: 'json',
                     contentType: 'application/json',
                     success: function (data) {
-                        console.log(data);
+                        $('#modal-edit').modal('hide');
+
+                        $('#firstName' + userId).html(formData.firstName);
+                        $("#lastName" + userId).html(formData.lastName);
+                        $("#email" + userId).html(formData.email);
+                        $("#userName" + userId).html(formData.userName);
+
+                        toastr.success(data);
                     },
                     error: function (err) {
                         console.log(err);
