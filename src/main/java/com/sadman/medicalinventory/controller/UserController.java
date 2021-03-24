@@ -34,9 +34,9 @@ public class UserController {
     }
 
     @PostMapping(value="/users/add")
-    public String addUser(User user){
+    public ResponseEntity<String> addUser(@RequestBody User user){
         service.createUser(user);
-        return "redirect:/users";
+        return new ResponseEntity<>("User is added successfuly", HttpStatus.OK);
     }
 
     @GetMapping("/users/{id}")
