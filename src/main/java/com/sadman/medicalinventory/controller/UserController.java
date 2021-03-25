@@ -34,9 +34,10 @@ public class UserController {
     }
 
     @PostMapping(value="/users/add")
-    public ResponseEntity<String> addUser(@RequestBody User user){
+    @ResponseBody
+    public ResponseEntity<String> addUser(User user){
         service.createUser(user);
-        return new ResponseEntity<>("User is added successfuly", HttpStatus.OK);
+        return new ResponseEntity<>("User is added successfully", HttpStatus.OK);
     }
 
     @GetMapping("/users/{id}")

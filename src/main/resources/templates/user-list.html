@@ -105,7 +105,8 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form id="addForm" th:action="@{/users/add}" th:object="${user}" method="post">
+<!--                        th:action="@{/users/add}" method="post" -->
+                        <form id="addForm" th:object="${user}">
                             <div class="modal-body">
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label" for="inputfirstname">First Name</label>
@@ -228,7 +229,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label" for="inputphone1">Phone</label>
                                     <div class="col-sm-9">
-                                        <input type="tel" th:field="*{phone}" class="form-control" id="inputphone1"
+                                        <input type="text" th:field="*{phone}" class="form-control" id="inputphone1"
                                                name="phone"
                                                placeholder="Enter Phone">
                                     </div>
@@ -443,8 +444,8 @@
                         minlength: 5
                     },
                     phone: {
-                        required: true,
-                        phone: true
+                        required: true
+                        // phone: true
                     },
                     address: {
                         required: true
@@ -469,8 +470,8 @@
                         minlength: "Your password must be at least 5 characters long"
                     },
                     phone: {
-                        required: "Please enter a phone number",
-                        phone: "Please enter a vaild phone number"
+                        required: "Please enter a phone number"
+                        // phone: "Please enter a vaild phone number"
                     },
                     address: {
                         required: "Please enter a address"
@@ -492,22 +493,20 @@
                         url: form.action,
                         type: form.method,
                         data: $(form).serialize(),
-                        // contentType: 'application/json',
+                        contentType: 'application/json',
                         success: function (data) {
-                            // $('#modal-add').modal('hide');
-                            //
-                            // $('#firstName' + userId).html(formData.firstName);
-                            // $("#lastName" + userId).html(formData.lastName);
-                            // $("#email" + userId).html(formData.email);
-                            // $("#userName" + userId).html(formData.userName);
-
-                            toastr.success(data);
+                            console.log(data);
+                            // toastr.success(data);
                         },
                         error: function (err) {
                             console.log(err);
                         }
                     });
                 }
+            });
+
+            $('#btnAdd').click(function() {
+                $("#addForm").valid();
             });
 
             $('#editForm').validate({
