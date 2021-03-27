@@ -105,8 +105,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-<!--                        th:action="@{/users/add}" method="post" -->
-                        <form id="addForm" th:object="${user}">
+                        <form id="addForm" th:action="@{/users/add}" th:object="${user}" method="post">
                             <div class="modal-body">
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label" for="inputfirstname">First Name</label>
@@ -151,7 +150,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label" for="inputphone">Phone</label>
                                     <div class="col-sm-9">
-                                        <input type="tel" th:field="*{phone}" class="form-control" id="inputphone"
+                                        <input type="text" th:field="*{phone}" class="form-control" id="inputphone"
                                                name="phone"
                                                placeholder="Enter Phone">
                                     </div>
@@ -183,14 +182,14 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form id="editForm">
-                            <div class="modal-body" th:object="${user}">
+                        <form id="editForm" th:object="${user}">
+                            <div class="modal-body">
                                 <input type="hidden" id="inputid1"/>
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label" for="inputfirstname1">First Name</label>
                                     <div class="col-sm-9">
                                         <input type="text" th:field="*{firstName}" class="form-control"
-                                               id="inputfirstname1" name="firstname"
+                                               id="inputfirstname1" name="firstName"
                                                placeholder="Enter First Name">
                                     </div>
                                 </div>
@@ -198,7 +197,7 @@
                                     <label class="col-sm-3 col-form-label" for="inputlastname1">Last Name</label>
                                     <div class="col-sm-9">
                                         <input type="text" th:field="*{lastName}" class="form-control"
-                                               id="inputlastname1" name="lastname"
+                                               id="inputlastname1" name="lastName"
                                                placeholder="Enter Last Name">
                                     </div>
                                 </div>
@@ -206,7 +205,7 @@
                                     <label class="col-sm-3 col-form-label" for="inputusername1">Username</label>
                                     <div class="col-sm-9">
                                         <input type="text" th:field="*{userName}" class="form-control"
-                                               id="inputusername1" name="username"
+                                               id="inputusername1" name="userName"
                                                placeholder="Enter Username">
                                     </div>
                                 </div>
@@ -242,6 +241,13 @@
                                                placeholder="Enter Address">
                                     </div>
                                 </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="inputactive1">Active</label>
+                                    <div class="col-sm-9">
+                                        <input type="checkbox" id="inputactive1" name="active"/>
+                                        <input type="hidden" id="isActive">
+                                    </div>
+                                </div>
                             </div>
                             <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -249,9 +255,7 @@
                             </div>
                         </form>
                     </div>
-                    <!-- /.modal-content -->
                 </div>
-                <!-- /.modal-dialog -->
             </div>
 
             <div class="modal fade" id="modal-delete">
@@ -306,41 +310,14 @@
     <script th:inline="javascript">
         $(function () {
 
-            // $(document).on("click", "#btnAdd", function () {
-            //
-            //     $.ajax({
-            //         type: "POST",
-            //         url: "/users/add",
-            //         data: JSON.stringify(formData),
-            //         // dataType: 'json',
-            //         contentType: 'application/json',
-            //         success: function (data) {
-            //             $('#modal-add').modal('hide');
-            //             //
-            //             // $('#firstName' + userId).html(formData.firstName);
-            //             // $("#lastName" + userId).html(formData.lastName);
-            //             // $("#email" + userId).html(formData.email);
-            //             // $("#userName" + userId).html(formData.userName);
-            //
-            //             toastr.success(data);
-            //         },
-            //         error: function (err) {
-            //             console.log(err);
-            //         }
-            //     });
-            // });
-
             $(document).on("click", "#btnEdit", function () {
                 var userId = $(this).data('user-id');
 
-                // var contents =
                 $.ajax({
                     type: 'GET',
                     url: "/users/" + userId,
                     dataType: "json",
                     success: function (data) {
-                        // console.log(data);
-                        // console.log(data.firstName);
                         $('#inputid1').val(data.id);
                         $('#inputfirstname1').val(data.firstName);
                         $('#inputlastname1').val(data.lastName);
@@ -348,41 +325,8 @@
                         $('#inputemail1').val(data.email);
                         $('#inputphone1').val(data.phone);
                         $('#inputaddress1').val(data.address);
-                    },
-                    error: function (err) {
-                        console.log(err);
-                    }
-                });
-            });
-
-            $(document).on("click", "#confirmEdit", function () {
-                var userId = document.getElementById("inputid1").value;
-
-                var formData = {
-                    firstName: $("#inputfirstname1").val(),
-                    lastName: $("#inputlastname1").val(),
-                    userName: $("#inputusername1").val(),
-                    email: $("#inputemail1").val(),
-                    phone: $("#inputphone1").val(),
-                    address: $("#inputaddress1").val()
-                };
-                // console.log(formData);
-
-                $.ajax({
-                    type: "PUT",
-                    url: "/users/edit/" + userId,
-                    data: JSON.stringify(formData),
-                    // dataType: 'json',
-                    contentType: 'application/json',
-                    success: function (data) {
-                        $('#modal-edit').modal('hide');
-
-                        $('#firstName' + userId).html(formData.firstName);
-                        $("#lastName" + userId).html(formData.lastName);
-                        $("#email" + userId).html(formData.email);
-                        $("#userName" + userId).html(formData.userName);
-
-                        toastr.success(data);
+                        $('#isActive').val(data.active);
+                        document.getElementById("inputactive1").checked = data.active;
                     },
                     error: function (err) {
                         console.log(err);
@@ -418,21 +362,15 @@
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
             }).buttons().container().appendTo('#userTable_wrapper .col-md-6:eq(0)');
 
-            // $.validator.setDefaults({
-            //     submitHandler: function () {
-            //         alert("Form successful submitted!");
-            //     }
-            // });
-
             $('#addForm').validate({
                 rules: {
-                    firstname: {
+                    firstName: {
                         required: true
                     },
-                    lastname: {
+                    lastName: {
                         required: true
                     },
-                    username: {
+                    userName: {
                         required: true
                     },
                     email: {
@@ -452,13 +390,13 @@
                     }
                 },
                 messages: {
-                    firstname: {
+                    firstName: {
                         required: "Please enter a first name"
                     },
-                    lastname: {
+                    lastName: {
                         required: "Please enter a last name"
                     },
-                    username: {
+                    userName: {
                         required: "Please enter a username"
                     },
                     email: {
@@ -493,10 +431,13 @@
                         url: form.action,
                         type: form.method,
                         data: $(form).serialize(),
-                        contentType: 'application/json',
                         success: function (data) {
-                            console.log(data);
-                            // toastr.success(data);
+                            $('#modal-add').modal('hide');
+                            toastr.success(data);
+                            setTimeout(function()
+                            {
+                                location.reload();  //Refresh page
+                            }, 3000);
                         },
                         error: function (err) {
                             console.log(err);
@@ -505,58 +446,54 @@
                 }
             });
 
-            $('#btnAdd').click(function() {
-                $("#addForm").valid();
+            $('#inputactive1').click(function() {
+                if (this.checked) {
+                    $('#isActive').val(true);
+                } else {
+                    $('#isActive').val(false);
+                }
             });
 
             $('#editForm').validate({
                 rules: {
-                    firstname: {
+                    firstName: {
                         required: true
                     },
-                    lastname: {
+                    lastName: {
                         required: true
                     },
-                    username: {
+                    userName: {
                         required: true
                     },
                     email: {
                         required: true,
                         email: true,
                     },
-                    // password: {
-                    //     required: true,
-                    //     minlength: 5
-                    // },
                     phone: {
-                        required: true,
-                        phone: true
+                        required: true
+                        // phone: true
                     },
                     address: {
                         required: true
                     }
                 },
                 messages: {
-                    firstname: {
+                    firstName: {
                         required: "Please enter a first name"
                     },
-                    lastname: {
+                    lastName: {
                         required: "Please enter a last name"
                     },
-                    username: {
+                    userName: {
                         required: "Please enter a username"
                     },
                     email: {
                         required: "Please enter a email address",
                         email: "Please enter a vaild email address"
                     },
-                    // password: {
-                    //     required: "Please provide a password",
-                    //     minlength: "Your password must be at least 5 characters long"
-                    // },
                     phone: {
-                        required: "Please enter a phone number",
-                        phone: "Please enter a vaild phone number"
+                        required: "Please enter a phone number"
+                        // phone: "Please enter a vaild phone number"
                     },
                     address: {
                         required: "Please enter a address"
@@ -572,6 +509,39 @@
                 },
                 unhighlight: function (element, errorClass, validClass) {
                     $(element).removeClass('is-invalid');
+                },
+                submitHandler: function (form) {
+                    var userId = document.getElementById("inputid1").value;
+
+                    var formData = {
+                        firstName: $("#inputfirstname1").val(),
+                        lastName: $("#inputlastname1").val(),
+                        userName: $("#inputusername1").val(),
+                        email: $("#inputemail1").val(),
+                        phone: $("#inputphone1").val(),
+                        address: $("#inputaddress1").val(),
+                        active: $("#isActive").val()
+                    };
+
+                    console.log(formData);
+
+                    $.ajax({
+                        type: "PUT",
+                        url: "/users/edit/" + userId,
+                        data: JSON.stringify(formData),
+                        contentType: 'application/json',
+                        success: function (data) {
+                            $('#modal-edit').modal('hide');
+                            toastr.success(data);
+                            setTimeout(function()
+                            {
+                                location.reload();  //Refresh page
+                            }, 3000); //3 Second
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
                 }
             });
         });

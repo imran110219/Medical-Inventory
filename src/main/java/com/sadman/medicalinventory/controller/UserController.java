@@ -34,7 +34,6 @@ public class UserController {
     }
 
     @PostMapping(value="/users/add")
-    @ResponseBody
     public ResponseEntity<String> addUser(User user){
         service.createUser(user);
         return new ResponseEntity<>("User is added successfully", HttpStatus.OK);
@@ -50,14 +49,14 @@ public class UserController {
     @PutMapping("/users/edit/{id}")
     public ResponseEntity<String> editUserById(@RequestBody User newUser, @PathVariable(value = "id") Long userId) {
         service.updateUser(newUser, userId);
-        return new ResponseEntity<>("Edited Successfully", HttpStatus.OK);
+        return new ResponseEntity<>("User is Edited Successfully", HttpStatus.OK);
     }
 
     @DeleteMapping("/users/delete/{id}")
     @ResponseBody
     public ResponseEntity<String> deleteUserById(@PathVariable(value = "id") Long userId){
         service.deleteUserById(userId);
-        return new ResponseEntity<>("Deleted Successfully", HttpStatus.OK);
+        return new ResponseEntity<>("User is Deleted Successfully", HttpStatus.OK);
     }
 
     @GetMapping(value="/dashboard")
