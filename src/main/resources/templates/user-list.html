@@ -47,8 +47,7 @@
                                         <th>Email</th>
                                         <th>Username</th>
                                         <th>Status</th>
-                                        <th>Edit</th>
-                                        <th>Delete</th>
+                                        <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -63,16 +62,17 @@
                                             </span>
                                         </td>
                                         <td>
-                                            <button type="button" id="btnEdit" class="btn btn-block btn-primary btn-sm"
-                                                    data-toggle="modal" data-target="#modal-edit"
-                                                    th:attrappend="data-user-id=${user.id}">Edit
-                                            </button>
-                                        </td>
-                                        <td>
-                                            <button type="button" id="btnDelete" class="btn btn-block btn-danger btn-sm"
-                                                    data-toggle="modal" data-target="#modal-delete"
-                                                    th:attrappend="data-user-id=${user.id}">Delete
-                                            </button>
+                                            <div class="btn-group">
+                                                <button type="button" id="btnEdit" class="btn btn-block btn-primary btn-sm"
+                                                        style="margin-top: 8px"
+                                                        data-toggle="modal" data-target="#modal-edit"
+                                                        th:attrappend="data-user-id=${user.id}"><i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" id="btnDelete" class="btn btn-block btn-danger btn-sm"
+                                                        data-toggle="modal" data-target="#modal-delete"
+                                                        th:attrappend="data-user-id=${user.id}"><i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -83,8 +83,7 @@
                                         <th>Email</th>
                                         <th>Username</th>
                                         <th>Status</th>
-                                        <th>Edit</th>
-                                        <th>Delete</th>
+                                        <th>Action</th>
                                     </tr>
                                     </tfoot>
                                 </table>
@@ -371,11 +370,29 @@
                         required: true
                     },
                     userName: {
-                        required: true
+                        required: true,
+                        remote:{
+                            url: "/users/checkUsername", //make sure to return true or false with a 200 status code
+                            type: "post",
+                            data: {
+                                username: function() {
+                                    return $("#inputusername").val();
+                                }
+                            }
+                        }
                     },
                     email: {
                         required: true,
                         email: true,
+                        remote:{
+                            url: "/users/checkEmail", //make sure to return true or false with a 200 status code
+                            type: "post",
+                            data: {
+                                email: function() {
+                                    return $("#inputemail").val();
+                                }
+                            }
+                        }
                     },
                     password: {
                         required: true,
@@ -397,11 +414,13 @@
                         required: "Please enter a last name"
                     },
                     userName: {
-                        required: "Please enter a username"
+                        required: "Please enter a username",
+                        remote : "This username is already exist"
                     },
                     email: {
                         required: "Please enter a email address",
-                        email: "Please enter a vaild email address"
+                        email: "Please enter a vaild email address",
+                        remote : "This email is already exist"
                     },
                     password: {
                         required: "Please provide a password",

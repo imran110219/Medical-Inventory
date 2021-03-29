@@ -3,6 +3,7 @@ package com.sadman.medicalinventory.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -31,7 +32,7 @@ public class Purchase {
     @Column(name = "total")
     private double total;
     @Column(name = "expiry_datetime")
-    private String expiryDate;
+    private Date expiryDate;
     @Column(name = "datetime", insertable=false)
     private String date;
 }

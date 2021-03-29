@@ -33,8 +33,24 @@ public class UserController {
         return "user-list";
     }
 
+    @PostMapping(value="/users/checkEmail")
+    public ResponseEntity<Boolean> checkEmail(String email){
+        boolean isEmail = !service.existsByEmail(email);
+        return new ResponseEntity<>(isEmail, HttpStatus.OK);
+    }
+
+    @PostMapping(value="/users/checkUsername")
+    public ResponseEntity<Boolean> checkUsername(String username){
+        boolean isUsername = !service.existsByUserName(username);
+        return new ResponseEntity<>(isUsername, HttpStatus.OK);
+    }
+
     @PostMapping(value="/users/add")
     public ResponseEntity<String> addUser(User user){
+        if(service.existsByUserName(user.getUserName()))
+            return new ResponseEntity<>("This user name is already exist", HttpStatus.BAD_REQUEST);
+        if(service.existsByEmail(user.getEmail()))
+            return new ResponseEntity<>("This email is already exist", HttpStatus.BAD_REQUEST);
         service.createUser(user);
         return new ResponseEntity<>("User is added successfully", HttpStatus.OK);
     }

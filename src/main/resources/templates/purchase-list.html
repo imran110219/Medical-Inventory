@@ -52,8 +52,7 @@
                                         <th>Unit Price</th>
                                         <th>Total</th>
                                         <th>Expiry Date</th>
-                                        <th>Edit</th>
-                                        <th>Delete</th>
+                                        <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -64,14 +63,19 @@
                                         <td th:text="${purchase.quantity}"></td>
                                         <td th:text="${purchase.unitPrice}"></td>
                                         <td th:text="${purchase.total}"></td>
-                                        <td th:text="${purchase.expiryDate}"></td>
+                                        <td th:text="${#dates.format(purchase.getExpiryDate(), 'dd.MM.yyyy')}"></td>
                                         <td>
-                                            <button type="button"
-                                                    class="btn btn-block btn-primary btn-sm">Edit</button>
-                                        </td>
-                                        <td>
-                                            <button type="button"
-                                                    class="btn btn-block btn-danger btn-sm">Delete</button>
+                                            <div class="btn-group">
+                                                <button type="button" id="btnEdit"
+                                                        class="btn btn-block btn-primary btn-sm"
+                                                        style="margin-top: 8px"
+                                                ><i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" id="btnDelete"
+                                                        class="btn btn-block btn-danger btn-sm"
+                                                ><i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -84,8 +88,7 @@
                                         <th>Unit Price</th>
                                         <th>Total</th>
                                         <th>Expiry Date</th>
-                                        <th>Edit</th>
-                                        <th>Delete</th>
+                                        <th>Action</th>
                                     </tr>
                                     </tfoot>
                                 </table>

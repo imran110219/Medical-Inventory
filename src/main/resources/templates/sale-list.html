@@ -36,7 +36,8 @@
                             <div class="card-header">
                                 <div class="col-sm-2 col-md-1">
                                     <button type="button" class="btn btn-block btn-success btn-sm"
-                                            data-toggle="modal" data-target="#modal-default">Add</button>
+                                            data-toggle="modal" data-target="#modal-default">Add
+                                    </button>
                                 </div>
                             </div>
 
@@ -51,8 +52,7 @@
                                         <th>Quantity</th>
                                         <th>Unit Price</th>
                                         <th>Total</th>
-                                        <th>Edit</th>
-                                        <th>Delete</th>
+                                        <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -64,12 +64,17 @@
                                         <td th:text="${sale.unitPrice}"></td>
                                         <td th:text="${sale.total}"></td>
                                         <td>
-                                            <button type="button"
-                                                    class="btn btn-block btn-primary btn-sm">Edit</button>
-                                        </td>
-                                        <td>
-                                            <button type="button"
-                                                    class="btn btn-block btn-danger btn-sm">Delete</button>
+                                            <div class="btn-group">
+                                                <button type="button" id="btnEdit"
+                                                        class="btn btn-block btn-primary btn-sm"
+                                                        style="margin-top: 8px"
+                                                ><i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" id="btnDelete"
+                                                        class="btn btn-block btn-danger btn-sm"
+                                                ><i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -81,8 +86,7 @@
                                         <th>Quantity</th>
                                         <th>Unit Price</th>
                                         <th>Total</th>
-                                        <th>Edit</th>
-                                        <th>Delete</th>
+                                        <th>Action</th>
                                     </tr>
                                     </tfoot>
                                 </table>
@@ -115,7 +119,8 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label" for="inputdescription">Description</label>
                                     <div class="col-sm-9">
-                                            <textarea id="inputdescription" name="description" class="form-control" rows="4"
+                                            <textarea id="inputdescription" name="description" class="form-control"
+                                                      rows="4"
                                                       cols="50" placeholder="Enter Indication Description"></textarea>
                                     </div>
                                 </div>

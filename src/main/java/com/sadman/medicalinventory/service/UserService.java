@@ -24,6 +24,14 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    public boolean existsByEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    public boolean existsByUserName(String username) {
+        return userRepository.existsByUserName(username);
+    }
+
     public User findUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
