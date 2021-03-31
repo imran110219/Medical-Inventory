@@ -19,9 +19,9 @@
 
 <body class="hold-transition sidebar-mini layout-fixed">
 <!-- Site wrapper -->
-<div class="wrapper"  layout:fragment="content">
+<div class="wrapper">
 
-    <div class="content-wrapper">
+    <div class="content-wrapper" layout:fragment="content">
 
         <section class="content-header">
             <div class="container-fluid">
@@ -80,14 +80,18 @@
                                         </td>
                                         <td>
                                             <div class="btn-group">
-                                                <button type="button" id="btnEdit" class="btn btn-block btn-primary btn-sm"
+                                                <button type="button" id="btnEdit"
+                                                        class="btn btn-block btn-primary btn-sm"
                                                         style="margin-top: 8px"
                                                         data-toggle="modal" data-target="#modal-edit"
-                                                        th:attrappend="data-user-id=${user.id}"><i class="fas fa-edit"></i>
+                                                        th:attrappend="data-user-id=${user.id}"><i
+                                                        class="fas fa-edit"></i>
                                                 </button>
-                                                <button type="button" id="btnDelete" class="btn btn-block btn-danger btn-sm"
+                                                <button type="button" id="btnDelete"
+                                                        class="btn btn-block btn-danger btn-sm"
                                                         data-toggle="modal" data-target="#modal-delete"
-                                                        th:attrappend="data-user-id=${user.id}"><i class="fas fa-trash"></i>
+                                                        th:attrappend="data-user-id=${user.id}"><i
+                                                        class="fas fa-trash"></i>
                                                 </button>
                                             </div>
                                         </td>
@@ -388,11 +392,11 @@
                     },
                     userName: {
                         required: true,
-                        remote:{
+                        remote: {
                             url: "/users/checkUsername", //make sure to return true or false with a 200 status code
                             type: "post",
                             data: {
-                                username: function() {
+                                username: function () {
                                     return $("#inputusername").val();
                                 }
                             }
@@ -401,11 +405,11 @@
                     email: {
                         required: true,
                         email: true,
-                        remote:{
+                        remote: {
                             url: "/users/checkEmail", //make sure to return true or false with a 200 status code
                             type: "post",
                             data: {
-                                email: function() {
+                                email: function () {
                                     return $("#inputemail").val();
                                 }
                             }
@@ -432,12 +436,12 @@
                     },
                     userName: {
                         required: "Please enter a username",
-                        remote : "This username is already exist"
+                        remote: "This username is already exist"
                     },
                     email: {
                         required: "Please enter a email address",
                         email: "Please enter a vaild email address",
-                        remote : "This email is already exist"
+                        remote: "This email is already exist"
                     },
                     password: {
                         required: "Please provide a password",
@@ -470,8 +474,7 @@
                         success: function (data) {
                             $('#modal-add').modal('hide');
                             toastr.success(data);
-                            setTimeout(function()
-                            {
+                            setTimeout(function () {
                                 location.reload();  //Refresh page
                             }, 3000);
                         },
@@ -482,7 +485,7 @@
                 }
             });
 
-            $('#inputactive1').click(function() {
+            $('#inputactive1').click(function () {
                 if (this.checked) {
                     $('#isActive').val(true);
                 } else {
@@ -569,8 +572,7 @@
                         success: function (data) {
                             $('#modal-edit').modal('hide');
                             toastr.success(data);
-                            setTimeout(function()
-                            {
+                            setTimeout(function () {
                                 location.reload();  //Refresh page
                             }, 3000); //3 Second
                         },

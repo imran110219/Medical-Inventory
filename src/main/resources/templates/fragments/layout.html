@@ -25,12 +25,17 @@
 
 <body class="hold-transition sidebar-mini layout-fixed">
 
-<div class="wrapper" layout:fragment="content">
-    <aside class="main-sidebar sidebar-dark-primary elevation-4" th:replace="sidebar"></aside>
+<div class="wrapper">
 
-<!--    <section class="content-header" th:replace="fragments/header :: header"></section>-->
+    <aside th:replace="fragments/sidebar :: sidebar"></aside>
 
-<!--    <section class="content" layout:fragment="content"></section>-->
+    <div class="content-wrapper" layout:fragment="content">
+
+<!--        <section class="content-header" th:replace="fragments/header :: header"></section>-->
+
+<!--        <section class="content" layout:fragment="content"></section>-->
+
+    </div>
 </div>
 
 <footer class="main-footer" th:replace="fragments/footer :: footer"></footer>

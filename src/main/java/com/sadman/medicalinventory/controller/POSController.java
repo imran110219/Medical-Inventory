@@ -1,5 +1,6 @@
 package com.sadman.medicalinventory.controller;
 
+import com.sadman.medicalinventory.model.Brand;
 import com.sadman.medicalinventory.model.User;
 import com.sadman.medicalinventory.service.BrandService;
 import com.sadman.medicalinventory.service.UserService;
@@ -21,7 +22,8 @@ public class POSController {
 
     @RequestMapping(value = "/pos")
     public String getPOS(Model model) {
-
+        List<Brand> brandList = brandService.getAllBrands();
+        model.addAttribute("brands", brandList);
         return "pos";
     }
 }

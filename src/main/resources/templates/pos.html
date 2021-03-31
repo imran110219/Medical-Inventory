@@ -8,580 +8,313 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>AdminLTE 3 | Fixed Sidebar</title>
     <th:block layout:fragment="link">
-        <!-- DataTables -->
-        <link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
-        <link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-        <link rel="stylesheet" href="/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
-        <!-- Toastr -->
-        <link rel="stylesheet" href="/plugins/toastr/toastr.min.css">
+        <!-- Google Font: Source Sans Pro -->
+        <link rel="stylesheet"
+              href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+        <!-- daterange picker -->
+        <link rel="stylesheet" href="/plugins/daterangepicker/daterangepicker.css">
+        <!-- iCheck for checkboxes and radio inputs -->
+        <link rel="stylesheet" href="/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+        <!-- Bootstrap Color Picker -->
+        <link rel="stylesheet" href="/plugins/bootstrap-colorpicker/css/bootstrap-colorpicker.min.css">
+        <!-- Tempusdominus Bootstrap 4 -->
+        <link rel="stylesheet" href="/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
+        <!-- Select2 -->
+        <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
+        <link rel="stylesheet" href="/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+        <!-- Bootstrap4 Duallistbox -->
+        <link rel="stylesheet" href="/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+        <!-- BS Stepper -->
+        <link rel="stylesheet" href="/plugins/bs-stepper/css/bs-stepper.min.css">
+        <!-- dropzonejs -->
+        <link rel="stylesheet" href="/plugins/dropzone/min/dropzone.min.css">
+
+<!--        <script src="/plugins/jquery/jquery.min.js"></script>-->
+<!--        <script>-->
+<!--            $(document).ready(function () {-->
+<!--                $(".add-row").click(function () {-->
+<!--                    var tr = "<tr><td> <select class='form-control select2' style='width: 100%;'><option selected='selected'>Nevalip</option><option>Napa</option><option>Naxpro</option><option>Aice</option><option>Bori</option><option>Calkeria</option><option>Phos</option> </select></td><td style='width:15%'> <select class='form-control select2' style='width: 100%;'><option selected='selected'></option><option>11-7-2014</option><option>11-7-2015</option><option>11-7-2016</option><option>11-7-2017</option> </select></td><td style='width:10%'> <input type='number' class='form-control' id='stock' placeholder='100' disabled></td><td style='width:10%'> <input type='number' class='form-control' id='quantity' placeholder='10'></td><td style='width:12%'> <input type='number' class='form-control' id='price' placeholder='100.00' disabled></td><td style='width:12%'> <input type='number' class='form-control' id='discount' placeholder='0'></td><td style='width:12%'> <input type='number' class='form-control' id='total' placeholder='100.00' disabled></td><td> <button type='button' class='btn btn-block btn-danger btn-sm delete-row'> Delete </button></td></tr>";-->
+<!--                    $("#brand_tbl").append(tr);-->
+<!--                    $('.select2').select2();-->
+<!--                });-->
+
+<!--                $("#brand_tbl").on('click', '.delete-row', function () {-->
+<!--                    $(this).parent().parent().remove();-->
+<!--                });-->
+<!--            });-->
+<!--        </script>-->
     </th:block>
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
 <!-- Site wrapper -->
 <div class="wrapper">
-    <div class="content-wrapper">
 
-        <section class="content-header" th:fragment="header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>Fixed Layout</h1>
+    <div class="content-wrapper" layout:fragment="content">
+            <!-- Content Header (Page header) -->
+            <section class="content-header">
+                <div class="container-fluid">
+                    <div class="row mb-2">
+                        <div class="col-sm-6">
+                            <h1>Point of Sale</h1>
+                        </div>
+                        <!-- <div class="col-sm-6">
+                            <ol class="breadcrumb float-sm-right">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item"><a href="#">Layout</a></li>
+                                <li class="breadcrumb-item active">Fixed Layout</li>
+                            </ol>
+                        </div> -->
                     </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item"><a href="#">Layout</a></li>
-                            <li class="breadcrumb-item active">Fixed Layout</li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </section>
+                </div><!-- /.container-fluid -->
+            </section>
 
-        <section class="content" layout:fragment="content">
+            <!-- Main content -->
+            <section class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <!-- left column -->
+                        <div class="col-md-12">
 
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-12">
-                        <!-- Default box -->
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="col-sm-2 col-md-1">
-                                    <button type="button" class="btn btn-block btn-success btn-sm"
-                                            data-toggle="modal" data-target="#modal-add">Add
-                                    </button>
+                            <!-- general form elements -->
+                            <div class="card card-primary">
+                                <div class="card-header">
+                                    <h3 class="card-title">Generate Invoice</h3>
                                 </div>
-                            </div>
-
-                            <!-- /.card-header -->
-                            <div class="card-body">
-                                <table id="userTable" class="table table-bordered table-striped" th:switch="${users}">
-                                    <thead>
-                                    <tr>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Email</th>
-                                        <th>Username</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <tr th:id="${user.id}" th:each="user : ${users}">
-                                        <td th:id="'firstName'+${user.id}" th:text="${user.firstName}"></td>
-                                        <td th:id="'lastName'+${user.id}" th:text="${user.lastName}"></td>
-                                        <td th:id="'email'+${user.id}" th:text="${user.email}"></td>
-                                        <td th:id="'userName'+${user.id}" th:text="${user.userName}"></td>
-                                        <td style="text-align: center">
-                                            <span th:class="${user.active} ? 'badge badge-success' : 'badge badge-danger'"
-                                                  th:text="${user.active}? 'active' : 'inactive'">
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <div class="btn-group">
-                                                <button type="button" id="btnEdit" class="btn btn-block btn-primary btn-sm"
-                                                        style="margin-top: 8px"
-                                                        data-toggle="modal" data-target="#modal-edit"
-                                                        th:attrappend="data-user-id=${user.id}"><i class="fas fa-edit"></i>
-                                                </button>
-                                                <button type="button" id="btnDelete" class="btn btn-block btn-danger btn-sm"
-                                                        data-toggle="modal" data-target="#modal-delete"
-                                                        th:attrappend="data-user-id=${user.id}"><i class="fas fa-trash"></i>
-                                                </button>
+                                <!-- /.card-header -->
+                                <!-- form start -->
+                                <form>
+                                    <div class="card-body">
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label" for="name">Customer Name</label>
+                                            <div class="col-sm-3">
+                                                <input type="name" class="form-control" id="name"
+                                                       placeholder="Enter Customer Name">
                                             </div>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                    <tfoot>
-                                    <tr>
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Email</th>
-                                        <th>Username</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                    </tfoot>
-                                </table>
-                            </div>
-                            <!-- /.card-body -->
-                        </div>
-                        <!-- /.card -->
-                    </div>
-                </div>
-            </div>
+                                        </div>
+                                        <div class="form-group row">
+                                            <label class="col-sm-2 col-form-label" for="mobile">Mobile No</label>
+                                            <div class="col-sm-3">
+                                                <input type="tel" class="form-control" id="mobile"
+                                                       placeholder="Enter Mobile Number">
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-4 col-md-2">
+                                            <button type="button" class="btn btn-success btn-sm add-row">
+                                                Add
+                                            </button>
+                                            <button type="reset" class="btn btn-primary btn-sm">
+                                                Reset
+                                            </button>
+                                        </div>
+                                        <table class="table" id="brand_tbl">
+                                            <thead>
+                                            <tr>
+                                                <th>Brand Name</th>
+                                                <th>Expired Date</th>
+                                                <th>Stock</th>
+                                                <th>Quantity</th>
+                                                <th>Price</th>
+                                                <th>Discount %</th>
+                                                <th>Total</th>
+                                                <th>Action</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <td>
+                                                    <select th:field="${brandID}" class="form-control select2" style="width: 100%;">
+<!--                                                        <option selected="selected">Nevalip</option>-->
+<!--                                                        <option>Napa</option>-->
+<!--                                                        <option>Naxpro</option>-->
+<!--                                                        <option>Aice</option>-->
+<!--                                                        <option>Bori</option>-->
+<!--                                                        <option>Calkeria</option>-->
+<!--                                                        <option>Phos</option>-->
+                                                        <option value=""> -- </option>
+                                                        <option th:each="brand : ${brands}"
+                                                                th:value="${brand.id}"
+                                                                th:utext="${brand.name}">
+                                                    </select>
+                                                </td>
+                                                <td style="width:15%">
+                                                    <select class="form-control select2" style="width: 100%;">
+                                                        <option selected="selected"></option>
+                                                        <option>11-7-2014</option>
+                                                        <option>11-7-2015</option>
+                                                        <option>11-7-2016</option>
+                                                        <option>11-7-2017</option>
+                                                    </select>
+                                                </td>
+                                                <td style="width:10%">
+                                                    <input type="number" class="form-control" id="stock"
+                                                           placeholder="100" disabled>
+                                                </td>
+                                                <td style="width:10%">
+                                                    <input type="number" class="form-control" id="quantity"
+                                                           placeholder="10">
+                                                </td>
+                                                <td style="width:12%">
+                                                    <input type="number" class="form-control" id="price"
+                                                           placeholder="100.00" disabled>
+                                                </td>
+                                                <td style="width:12%">
+                                                    <input type="number" class="form-control" id="discount"
+                                                           placeholder="0">
+                                                </td>
+                                                <td style="width:12%">
+                                                    <input type="number" class="form-control" id="total"
+                                                           placeholder="100.00" disabled>
+                                                </td>
+                                                <td>
+                                                    <button type="button"
+                                                            class="btn btn-block btn-danger btn-sm delete-row">
+                                                        Delete
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                        </br>
+                                        </br>
+                                        </br>
+                                        <div class="form-group row justify-content-end">
+                                            <label class="col-sm-2 col-form-label" for="name">
+                                                Average Discount
+                                            </label>
+                                            <div class="col-sm-2">
+                                                <input type="number" class="form-control" id="average_discount">
+                                            </div>
+                                            <div class="col-sm-1">
 
-            <div class="modal fade" id="modal-add">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Add User</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <form id="addForm" th:action="@{/users/add}" th:object="${user}" method="post">
-                            <div class="modal-body">
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputfirstname">First Name</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" th:field="*{firstName}" class="form-control"
-                                               id="inputfirstname" name="firstname"
-                                               placeholder="Enter First Name">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputlastname">Last Name</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" th:field="*{lastName}" class="form-control"
-                                               id="inputlastname" name="lastname"
-                                               placeholder="Enter Last Name">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputusername">Username</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" th:field="*{userName}" class="form-control"
-                                               id="inputusername" name="username"
-                                               placeholder="Enter Username">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputemail">Email</label>
-                                    <div class="col-sm-9">
-                                        <input type="email" th:field="*{email}" class="form-control" id="inputemail"
-                                               name="email"
-                                               placeholder="Enter Email">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputpassword">Password</label>
-                                    <div class="col-sm-9">
-                                        <input type="password" th:field="*{password}" class="form-control"
-                                               id="inputpassword"
-                                               name="password" placeholder="Enter Password">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputphone">Phone</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" th:field="*{phone}" class="form-control" id="inputphone"
-                                               name="phone"
-                                               placeholder="Enter Phone">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputaddress">Address</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" th:field="*{address}" class="form-control" id="inputaddress"
-                                               name="address"
-                                               placeholder="Enter Address">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button id="btnAdd" type="submit" class="btn btn-primary">Save</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row justify-content-end">
+                                            <label class="col-sm-2 col-form-label justify-content-end" for="name">
+                                                Total Discount
+                                            </label>
+                                            <div class="col-sm-2">
+                                                <input type="number" class="form-control" id="total_discount" disabled>
+                                            </div>
+                                            <div class="col-sm-1">
 
-            <div class="modal fade" id="modal-edit">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Edit User</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <form id="editForm" th:object="${user}">
-                            <div class="modal-body">
-                                <input type="hidden" id="inputid1"/>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputfirstname1">First Name</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" th:field="*{firstName}" class="form-control"
-                                               id="inputfirstname1" name="firstName"
-                                               placeholder="Enter First Name">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputlastname1">Last Name</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" th:field="*{lastName}" class="form-control"
-                                               id="inputlastname1" name="lastName"
-                                               placeholder="Enter Last Name">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputusername1">Username</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" th:field="*{userName}" class="form-control"
-                                               id="inputusername1" name="userName"
-                                               placeholder="Enter Username">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputemail1">Email</label>
-                                    <div class="col-sm-9">
-                                        <input type="email" th:field="*{email}" class="form-control" id="inputemail1"
-                                               name="email"
-                                               placeholder="Enter Email">
-                                    </div>
-                                </div>
-                                <!--                                <div class="form-group row">-->
-                                <!--                                    <label class="col-sm-3 col-form-label" for="inputpassword1">Password</label>-->
-                                <!--                                    <div class="col-sm-9">-->
-                                <!--                                        <input type="password" th:field="*{password}" class="form-control"-->
-                                <!--                                               id="inputpassword1"-->
-                                <!--                                               name="password" placeholder="Enter Password">-->
-                                <!--                                    </div>-->
-                                <!--                                </div>-->
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputphone1">Phone</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" th:field="*{phone}" class="form-control" id="inputphone1"
-                                               name="phone"
-                                               placeholder="Enter Phone">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputaddress1">Address</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" th:field="*{address}" class="form-control" id="inputaddress1"
-                                               name="address"
-                                               placeholder="Enter Address">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputactive1">Active</label>
-                                    <div class="col-sm-9">
-                                        <input type="checkbox" id="inputactive1" name="active"/>
-                                        <input type="hidden" id="isActive">
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="modal-footer justify-content-between">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <button id="confirmEdit" type="submit" class="btn btn-primary">Save</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group row justify-content-end">
+                                            <label class="col-sm-2 col-form-label" for="vat">
+                                                Vat
+                                            </label>
+                                            <div class="col-sm-2">
+                                                <input type="number" class="form-control" id="vat" disabled>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <input type="checkbox" id="vat_checkbox" name="vat_checkbox">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row justify-content-end">
+                                            <label class="col-sm-2 col-form-label" for="tax">
+                                                Tax
+                                            </label>
+                                            <div class="col-sm-2">
+                                                <input type="number" class="form-control" id="tax" disabled>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <input type="checkbox" id="tax_checkbox" name="tax_checkbox">
+                                            </div>
+                                        </div>
+                                        <div class="form-group row justify-content-end">
+                                            <label class="col-sm-2 col-form-label" for="total_tax">
+                                                Total Tax
+                                            </label>
+                                            <div class="col-sm-2">
+                                                <input type="number" class="form-control" id="total_tax" disabled>
+                                            </div>
+                                            <div class="col-sm-1">
 
-            <div class="modal fade" id="modal-delete">
-                <div class="modal-dialog modal-sm">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Delete User</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <p>Delete this user?</p>
-                            <input type="hidden" id="userId"/>
-                        </div>
-                        <div class="modal-footer justify-content-between">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                            <button id="confirmDelete" type="submit" class="btn btn-primary">Yes</button>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
-            <!-- /.modal -->
+                                            </div>
+                                        </div>
+                                        <div class="form-group row justify-content-end">
+                                            <label class="col-sm-2 col-form-label" for="grand_total">
+                                                Grand Total
+                                            </label>
+                                            <div class="col-sm-2">
+                                                <input type="number" class="form-control" id="grand_total" disabled>
+                                            </div>
+                                            <div class="col-sm-1">
 
-        </section>
-        <!-- /.content -->
+                                            </div>
+                                        </div>
+                                        <div class="form-group row justify-content-end">
+                                            <label class="col-sm-2 col-form-label" for="paid_amount">
+                                                Paid Amount
+                                            </label>
+                                            <div class="col-sm-2">
+                                                <input type="number" class="form-control" id="paid_amount">
+                                            </div>
+                                            <div class="col-sm-1">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- /.card-body -->
+
+                                    <div class="card-footer">
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <!-- /.card -->
+
+                        </div>
+                        <!--/.col (right) -->
+                    </div>
+                    <!-- /.row -->
+                </div><!-- /.container-fluid -->
+            </section>
+            <!-- /.content -->
+        </div>
+        <!-- /.content-wrapper -->
     </div>
-    <!-- /.content-wrapper -->
-</div>
-<!-- ./wrapper -->
-<th:block layout:fragment="script">
-    <!-- jquery-validation -->
-    <script src="/plugins/jquery-validation/jquery.validate.min.js"></script>
-    <script src="/plugins/jquery-validation/additional-methods.min.js"></script>
-    <!-- DataTables  & Plugins -->
-    <script src="/plugins/datatables/jquery.dataTables.min.js"></script>
-    <script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
-    <script src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
-    <script src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-    <script src="/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
-    <script src="/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
-    <script src="/plugins/jszip/jszip.min.js"></script>
-    <script src="/plugins/pdfmake/pdfmake.min.js"></script>
-    <script src="/plugins/pdfmake/vfs_fonts.js"></script>
-    <script src="/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
-    <script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
-    <script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
-    <!-- Toastr -->
-    <script src="/plugins/toastr/toastr.min.js"></script>
-    <script th:inline="javascript">
-        $(function () {
 
-            $(document).on("click", "#btnEdit", function () {
-                var userId = $(this).data('user-id');
+    <!-- ./wrapper -->
+    <th:block layout:fragment="script">
+        <!-- Select2 -->
+        <script src="/plugins/select2/js/select2.full.min.js"></script>
+        <!-- Bootstrap4 Duallistbox -->
+        <script src="/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
+        <!-- InputMask -->
+        <script src="/plugins/moment/moment.min.js"></script>
+        <script src="/plugins/inputmask/jquery.inputmask.min.js"></script>
+        <!-- date-range-picker -->
+        <script src="/plugins/daterangepicker/daterangepicker.js"></script>
+        <!-- bootstrap color picker -->
+        <script src="/plugins/bootstrap-colorpicker/js/bootstrap-colorpicker.min.js"></script>
+        <!-- Tempusdominus Bootstrap 4 -->
+        <script src="/plugins/tempusdominus-bootstrap-4/js/tempusdominus-bootstrap-4.min.js"></script>
+        <!-- Bootstrap Switch -->
+        <script src="/plugins/bootstrap-switch/js/bootstrap-switch.min.js"></script>
+        <!-- BS-Stepper -->
+        <script src="/plugins/bs-stepper/js/bs-stepper.min.js"></script>
+        <!-- dropzonejs -->
+        <script src="/plugins/dropzone/min/dropzone.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $(".add-row").click(function () {
+                    var tr = "<tr><td> <select class='form-control select2' style='width: 100%;'><option selected='selected'>Nevalip</option><option>Napa</option><option>Naxpro</option><option>Aice</option><option>Bori</option><option>Calkeria</option><option>Phos</option> </select></td><td style='width:15%'> <select class='form-control select2' style='width: 100%;'><option selected='selected'></option><option>11-7-2014</option><option>11-7-2015</option><option>11-7-2016</option><option>11-7-2017</option> </select></td><td style='width:10%'> <input type='number' class='form-control' id='stock' placeholder='100' disabled></td><td style='width:10%'> <input type='number' class='form-control' id='quantity' placeholder='10'></td><td style='width:12%'> <input type='number' class='form-control' id='price' placeholder='100.00' disabled></td><td style='width:12%'> <input type='number' class='form-control' id='discount' placeholder='0'></td><td style='width:12%'> <input type='number' class='form-control' id='total' placeholder='100.00' disabled></td><td> <button type='button' class='btn btn-block btn-danger btn-sm delete-row'> Delete </button></td></tr>";
+                    $("#brand_tbl").append(tr);
+                    $('.select2').select2();
+                });
 
-                $.ajax({
-                    type: 'GET',
-                    url: "/users/" + userId,
-                    dataType: "json",
-                    success: function (data) {
-                        $('#inputid1').val(data.id);
-                        $('#inputfirstname1').val(data.firstName);
-                        $('#inputlastname1').val(data.lastName);
-                        $('#inputusername1').val(data.userName);
-                        $('#inputemail1').val(data.email);
-                        $('#inputphone1').val(data.phone);
-                        $('#inputaddress1').val(data.address);
-                        $('#isActive').val(data.active);
-                        document.getElementById("inputactive1").checked = data.active;
-                    },
-                    error: function (err) {
-                        console.log(err);
-                    }
+                $("#brand_tbl").on('click', '.delete-row', function () {
+                    $(this).parent().parent().remove();
                 });
             });
 
-            $(document).on("click", "#btnDelete", function () {
-                var userId = $(this).data('user-id');
-                $('#userId').val(userId);
-            });
-
-            $(document).on("click", "#confirmDelete", function () {
-                var userId = document.getElementById("userId").value;
-
-                $.ajax({
-                    type: "DELETE",
-                    url: "/users/delete/" + userId,
-                    success: function (data) {
-                        console.log(data);
-                        $('#modal-delete').modal('hide');
-                        $('table#userTable tr#' + userId).remove();
-                        toastr.error(data);
-                    },
-                    error: function (err) {
-                        console.log(err);
-                    }
-                });
-            });
-
-            $("#userTable").DataTable({
-                "responsive": true, "lengthChange": false, "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#userTable_wrapper .col-md-6:eq(0)');
-
-            $('#addForm').validate({
-                rules: {
-                    firstName: {
-                        required: true
-                    },
-                    lastName: {
-                        required: true
-                    },
-                    userName: {
-                        required: true,
-                        remote:{
-                            url: "/users/checkUsername", //make sure to return true or false with a 200 status code
-                            type: "post",
-                            data: {
-                                username: function() {
-                                    return $("#inputusername").val();
-                                }
-                            }
-                        }
-                    },
-                    email: {
-                        required: true,
-                        email: true,
-                        remote:{
-                            url: "/users/checkEmail", //make sure to return true or false with a 200 status code
-                            type: "post",
-                            data: {
-                                email: function() {
-                                    return $("#inputemail").val();
-                                }
-                            }
-                        }
-                    },
-                    password: {
-                        required: true,
-                        minlength: 5
-                    },
-                    phone: {
-                        required: true
-                        // phone: true
-                    },
-                    address: {
-                        required: true
-                    }
-                },
-                messages: {
-                    firstName: {
-                        required: "Please enter a first name"
-                    },
-                    lastName: {
-                        required: "Please enter a last name"
-                    },
-                    userName: {
-                        required: "Please enter a username",
-                        remote : "This username is already exist"
-                    },
-                    email: {
-                        required: "Please enter a email address",
-                        email: "Please enter a vaild email address",
-                        remote : "This email is already exist"
-                    },
-                    password: {
-                        required: "Please provide a password",
-                        minlength: "Your password must be at least 5 characters long"
-                    },
-                    phone: {
-                        required: "Please enter a phone number"
-                        // phone: "Please enter a vaild phone number"
-                    },
-                    address: {
-                        required: "Please enter a address"
-                    }
-                },
-                errorElement: 'span',
-                errorPlacement: function (error, element) {
-                    error.addClass('invalid-feedback');
-                    element.closest('.form-group').append(error);
-                },
-                highlight: function (element, errorClass, validClass) {
-                    $(element).addClass('is-invalid');
-                },
-                unhighlight: function (element, errorClass, validClass) {
-                    $(element).removeClass('is-invalid');
-                },
-                submitHandler: function (form) {
-                    $.ajax({
-                        url: form.action,
-                        type: form.method,
-                        data: $(form).serialize(),
-                        success: function (data) {
-                            $('#modal-add').modal('hide');
-                            toastr.success(data);
-                            setTimeout(function()
-                            {
-                                location.reload();  //Refresh page
-                            }, 3000);
-                        },
-                        error: function (err) {
-                            console.log(err);
-                        }
-                    });
-                }
-            });
-
-            $('#inputactive1').click(function() {
-                if (this.checked) {
-                    $('#isActive').val(true);
-                } else {
-                    $('#isActive').val(false);
-                }
-            });
-
-            $('#editForm').validate({
-                rules: {
-                    firstName: {
-                        required: true
-                    },
-                    lastName: {
-                        required: true
-                    },
-                    userName: {
-                        required: true
-                    },
-                    email: {
-                        required: true,
-                        email: true,
-                    },
-                    phone: {
-                        required: true
-                        // phone: true
-                    },
-                    address: {
-                        required: true
-                    }
-                },
-                messages: {
-                    firstName: {
-                        required: "Please enter a first name"
-                    },
-                    lastName: {
-                        required: "Please enter a last name"
-                    },
-                    userName: {
-                        required: "Please enter a username"
-                    },
-                    email: {
-                        required: "Please enter a email address",
-                        email: "Please enter a vaild email address"
-                    },
-                    phone: {
-                        required: "Please enter a phone number"
-                        // phone: "Please enter a vaild phone number"
-                    },
-                    address: {
-                        required: "Please enter a address"
-                    }
-                },
-                errorElement: 'span',
-                errorPlacement: function (error, element) {
-                    error.addClass('invalid-feedback');
-                    element.closest('.form-group').append(error);
-                },
-                highlight: function (element, errorClass, validClass) {
-                    $(element).addClass('is-invalid');
-                },
-                unhighlight: function (element, errorClass, validClass) {
-                    $(element).removeClass('is-invalid');
-                },
-                submitHandler: function (form) {
-                    var userId = document.getElementById("inputid1").value;
-
-                    var formData = {
-                        firstName: $("#inputfirstname1").val(),
-                        lastName: $("#inputlastname1").val(),
-                        userName: $("#inputusername1").val(),
-                        email: $("#inputemail1").val(),
-                        phone: $("#inputphone1").val(),
-                        address: $("#inputaddress1").val(),
-                        active: $("#isActive").val()
-                    };
-
-                    console.log(formData);
-
-                    $.ajax({
-                        type: "PUT",
-                        url: "/users/edit/" + userId,
-                        data: JSON.stringify(formData),
-                        contentType: 'application/json',
-                        success: function (data) {
-                            $('#modal-edit').modal('hide');
-                            toastr.success(data);
-                            setTimeout(function()
-                            {
-                                location.reload();  //Refresh page
-                            }, 3000); //3 Second
-                        },
-                        error: function (err) {
-                            console.log(err);
-                        }
-                    });
-                }
-            });
-        });
-    </script>
-</th:block>
+            $(function () {
+                //Initialize Select2 Elements
+                $('.select2').select2()
+            })
+        </script>
+    </th:block>
 </body>
 </html>

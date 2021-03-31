@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface BrandRepository extends JpaRepository<Brand, Long> {
-    public List<Brand> getBrandsByManufacturerId(Long companyId);
-    public List<Brand> getBrandsByGenericId(Long genericId);
+    List<Brand> getBrandsByManufacturerId(Long companyId);
+    List<Brand> getBrandsByGenericId(Long genericId);
 }
