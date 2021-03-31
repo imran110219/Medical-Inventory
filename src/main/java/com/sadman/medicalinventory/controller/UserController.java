@@ -47,10 +47,6 @@ public class UserController {
 
     @PostMapping(value="/users/add")
     public ResponseEntity<String> addUser(User user){
-        if(service.existsByUserName(user.getUserName()))
-            return new ResponseEntity<>("This user name is already exist", HttpStatus.BAD_REQUEST);
-        if(service.existsByEmail(user.getEmail()))
-            return new ResponseEntity<>("This email is already exist", HttpStatus.BAD_REQUEST);
         service.createUser(user);
         return new ResponseEntity<>("User is added successfully", HttpStatus.OK);
     }
