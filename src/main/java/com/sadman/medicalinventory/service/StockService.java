@@ -22,6 +22,10 @@ public class StockService {
         return repository.findById(id).orElseThrow(() -> new RecordNotFoundException(id));
     }
 
+    public Stock getStockByPurchaseId(Long purchaseId) {
+        return repository.getStockByPurchaseId(purchaseId);
+    }
+
     public Stock createStock(Stock stock){
         return repository.save(stock);
     }

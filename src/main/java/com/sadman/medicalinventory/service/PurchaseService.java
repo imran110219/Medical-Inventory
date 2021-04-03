@@ -1,6 +1,7 @@
 package com.sadman.medicalinventory.service;
 
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
+import com.sadman.medicalinventory.model.Brand;
 import com.sadman.medicalinventory.model.Purchase;
 import com.sadman.medicalinventory.model.Indication;
 import com.sadman.medicalinventory.repository.PurchaseRepository;
@@ -19,6 +20,10 @@ public class PurchaseService {
     public List<Purchase> getAllPurchases()
     {
         return repository.findAll();
+    }
+
+    public List<Purchase> getPurchasesByBrandId(Long brandId) {
+        return repository.getPurchasesByBrandId(brandId);
     }
 
     public Purchase getPurchaseById(Long id) throws RecordNotFoundException {

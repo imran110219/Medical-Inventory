@@ -1,5 +1,6 @@
 package com.sadman.medicalinventory.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,6 +33,7 @@ public class Purchase {
     @Column(name = "total")
     private double total;
     @Column(name = "expiry_datetime")
+    @JsonFormat(pattern="dd-MM-yyyy")
     private Date expiryDate;
     @Column(name = "datetime", insertable=false)
     private String date;
