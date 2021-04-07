@@ -117,15 +117,9 @@
                                         <tbody>
                                         <tr>
                                             <td>
-                                                <select id="selectBrand" class="form-control select2"
+                                                <select id="selectBrand1" class="form-control select2"
+                                                        onchange="changeBrand(this);"
                                                         style="width: 100%;">
-                                                    <!--                                                    <option selected="selected">Nevalip</option>-->
-                                                    <!--                                                    <option>Napa</option>-->
-                                                    <!--                                                    <option>Naxpro</option>-->
-                                                    <!--                                                    <option>Aice</option>-->
-                                                    <!--                                                    <option>Bori</option>-->
-                                                    <!--                                                    <option>Calkeria</option>-->
-                                                    <!--                                                    <option>Phos</option>-->
                                                     <option value=""> --</option>
                                                     <option th:each="brand : ${brands}"
                                                             th:value="${brand.id}"
@@ -133,33 +127,33 @@
                                                 </select>
                                             </td>
                                             <td style="width:15%">
-                                                <select id="selectDate" class="form-control select2" style="width: 100%;">
+                                                <select id="selectDate1" class="form-control select2"
+                                                        onchange="changeDate(this);"
+                                                        style="width: 100%;">
                                                     <option value=""> --</option>
-<!--                                                    <option>11-7-2014</option>-->
-<!--                                                    <option>11-7-2015</option>-->
-<!--                                                    <option>11-7-2016</option>-->
-<!--                                                    <option>11-7-2017</option>-->
                                                 </select>
                                             </td>
                                             <td style="width:10%">
-                                                <input type="number" class="form-control" id="stock"
+                                                <input type="number" class="form-control" id="stock1"
                                                        placeholder="" disabled>
                                             </td>
                                             <td style="width:10%">
-                                                <input type="number" class="form-control" id="quantity"
-                                                       placeholder="10">
+                                                <input type="number" class="form-control" id="quantity1"
+                                                       onchange="changeQuantity(this);"
+                                                       placeholder="">
                                             </td>
                                             <td style="width:12%">
-                                                <input type="number" class="form-control" id="price"
-                                                       placeholder="100.00" disabled>
+                                                <input type="number" class="form-control" id="price1"
+                                                       placeholder="" disabled>
                                             </td>
                                             <td style="width:12%">
-                                                <input type="number" class="form-control" id="discount"
+                                                <input type="number" class="form-control" id="discount1"
+                                                       onchange="changeDiscount(this);"
                                                        placeholder="0">
                                             </td>
                                             <td style="width:12%">
-                                                <input type="number" class="form-control" id="total"
-                                                       placeholder="100.00" disabled>
+                                                <input type="number" class="form-control" id="total1"
+                                                       placeholder="" disabled>
                                             </td>
                                             <td>
                                                 <button type="button"
@@ -309,21 +303,50 @@
     <!--    <script src="/dist/js/adminlte.min.js"></script>-->
     <!-- AdminLTE for demo purposes -->
     <!--    <script src="/dist/js/demo.js"></script>-->
-    <script>
+    <script type="text/javascript" th:inline="javascript">
         $(document).ready(function () {
             $(".add-row").click(function () {
-                var tr = "<tr><td> <select class='form-control select2' style='width: 100%;'><option selected='selected'>Nevalip</option><option>Napa</option><option>Naxpro</option><option>Aice</option><option>Bori</option><option>Calkeria</option><option>Phos</option> </select></td><td style='width:15%'> <select class='form-control select2' style='width: 100%;'><option selected='selected'></option><option>11-7-2014</option><option>11-7-2015</option><option>11-7-2016</option><option>11-7-2017</option> </select></td><td style='width:10%'> <input type='number' class='form-control' id='stock' placeholder='100' disabled></td><td style='width:10%'> <input type='number' class='form-control' id='quantity' placeholder='10'></td><td style='width:12%'> <input type='number' class='form-control' id='price' placeholder='100.00' disabled></td><td style='width:12%'> <input type='number' class='form-control' id='discount' placeholder='0'></td><td style='width:12%'> <input type='number' class='form-control' id='total' placeholder='100.00' disabled></td><td> <button type='button' class='btn btn-block btn-danger btn-sm delete-row'> Delete </button></td></tr>";
+                var row = $("tbody tr").length + 1;
+                var tr = "<tr id='tr" + row + "'> <td> <select id='selectBrand" + row + "' class='form-control select2' onchange='changeBrand(this);' style='width: 100%;'> </select> </td> <td style='width:15%'> <select id='selectDate" + row + "' class='form-control select2' onchange='changeDate(this);' style='width: 100%;'> <option value=''> --</option> </select> </td> <td style='width:10%'> <input type='number' class='form-control' id='stock" + row + "' placeholder='' disabled> </td> <td style='width:10%'> <input type='number' class='form-control' id='quantity" + row + "' onchange='changeQuantity(this);' placeholder=''> </td> <td style='width:12%'> <input type='number' class='form-control' id='price" + row + "' placeholder='' disabled> </td> <td style='width:12%'> <input type='number' class='form-control' id='discount" + row + "' onchange='changeDiscount(this);' placeholder='0'> </td> <td style='width:12%'> <input type='number' class='form-control' id='total" + row + "' placeholder='' disabled> </td> <td> <button type='button' class='btn btn-block btn-danger btn-sm delete-row'> Delete </button> </td> </tr>";
                 $("#brand_tbl").append(tr);
                 $('.select2').select2();
+
+                /*<![CDATA[*/
+
+                var brandList = [[${brands}]];
+                $('#selectBrand' + row).append('<option value=' + 0 + '> --</option>');
+                for (i = 0; i < brandList.length; i++) {
+                    $('#selectBrand' + row).append('<option value=' + brandList[i].id + '>' + brandList[i].name + '</option>');
+                    // console.log(brandList[i]);
+                }
+
+                /*]]>*/
             });
 
             $("#brand_tbl").on('click', '.delete-row', function () {
                 $(this).parent().parent().remove();
             });
+
         });
 
-        $("#selectBrand").change(function () {
-            var brandId = $(this).val();
+        function changeBrand(selectObject) {
+            var brandId = selectObject.value;
+            var selectid = selectObject.id;
+            var res = selectid.substring(11);
+
+            $.ajax({
+                url: '/pos/brand/' + brandId,
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/json",
+                success: function (data) {
+                    // console.log(data.salePrice);
+                    $('#price'+res).val(data.salePrice);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
 
             $.ajax({
                 url: '/pos/purchases/' + brandId,
@@ -331,26 +354,64 @@
                 dataType: 'json',
                 contentType: "application/json",
                 success: function (data) {
-                    // console.log(data);
-                    // $.each(data, function (value) {
-                    //     // $('#selectDate').append('<option>' + value + '</option>');
-                    //     console.log(value);
-                    // });
-                    $('#selectDate').children().remove();
-                    $('#selectDate').append('<option value='+0+'> --</option>');
-                    for (var i = 0; i < data.length; i++){
-                        console.log(data[i].id + '  ' + data[i].expiryDate);
-                        $('#selectDate').append('<option value='+data[i].id+'>'+data[i].expiryDate+'</option>');
+                    $('#selectDate'+res).children().remove();
+                    $('#selectDate'+res).append('<option value=' + 0 + '> --</option>');
+                    for (var i = 0; i < data.length; i++) {
+                        // console.log(data[i].id + '  ' + data[i].expiryDate);
+                        $('#selectDate'+res).append('<option value=' + data[i].id + '>' + data[i].expiryDate + '</option>');
                     }
                 },
                 error: function (err) {
                     console.log(err);
                 }
             });
-        });
+        }
 
-        $("#selectDate").change(function () {
-            var purchaseId = $(this).val();
+        // $("#selectBrand").change(function () {
+        //     var brandId = $(this).val();
+        //
+        //     $.ajax({
+        //         url: '/pos/brand/' + brandId,
+        //         type: 'POST',
+        //         dataType: 'json',
+        //         contentType: "application/json",
+        //         success: function (data) {
+        //             // console.log(data.salePrice);
+        //             $('#price').val(data.salePrice);
+        //         },
+        //         error: function (err) {
+        //             console.log(err);
+        //         }
+        //     });
+        //
+        //     $.ajax({
+        //         url: '/pos/purchases/' + brandId,
+        //         type: 'POST',
+        //         dataType: 'json',
+        //         contentType: "application/json",
+        //         success: function (data) {
+        //             // console.log(data);
+        //             // $.each(data, function (value) {
+        //             //     // $('#selectDate').append('<option>' + value + '</option>');
+        //             //     console.log(value);
+        //             // });
+        //             $('#selectDate').children().remove();
+        //             $('#selectDate').append('<option value=' + 0 + '> --</option>');
+        //             for (var i = 0; i < data.length; i++) {
+        //                 // console.log(data[i].id + '  ' + data[i].expiryDate);
+        //                 $('#selectDate').append('<option value=' + data[i].id + '>' + data[i].expiryDate + '</option>');
+        //             }
+        //         },
+        //         error: function (err) {
+        //             console.log(err);
+        //         }
+        //     });
+        // });
+
+        function changeDate(selectObject) {
+            var purchaseId = selectObject.value;
+            var selectid = selectObject.id;
+            var res = selectid.substring(10);
 
             $.ajax({
                 url: '/pos/stock/' + purchaseId,
@@ -358,23 +419,100 @@
                 dataType: 'json',
                 contentType: "application/json",
                 success: function (data) {
-                    console.log(data.quantity);
-                    $('#stock').val(data.quantity);
+                    // console.log(data.quantity);
+                    $('#stock'+res).val(data.quantity);
                 },
                 error: function (err) {
                     console.log(err);
                 }
             });
-        });
+        }
 
-        $('#quantity').change(function(){
-            if($(this).val() > $('#stock').val()){
-                alert("Stock limited");
+        // $("#selectDate").change(function () {
+        //     var purchaseId = $(this).val();
+        //
+        //     $.ajax({
+        //         url: '/pos/stock/' + purchaseId,
+        //         type: 'POST',
+        //         dataType: 'json',
+        //         contentType: "application/json",
+        //         success: function (data) {
+        //             // console.log(data.quantity);
+        //             $('#stock').val(data.quantity);
+        //         },
+        //         error: function (err) {
+        //             console.log(err);
+        //         }
+        //     });
+        // });
+
+        function calculate(serial) {
+            var quanti = $('#quantity'+serial).val();
+            var pric = $('#price'+serial).val();
+            var disc = $('#discount'+serial).val();
+            var temp = quanti * pric;
+            if (disc != null) {
+                temp = temp - (temp * disc) / 100;
             }
-            else {
-                alert("Done");
+            $('#total'+serial).val(temp);
+            calculateSum();
+        }
+
+        function calculateSum() {
+            var sum1 = 0;
+            $("#brand_tbl tr").not(':first').each(function() {
+                sum1 +=  getnum($(this).find("td:eq(6)").text());
+                function getnum(t){
+                    if(isNumeric(t)){
+                        return parseInt(t,10);
+                    }
+                    return 0;
+                    function isNumeric(n) {
+                        return !isNaN(parseFloat(n)) && isFinite(n);
+                    }
+                }
+                console.log(sum1);
+            });
+            $("#grand_total").text(sum1);
+        }
+
+        function changeQuantity(selectObject) {
+            var quantityId = selectObject.value;
+            var selectid = selectObject.id;
+            var res = selectid.substring(8);
+
+            var stoc = $('#stock'+res).val();
+            var quanti = $('#quantity'+res).val();
+
+            if (Number(quanti) > Number(stoc) && quanti != null) {
+                alert('Limited Stock');
+            } else {
+                calculate(res);
             }
-        });
+        }
+
+        // $('#quantity').change(function () {
+        //     var stoc = $('#stock').val();
+        //     var quanti = $('#quantity').val();
+        //
+        //     if (Number(quanti) > Number(stoc) && quanti != null) {
+        //         alert('Limited Stock');
+        //     } else {
+        //         calculate();
+        //     }
+        // });
+
+        function changeDiscount(selectObject) {
+            var quantityId = selectObject.value;
+            var selectid = selectObject.id;
+            var res = selectid.substring(8);
+
+            calculate(res);
+        }
+
+        // $('#discount').change(function () {
+        //     calculate();
+        // });
 
         $(function () {
             //Initialize Select2 Elements

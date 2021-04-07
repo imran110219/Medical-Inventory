@@ -1,5 +1,6 @@
 package com.sadman.medicalinventory.controller;
 
+import com.sadman.medicalinventory.exception.RecordNotFoundException;
 import com.sadman.medicalinventory.model.Brand;
 import com.sadman.medicalinventory.model.Purchase;
 import com.sadman.medicalinventory.model.Stock;
@@ -33,6 +34,12 @@ public class POSController {
 
     @Autowired
     private StockService stockService;
+
+    @PostMapping(value="/pos/brand/{id}")
+    public ResponseEntity<Brand> getBrandById(@PathVariable(value = "id") Long brandId) throws RecordNotFoundException {
+        Brand brand = brandService.getBrandById(brandId);
+        return new ResponseEntity<>(brand, HttpStatus.OK);
+    }
 
     @PostMapping(value="/pos/purchases/{id}")
     public ResponseEntity<List<Purchase>> getPurchasesByBrandId(@PathVariable(value = "id") Long brandId){
