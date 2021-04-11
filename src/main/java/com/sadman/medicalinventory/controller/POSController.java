@@ -1,5 +1,7 @@
 package com.sadman.medicalinventory.controller;
 
+import com.sadman.medicalinventory.dto.InvoiceDTO;
+import com.sadman.medicalinventory.dto.MedicineDTO;
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
 import com.sadman.medicalinventory.model.Brand;
 import com.sadman.medicalinventory.model.Purchase;
@@ -56,6 +58,8 @@ public class POSController {
     @RequestMapping(value = "/pos")
     public String getPOS(Model model) {
         List<Brand> brandList = brandService.getAllBrands();
+        model.addAttribute("medicinedto", new MedicineDTO());
+        model.addAttribute("invoicedto", new InvoiceDTO());
         model.addAttribute("brands", brandList);
         return "pos";
     }

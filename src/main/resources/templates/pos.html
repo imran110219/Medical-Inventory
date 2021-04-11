@@ -77,12 +77,12 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form>
+                            <form id="posForm" th:object="${invoicedto}">
                                 <div class="card-body">
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label" for="name">Customer Name</label>
                                         <div class="col-sm-3">
-                                            <input type="text" class="form-control" id="name"
+                                            <input type="text" class="form-control" id="name" th:field="*{customerName}"
                                                    placeholder="Enter Customer Name">
                                         </div>
                                     </div>
@@ -90,6 +90,7 @@
                                         <label class="col-sm-2 col-form-label" for="mobile">Mobile No</label>
                                         <div class="col-sm-3">
                                             <input type="text" class="form-control" id="mobile"
+                                                   th:field="*{mobileNumber}"
                                                    placeholder="Enter Mobile Number">
                                         </div>
                                     </div>
@@ -115,9 +116,10 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
+                                        <tr th:each="medicineDTO : *{medicineDTOList}">
                                             <td>
                                                 <select id="selectBrand1" class="form-control select2"
+                                                        th:field="${medicineDTO.brandId}"
                                                         onchange="changeBrand(this);"
                                                         style="width: 100%;">
                                                     <option value=""> --</option>
@@ -136,10 +138,12 @@
                                             <td style="width:10%">
                                                 <input type="number" class="form-control" id="stock1"
                                                        placeholder="" disabled>
+                                                <input type="hidden" id="stockId1" th:field="${medicineDTO.stockId}">
                                             </td>
                                             <td style="width:10%">
                                                 <input type="number" class="form-control" id="quantity1"
                                                        onchange="changeQuantity(this);"
+                                                       th:field="${medicineDTO.quantity}"
                                                        placeholder="">
                                             </td>
                                             <td style="width:12%">
@@ -149,10 +153,13 @@
                                             <td style="width:12%">
                                                 <input type="number" class="form-control" id="discount1"
                                                        onchange="changeDiscount(this);"
+                                                       th:field="${medicineDTO.discount}"
                                                        placeholder="0">
+                                                <input type="hidden" id="discountAmount1">
                                             </td>
                                             <td style="width:12%">
                                                 <input type="number" class="form-control" id="total1"
+                                                       th:field="${medicineDTO.total}"
                                                        placeholder="" disabled>
                                             </td>
                                             <td>
@@ -168,22 +175,25 @@
                                     </br>
                                     </br>
                                     <div class="form-group row justify-content-end">
-                                        <label class="col-sm-2 col-form-label" for="name">
+                                        <label class="col-sm-2 col-form-label" for="average_discount">
                                             Average Discount
                                         </label>
                                         <div class="col-sm-2">
-                                            <input type="number" class="form-control" id="average_discount">
+                                            <input type="number" class="form-control" id="average_discount"
+                                                   th:field="*{averageDiscount}"
+                                                   onchange="changeAverageDiscount();">
                                         </div>
                                         <div class="col-sm-1">
 
                                         </div>
                                     </div>
                                     <div class="form-group row justify-content-end">
-                                        <label class="col-sm-2 col-form-label justify-content-end" for="name">
+                                        <label class="col-sm-2 col-form-label justify-content-end" for="total_discount">
                                             Total Discount
                                         </label>
                                         <div class="col-sm-2">
-                                            <input type="number" class="form-control" id="total_discount" disabled>
+                                            <input type="number" class="form-control" id="total_discount"
+                                                   th:field="*{totalDiscount}" disabled>
                                         </div>
                                         <div class="col-sm-1">
 
@@ -227,7 +237,8 @@
                                             Grand Total
                                         </label>
                                         <div class="col-sm-2">
-                                            <input type="number" class="form-control" id="grand_total" disabled>
+                                            <input type="number" class="form-control" id="grand_total"
+                                                   th:field="*{grandTotal}" disabled>
                                         </div>
                                         <div class="col-sm-1">
 
@@ -238,12 +249,24 @@
                                             Paid Amount
                                         </label>
                                         <div class="col-sm-2">
-                                            <input type="number" class="form-control" id="paid_amount">
+                                            <input type="number" class="form-control" id="paid_amount"
+                                                   onchange="changePaidAmount();">
                                         </div>
                                         <div class="col-sm-1">
 
                                         </div>
                                     </div>
+                                    <!--                                    <div class="form-group row justify-content-end">-->
+                                    <!--                                        <label class="col-sm-2 col-form-label" for="change">-->
+                                    <!--                                            Change-->
+                                    <!--                                        </label>-->
+                                    <!--                                        <div class="col-sm-2">-->
+                                    <!--                                            <input type="number" class="form-control" id="change">-->
+                                    <!--                                        </div>-->
+                                    <!--                                        <div class="col-sm-1">-->
+
+                                    <!--                                        </div>-->
+                                    <!--                                    </div>-->
                                 </div>
                                 <!-- /.card-body -->
 
@@ -307,7 +330,7 @@
         $(document).ready(function () {
             $(".add-row").click(function () {
                 var row = $("tbody tr").length + 1;
-                var tr = "<tr id='tr" + row + "'> <td> <select id='selectBrand" + row + "' class='form-control select2' onchange='changeBrand(this);' style='width: 100%;'> </select> </td> <td style='width:15%'> <select id='selectDate" + row + "' class='form-control select2' onchange='changeDate(this);' style='width: 100%;'> <option value=''> --</option> </select> </td> <td style='width:10%'> <input type='number' class='form-control' id='stock" + row + "' placeholder='' disabled> </td> <td style='width:10%'> <input type='number' class='form-control' id='quantity" + row + "' onchange='changeQuantity(this);' placeholder=''> </td> <td style='width:12%'> <input type='number' class='form-control' id='price" + row + "' placeholder='' disabled> </td> <td style='width:12%'> <input type='number' class='form-control' id='discount" + row + "' onchange='changeDiscount(this);' placeholder='0'> </td> <td style='width:12%'> <input type='number' class='form-control' id='total" + row + "' placeholder='' disabled> </td> <td> <button type='button' class='btn btn-block btn-danger btn-sm delete-row'> Delete </button> </td> </tr>";
+                var tr = "<tr id='tr" + row + "'> <td> <select id='selectBrand" + row + "' class='form-control select2' onchange='changeBrand(this);' style='width: 100%;'> </select> </td> <td style='width:15%'> <select id='selectDate" + row + "' class='form-control select2' onchange='changeDate(this);' style='width: 100%;'> <option value=''> --</option> </select> </td> <td style='width:10%'> <input type='number' class='form-control' id='stock" + row + "' placeholder='' disabled> </td> <td style='width:10%'> <input type='number' class='form-control' id='quantity" + row + "' onchange='changeQuantity(this);' placeholder=''> </td> <td style='width:12%'> <input type='number' class='form-control' id='price" + row + "' placeholder='' disabled> </td> <td style='width:12%'> <input type='number' class='form-control' id='discount" + row + "' onchange='changeDiscount(this);' placeholder='0'> <input type='hidden' id='discountAmount" + row + "'> </td> <td style='width:12%'> <input type='number' class='form-control' id='total" + row + "' placeholder='' disabled> </td> <td> <button type='button' class='btn btn-block btn-danger btn-sm delete-row'> Delete </button> </td> </tr>";
                 $("#brand_tbl").append(tr);
                 $('.select2').select2();
 
@@ -341,7 +364,7 @@
                 contentType: "application/json",
                 success: function (data) {
                     // console.log(data.salePrice);
-                    $('#price'+res).val(data.salePrice);
+                    $('#price' + res).val(data.salePrice);
                 },
                 error: function (err) {
                     console.log(err);
@@ -354,11 +377,11 @@
                 dataType: 'json',
                 contentType: "application/json",
                 success: function (data) {
-                    $('#selectDate'+res).children().remove();
-                    $('#selectDate'+res).append('<option value=' + 0 + '> --</option>');
+                    $('#selectDate' + res).children().remove();
+                    $('#selectDate' + res).append('<option value=' + 0 + '> --</option>');
                     for (var i = 0; i < data.length; i++) {
                         // console.log(data[i].id + '  ' + data[i].expiryDate);
-                        $('#selectDate'+res).append('<option value=' + data[i].id + '>' + data[i].expiryDate + '</option>');
+                        $('#selectDate' + res).append('<option value=' + data[i].id + '>' + data[i].expiryDate + '</option>');
                     }
                 },
                 error: function (err) {
@@ -366,47 +389,6 @@
                 }
             });
         }
-
-        // $("#selectBrand").change(function () {
-        //     var brandId = $(this).val();
-        //
-        //     $.ajax({
-        //         url: '/pos/brand/' + brandId,
-        //         type: 'POST',
-        //         dataType: 'json',
-        //         contentType: "application/json",
-        //         success: function (data) {
-        //             // console.log(data.salePrice);
-        //             $('#price').val(data.salePrice);
-        //         },
-        //         error: function (err) {
-        //             console.log(err);
-        //         }
-        //     });
-        //
-        //     $.ajax({
-        //         url: '/pos/purchases/' + brandId,
-        //         type: 'POST',
-        //         dataType: 'json',
-        //         contentType: "application/json",
-        //         success: function (data) {
-        //             // console.log(data);
-        //             // $.each(data, function (value) {
-        //             //     // $('#selectDate').append('<option>' + value + '</option>');
-        //             //     console.log(value);
-        //             // });
-        //             $('#selectDate').children().remove();
-        //             $('#selectDate').append('<option value=' + 0 + '> --</option>');
-        //             for (var i = 0; i < data.length; i++) {
-        //                 // console.log(data[i].id + '  ' + data[i].expiryDate);
-        //                 $('#selectDate').append('<option value=' + data[i].id + '>' + data[i].expiryDate + '</option>');
-        //             }
-        //         },
-        //         error: function (err) {
-        //             console.log(err);
-        //         }
-        //     });
-        // });
 
         function changeDate(selectObject) {
             var purchaseId = selectObject.value;
@@ -420,7 +402,8 @@
                 contentType: "application/json",
                 success: function (data) {
                     // console.log(data.quantity);
-                    $('#stock'+res).val(data.quantity);
+                    $('#stock' + res).val(data.quantity);
+                    $('#stockId' + res).val(data.id);
                 },
                 error: function (err) {
                     console.log(err);
@@ -428,52 +411,42 @@
             });
         }
 
-        // $("#selectDate").change(function () {
-        //     var purchaseId = $(this).val();
-        //
-        //     $.ajax({
-        //         url: '/pos/stock/' + purchaseId,
-        //         type: 'POST',
-        //         dataType: 'json',
-        //         contentType: "application/json",
-        //         success: function (data) {
-        //             // console.log(data.quantity);
-        //             $('#stock').val(data.quantity);
-        //         },
-        //         error: function (err) {
-        //             console.log(err);
-        //         }
-        //     });
-        // });
-
         function calculate(serial) {
-            var quanti = $('#quantity'+serial).val();
-            var pric = $('#price'+serial).val();
-            var disc = $('#discount'+serial).val();
+            var quanti = $('#quantity' + serial).val();
+            var pric = $('#price' + serial).val();
+            var disc = $('#discount' + serial).val();
+            var discamount;
             var temp = quanti * pric;
             if (disc != null) {
-                temp = temp - (temp * disc) / 100;
+                discamount = (temp * disc) / 100;
+                temp = temp - discamount;
             }
-            $('#total'+serial).val(temp);
+            $('#discountAmount' + serial).val(discamount);
+            $('#total' + serial).val(temp);
             calculateSum();
         }
 
         function calculateSum() {
-            var sum1 = 0;
-            $("#brand_tbl tr").not(':first').each(function() {
-                sum1 +=  getnum($(this).find("td:eq(6)").text());
-                function getnum(t){
-                    if(isNumeric(t)){
-                        return parseInt(t,10);
-                    }
-                    return 0;
-                    function isNumeric(n) {
-                        return !isNaN(parseFloat(n)) && isFinite(n);
-                    }
+            var sumTotal = 0;
+            var sumDiscount = 0;
+            var size = $("tbody tr").length + 1;
+            for (i = 1; i <= size; i++) {
+                var tempTotal = $('#total' + i).val();
+                var tempDiscount = $('#discountAmount' + i).val();
+                if (typeof tempTotal !== "undefined") {
+                    sumTotal = Number(sumTotal) + Number(tempTotal);
                 }
-                console.log(sum1);
-            });
-            $("#grand_total").text(sum1);
+                if (typeof tempDiscount !== "undefined") {
+                    sumDiscount = Number(sumDiscount) + Number(tempDiscount);
+                }
+            }
+            var averageDiscount = $('#average_discount').val();
+            if (typeof averageDiscount !== "undefined") {
+                sumDiscount = Number(sumDiscount) + Number(averageDiscount);
+            }
+
+            $("#total_discount").val(sumDiscount);
+            $("#grand_total").val(sumTotal);
         }
 
         function changeQuantity(selectObject) {
@@ -481,8 +454,8 @@
             var selectid = selectObject.id;
             var res = selectid.substring(8);
 
-            var stoc = $('#stock'+res).val();
-            var quanti = $('#quantity'+res).val();
+            var stoc = $('#stock' + res).val();
+            var quanti = $('#quantity' + res).val();
 
             if (Number(quanti) > Number(stoc) && quanti != null) {
                 alert('Limited Stock');
@@ -491,16 +464,9 @@
             }
         }
 
-        // $('#quantity').change(function () {
-        //     var stoc = $('#stock').val();
-        //     var quanti = $('#quantity').val();
-        //
-        //     if (Number(quanti) > Number(stoc) && quanti != null) {
-        //         alert('Limited Stock');
-        //     } else {
-        //         calculate();
-        //     }
-        // });
+        function changeAverageDiscount() {
+            calculateSum();
+        }
 
         function changeDiscount(selectObject) {
             var quantityId = selectObject.value;
@@ -510,9 +476,12 @@
             calculate(res);
         }
 
-        // $('#discount').change(function () {
-        //     calculate();
-        // });
+        // function changePaidAmount() {
+        //     var grandTotal = $("#grand_total").val();
+        //     var paidAmount = $("#paid_amount").val();
+        //     var changeAmount = Number(paidAmount) - Number(grandTotal);
+        //     $("#change").val(changeAmount);
+        // }
 
         $(function () {
             //Initialize Select2 Elements
