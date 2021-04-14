@@ -77,7 +77,7 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form id="posForm" th:object="${invoicedto}">
+                            <form id="posForm" th:action="@{/pos/payment}" th:object="${invoicedto}" method="post">
                                 <div class="card-body">
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label" for="name">Customer Name</label>
@@ -191,7 +191,7 @@
                                         <div class="col-sm-2">
                                             <input type="number" class="form-control" id="total_discount"
                                                    th:field="*{totalDiscount}"
-                                                   disabled>
+                                                   readonly>
                                         </div>
                                         <div class="col-sm-1">
 
@@ -236,7 +236,8 @@
                                         </label>
                                         <div class="col-sm-2">
                                             <input type="number" class="form-control" id="grand_total"
-                                                   disabled>
+                                                   th:field="*{grandTotal}"
+                                                   readonly>
                                         </div>
                                         <div class="col-sm-1">
 
@@ -325,14 +326,16 @@
     <!-- AdminLTE for demo purposes -->
     <!--    <script src="/dist/js/demo.js"></script>-->
     <script type="text/javascript" th:inline="javascript">
+        /*<![CDATA[*/
         $(document).ready(function () {
+
             $(".add-row").click(function () {
                 var row = $("tbody tr").length + 1;
                 var tr = "<tr id='tr" + row + "'> <td> <select id='selectBrand" + row + "' class='form-control select2' onchange='changeBrand(this);' style='width: 100%;'> </select> </td> <td style='width:15%'> <select id='selectDate" + row + "' class='form-control select2' onchange='changeDate(this);' style='width: 100%;'> <option value=''> --</option> </select> </td> <td style='width:10%'> <input type='number' class='form-control' id='stock" + row + "' placeholder='' disabled> </td> <td style='width:10%'> <input type='number' class='form-control' id='quantity" + row + "' onchange='changeQuantity(this);' placeholder=''> </td> <td style='width:12%'> <input type='number' class='form-control' id='price" + row + "' placeholder='' disabled> </td> <td style='width:12%'> <input type='number' class='form-control' id='discount" + row + "' onchange='changeDiscount(this);' placeholder='0'> <input type='hidden' id='discountAmount" + row + "'> </td> <td style='width:12%'> <input type='number' class='form-control' id='total" + row + "' placeholder='' disabled> </td> <td> <button type='button' class='btn btn-block btn-danger btn-sm delete-row'> Delete </button> </td> </tr>";
                 $("#brand_tbl").append(tr);
                 $('.select2').select2();
 
-                /*<![CDATA[*/
+
 
                 var brandList = [[${brands}]];
                 $('#selectBrand' + row).append('<option value=' + 0 + '> --</option>');
@@ -340,15 +343,35 @@
                     $('#selectBrand' + row).append('<option value=' + brandList[i].id + '>' + brandList[i].name + '</option>');
                     // console.log(brandList[i]);
                 }
-
-                /*]]>*/
             });
+
+            $("#posForm").submit(function (e) {
+                e.preventDefault();
+                var invoice_dto = [[${invoicedto}]];
+                var customer_name = [[${invoicedto.customerName}]];
+                console.log(invoice_dto);
+                $.ajax({
+                    type: 'post',
+                    url: "/pos/payment",
+                    data: $('#posForm').serialize(),
+                    success: function(returnedData){
+                        console.log($('#posForm').serialize());
+                        alert("success")
+                    },
+
+                    error: function(xhr, exception) {
+                        console.log(exception);
+                    }
+                });
+            });
+
 
             $("#brand_tbl").on('click', '.delete-row', function () {
                 $(this).parent().parent().remove();
             });
 
         });
+        /*]]>*/
 
         function changeBrand(selectObject) {
             var brandId = selectObject.value;

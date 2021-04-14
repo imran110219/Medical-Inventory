@@ -63,4 +63,10 @@ public class POSController {
         model.addAttribute("brands", brandList);
         return "pos";
     }
+
+    @PostMapping(value="/pos/payment")
+    public String makePayment(InvoiceDTO invoiceDTO){
+        System.out.println(invoiceDTO);
+        return "invoice/invoice";
+    }
 }
