@@ -117,9 +117,10 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr>
+                                        <tr th:object="${medicinedto}">
                                             <td>
                                                 <select id="selectBrand1" class="form-control select2"
+                                                        th:field="*{brandId}"
                                                         onchange="changeBrand(this);"
                                                         style="width: 100%;">
                                                     <option value=""> --</option>
@@ -138,10 +139,11 @@
                                             <td style="width:10%">
                                                 <input type="number" class="form-control" id="stock1"
                                                        placeholder="" disabled>
-                                                <input type="hidden" id="stockId1">
+                                                <input type="hidden" id="stockId1" th:field="*{stockId}">
                                             </td>
                                             <td style="width:10%">
                                                 <input type="number" class="form-control" id="quantity1"
+                                                       th:field="*{quantity}"
                                                        onchange="changeQuantity(this);"
                                                        placeholder="">
                                             </td>
@@ -153,11 +155,12 @@
                                                 <input type="number" class="form-control" id="discount1"
                                                        onchange="changeDiscount(this);"
                                                        placeholder="0">
-                                                <input type="hidden" id="discountAmount1">
+                                                <input type="hidden" id="discountAmount1" th:field="*{discount}">
                                             </td>
                                             <td style="width:12%">
                                                 <input type="number" class="form-control" id="total1"
-                                                       placeholder="" disabled>
+                                                       th:field="*{discount}"
+                                                       placeholder="" readonly>
                                             </td>
                                             <td>
                                                 <button type="button"
@@ -165,6 +168,7 @@
                                                     Delete
                                                 </button>
                                             </td>
+                                            <div th:text="${invoicedto.medicineDTOList.add(medicinedto)}" th:remove="all"></div>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -348,8 +352,8 @@
             $("#posForm").submit(function (e) {
                 e.preventDefault();
                 var invoice_dto = [[${invoicedto}]];
-                var customer_name = [[${invoicedto.customerName}]];
-                console.log(invoice_dto);
+                var medicine_dto = [[${medicinedto}]];
+                console.log(medicine_dto);
                 $.ajax({
                     type: 'post',
                     url: "/pos/payment",

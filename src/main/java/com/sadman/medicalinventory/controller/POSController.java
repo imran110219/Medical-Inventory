@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -59,7 +60,10 @@ public class POSController {
     public String getPOS(Model model) {
         List<Brand> brandList = brandService.getAllBrands();
         model.addAttribute("medicinedto", new MedicineDTO());
-        model.addAttribute("invoicedto", new InvoiceDTO());
+        InvoiceDTO invoiceDTO = new InvoiceDTO();
+        List<MedicineDTO> medicineDTOList = new ArrayList<>();
+        invoiceDTO.setMedicineDTOList(medicineDTOList);
+        model.addAttribute("invoicedto", invoiceDTO);
         model.addAttribute("brands", brandList);
         return "pos";
     }
