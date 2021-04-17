@@ -117,10 +117,10 @@
                                         </tr>
                                         </thead>
                                         <tbody>
-                                        <tr th:object="${medicinedto}">
+                                        <tr>
                                             <td>
                                                 <select id="selectBrand1" class="form-control select2"
-                                                        th:field="*{brandId}"
+                                                        th:field="*{medicineDTOList[0].brandId}"
                                                         onchange="changeBrand(this);"
                                                         style="width: 100%;">
                                                     <option value=""> --</option>
@@ -139,11 +139,11 @@
                                             <td style="width:10%">
                                                 <input type="number" class="form-control" id="stock1"
                                                        placeholder="" disabled>
-                                                <input type="hidden" id="stockId1" th:field="*{stockId}">
+                                                <input type="hidden" id="stockId1" th:field="*{medicineDTOList[0].stockId}">
                                             </td>
                                             <td style="width:10%">
                                                 <input type="number" class="form-control" id="quantity1"
-                                                       th:field="*{quantity}"
+                                                       th:field="*{medicineDTOList[0].quantity}"
                                                        onchange="changeQuantity(this);"
                                                        placeholder="">
                                             </td>
@@ -155,11 +155,11 @@
                                                 <input type="number" class="form-control" id="discount1"
                                                        onchange="changeDiscount(this);"
                                                        placeholder="0">
-                                                <input type="hidden" id="discountAmount1" th:field="*{discount}">
+                                                <input type="hidden" id="discountAmount1" th:field="*{medicineDTOList[0].discount}">
                                             </td>
                                             <td style="width:12%">
                                                 <input type="number" class="form-control" id="total1"
-                                                       th:field="*{discount}"
+                                                       th:field="*{medicineDTOList[0].total}"
                                                        placeholder="" readonly>
                                             </td>
                                             <td>
@@ -168,7 +168,58 @@
                                                     Delete
                                                 </button>
                                             </td>
-                                            <div th:text="${invoicedto.medicineDTOList.add(medicinedto)}" th:remove="all"></div>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <select id="selectBrand2" class="form-control select2"
+                                                        th:field="*{medicineDTOList[1].brandId}"
+                                                        onchange="changeBrand(this);"
+                                                        style="width: 100%;">
+                                                    <option value=""> --</option>
+                                                    <option th:each="brand : ${brands}"
+                                                            th:value="${brand.id}"
+                                                            th:utext="${brand.name}">
+                                                </select>
+                                            </td>
+                                            <td style="width:15%">
+                                                <select id="selectDate2" class="form-control select2"
+                                                        onchange="changeDate(this);"
+                                                        style="width: 100%;">
+                                                    <option value=""> --</option>
+                                                </select>
+                                            </td>
+                                            <td style="width:10%">
+                                                <input type="number" class="form-control" id="stock2"
+                                                       placeholder="" disabled>
+                                                <input type="hidden" id="stockId2" th:field="*{medicineDTOList[1].stockId}">
+                                            </td>
+                                            <td style="width:10%">
+                                                <input type="number" class="form-control" id="quantity2"
+                                                       th:field="*{medicineDTOList[1].quantity}"
+                                                       onchange="changeQuantity(this);"
+                                                       placeholder="">
+                                            </td>
+                                            <td style="width:12%">
+                                                <input type="number" class="form-control" id="price2"
+                                                       placeholder="" disabled>
+                                            </td>
+                                            <td style="width:12%">
+                                                <input type="number" class="form-control" id="discount2"
+                                                       onchange="changeDiscount(this);"
+                                                       placeholder="0">
+                                                <input type="hidden" id="discountAmount2" th:field="*{medicineDTOList[1].discount}">
+                                            </td>
+                                            <td style="width:12%">
+                                                <input type="number" class="form-control" id="total2"
+                                                       th:field="*{medicineDTOList[1].total}"
+                                                       placeholder="" readonly>
+                                            </td>
+                                            <td>
+                                                <button type="button"
+                                                        class="btn btn-block btn-danger btn-sm delete-row">
+                                                    Delete
+                                                </button>
+                                            </td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -335,10 +386,10 @@
 
             $(".add-row").click(function () {
                 var row = $("tbody tr").length + 1;
-                var tr = "<tr id='tr" + row + "'> <td> <select id='selectBrand" + row + "' class='form-control select2' onchange='changeBrand(this);' style='width: 100%;'> </select> </td> <td style='width:15%'> <select id='selectDate" + row + "' class='form-control select2' onchange='changeDate(this);' style='width: 100%;'> <option value=''> --</option> </select> </td> <td style='width:10%'> <input type='number' class='form-control' id='stock" + row + "' placeholder='' disabled> </td> <td style='width:10%'> <input type='number' class='form-control' id='quantity" + row + "' onchange='changeQuantity(this);' placeholder=''> </td> <td style='width:12%'> <input type='number' class='form-control' id='price" + row + "' placeholder='' disabled> </td> <td style='width:12%'> <input type='number' class='form-control' id='discount" + row + "' onchange='changeDiscount(this);' placeholder='0'> <input type='hidden' id='discountAmount" + row + "'> </td> <td style='width:12%'> <input type='number' class='form-control' id='total" + row + "' placeholder='' disabled> </td> <td> <button type='button' class='btn btn-block btn-danger btn-sm delete-row'> Delete </button> </td> </tr>";
+                var index = $("tbody tr").length;
+                var tr = "<tr id='tr" + row + "'> <td> <select id='selectBrand" + row + "' class='form-control select2' th:field='*{medicineDTOList[" + index + "].brandId}' onchange='changeBrand(this);' style='width: 100%;'> </select> </td> <td style='width:15%'> <select id='selectDate" + row + "' class='form-control select2' onchange='changeDate(this);' style='width: 100%;'> <option value=''> --</option> </select> </td> <td style='width:10%'> <input type='number' class='form-control' id='stock" + row + "' placeholder='' disabled> <input type='hidden' id='stockId1' th:field='*{medicineDTOList[" + index + "].stockId}'> </td> <td style='width:10%'> <input type='number' class='form-control' id='quantity" + row + "' th:field='*{medicineDTOList[" + index + "].quantity}' onchange='changeQuantity(this);' placeholder=''> </td> <td style='width:12%'> <input type='number' class='form-control' id='price" + row + "' placeholder='' disabled> </td> <td style='width:12%'> <input type='number' class='form-control' id='discount" + row + "' onchange='changeDiscount(this);' placeholder='0'> <input type='hidden' id='discountAmount" + row + "' th:field='*{medicineDTOList[" + index + "].discount}'> </td> <td style='width:12%'> <input type='number' class='form-control' id='total" + row + "' th:field='*{medicineDTOList[" + index + "].total}' placeholder='' readonly> </td> <td> <button type='button' class='btn btn-block btn-danger btn-sm delete-row'> Delete </button> </td> </tr>";
                 $("#brand_tbl").append(tr);
                 $('.select2').select2();
-
 
 
                 var brandList = [[${brands}]];
@@ -351,19 +402,21 @@
 
             $("#posForm").submit(function (e) {
                 e.preventDefault();
-                var invoice_dto = [[${invoicedto}]];
-                var medicine_dto = [[${medicinedto}]];
-                console.log(medicine_dto);
+                // var invoice_dto = [[${invoicedto}]];
+                // var medicine_dto = [[${medicinedto}]];
+
+                // var invoice_dto = $('#posForm').serialize();
+                // console.log(invoice_dto);
                 $.ajax({
                     type: 'post',
                     url: "/pos/payment",
                     data: $('#posForm').serialize(),
-                    success: function(returnedData){
+                    success: function (returnedData) {
                         console.log($('#posForm').serialize());
                         alert("success")
                     },
 
-                    error: function(xhr, exception) {
+                    error: function (xhr, exception) {
                         console.log(exception);
                     }
                 });
@@ -375,6 +428,7 @@
             });
 
         });
+
         /*]]>*/
 
         function changeBrand(selectObject) {
@@ -469,7 +523,7 @@
             if (typeof averageDiscount !== "undefined") {
                 sumDiscount = Number(sumDiscount) + Number(averageDiscount);
             }
-
+            sumTotal = Number(sumTotal) - Number(averageDiscount);
             $("#total_discount").val(sumDiscount);
             $("#grand_total").val(sumTotal);
         }

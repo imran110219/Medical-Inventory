@@ -59,10 +59,10 @@ public class POSController {
     @RequestMapping(value = "/pos")
     public String getPOS(Model model) {
         List<Brand> brandList = brandService.getAllBrands();
-        model.addAttribute("medicinedto", new MedicineDTO());
-        InvoiceDTO invoiceDTO = new InvoiceDTO();
         List<MedicineDTO> medicineDTOList = new ArrayList<>();
+        InvoiceDTO invoiceDTO = new InvoiceDTO();
         invoiceDTO.setMedicineDTOList(medicineDTOList);
+        model.addAttribute("medicinedto", new MedicineDTO());
         model.addAttribute("invoicedto", invoiceDTO);
         model.addAttribute("brands", brandList);
         return "pos";

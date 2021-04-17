@@ -1,7 +1,6 @@
 package com.sadman.medicalinventory.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -10,6 +9,10 @@ import java.util.List;
  */
 @Getter
 @Setter
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class InvoiceDTO {
     private String customerName;
     private String mobileNumber;

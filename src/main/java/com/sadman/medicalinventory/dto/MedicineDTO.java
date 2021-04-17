@@ -1,13 +1,16 @@
 package com.sadman.medicalinventory.dto;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * @author Sadman
  */
 @Getter
 @Setter
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class MedicineDTO {
     private Long brandId;
     private Long stockId;
