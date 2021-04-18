@@ -7,10 +7,7 @@ import com.sadman.medicalinventory.model.Brand;
 import com.sadman.medicalinventory.model.Purchase;
 import com.sadman.medicalinventory.model.Stock;
 import com.sadman.medicalinventory.model.User;
-import com.sadman.medicalinventory.service.BrandService;
-import com.sadman.medicalinventory.service.PurchaseService;
-import com.sadman.medicalinventory.service.StockService;
-import com.sadman.medicalinventory.service.UserService;
+import com.sadman.medicalinventory.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +34,9 @@ public class POSController {
 
     @Autowired
     private StockService stockService;
+
+    @Autowired
+    private POSService posService;
 
     @PostMapping(value="/pos/brand/{id}")
     public ResponseEntity<Brand> getBrandById(@PathVariable(value = "id") Long brandId) throws RecordNotFoundException {
@@ -70,7 +70,7 @@ public class POSController {
 
     @PostMapping(value="/pos/payment")
     public String makePayment(InvoiceDTO invoiceDTO){
-        System.out.println(invoiceDTO);
+        posService.makePayment(invoiceDTO);
         return "invoice/invoice";
     }
 }
