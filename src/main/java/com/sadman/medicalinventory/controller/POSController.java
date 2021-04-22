@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -77,10 +78,21 @@ public class POSController {
         return new ResponseEntity<>(invoice, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/pos/invoice/{invoiceId}")
-    public String getInvoice(@PathVariable(value = "invoiceId") String invoiceId) throws RecordNotFoundException {
+    @GetMapping(value = "/pos/invoice/{invoiceId}")
+    public String getInvoice(Model model, @PathVariable(value = "invoiceId") String invoiceId) throws RecordNotFoundException {
         Invoice invoice = invoiceService.getInvoiceById(invoiceId);
         List<Sale> saleList = saleService.getAllSalesByInvoiceId(invoiceId);
+        model.addAttribute("invoice", invoice);
+        model.addAttribute("saleList", saleList);
         return "invoice/invoice";
+    }
+
+    @GetMapping(value = "/pos/invoice/{invoiceId}/print")
+    public String printInvoice(Model model, @PathVariable(value = "invoiceId") String invoiceId) throws RecordNotFoundException {
+        Invoice invoice = invoiceService.getInvoiceById(invoiceId);
+        List<Sale> saleList = saleService.getAllSalesByInvoiceId(invoiceId);
+        model.addAttribute("invoice", invoice);
+        model.addAttribute("saleList", saleList);
+        return "invoice/invoice-print";
     }
 }

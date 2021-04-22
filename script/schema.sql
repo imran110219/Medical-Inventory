@@ -156,6 +156,9 @@ CREATE TABLE `return` (
   `id` INT(11),
   `invoice_id` VARCHAR(13) DEFAULT NULL,
   `purchase_id` INT(11) DEFAULT NULL,
+  `quantity` INT(11) NOT NULL,
+  `unit_price` DOUBLE NOT NULL,
+  `deduction` DOUBLE NOT NULL,
   `total` DOUBLE NOT NULL,
   `wastage` BIT(1) DEFAULT NULL,
   `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -212,7 +215,6 @@ CREATE TABLE `customer` (
   `fullname` VARCHAR(100) NOT NULL,
   `phone` VARCHAR(100) DEFAULT NULL,
   `email` VARCHAR(40) DEFAULT NULL,
-  `phone` VARCHAR(100) DEFAULT NULL,
   `address` TEXT DEFAULT NULL
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 

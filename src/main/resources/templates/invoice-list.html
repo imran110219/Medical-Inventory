@@ -52,7 +52,8 @@
                             <div class="card-header">
                                 <div class="col-sm-2 col-md-1">
                                     <button type="button" class="btn btn-block btn-success btn-sm"
-                                            data-toggle="modal" data-target="#modal-default">Add</button>
+                                            data-toggle="modal" data-target="#modal-default">Add
+                                    </button>
                                 </div>
                             </div>
 
@@ -83,7 +84,14 @@
                                         <td th:text="${invoice.paid}"></td>
                                         <td th:text="${invoice.returned}"></td>
                                         <td>
-                                            <div class="btn-group">
+                                            <div class="btn-group" style="margin-left: 23px">
+                                                <input type="hidden" id="invoiceId" th:value="${invoice.id}">
+                                                <button type="button" id="btnView"
+                                                        class="btn btn-block btn-info btn-sm"
+                                                        style="margin-top: 8px;border-radius: 3px 0px 0px 3px;"
+                                                        onclick="viewInvoice();"
+                                                ><i class="fas fa-eye"></i>
+                                                </button>
                                                 <button type="button" id="btnEdit"
                                                         class="btn btn-block btn-primary btn-sm"
                                                         style="margin-top: 8px"
@@ -236,6 +244,12 @@
                 }
             });
         });
+
+        function viewInvoice() {
+            var parameter = document.getElementById("invoiceId").value;
+            console.log(parameter);
+            window.location.href = '/pos/invoice/'+parameter;
+        }
     </script>
 </th:block>
 </body>

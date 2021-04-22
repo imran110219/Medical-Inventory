@@ -68,7 +68,7 @@ public class POSService {
             sale.setDiscount(medicineDTO.getDiscount());
             sale.setQuantity(medicineDTO.getQuantity());
             sale.setUnitPrice(medicineDTO.getUnitPrice());
-            sale.setTotal(medicineDTO.getUnitPrice());
+            sale.setTotal(medicineDTO.getTotal());
             saleList.add(sale);
         }
 

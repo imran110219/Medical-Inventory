@@ -1,8 +1,10 @@
 package com.sadman.medicalinventory.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -33,5 +35,5 @@ public class Invoice {
     @Column(name = "returned")
     private double returned;
     @Column(name = "datetime", insertable=false)
-    private String date;
+    private Date date;
 }
