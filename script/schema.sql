@@ -143,6 +143,7 @@ CREATE TABLE `sale` (
   `stock_id` INT(11) NOT NULL,
   `quantity` INT(11) NOT NULL,
   `unit_price` DOUBLE NOT NULL,
+  `discount` DOUBLE NOT NULL,
   `total` DOUBLE NOT NULL,
   `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
@@ -202,6 +203,17 @@ CREATE TABLE `user_role` (
   `id` INT(11),
   `user_id` INT(11) NOT NULL,
   `role_id` INT(11) NOT NULL
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+/*Table structure for table `customer` */
+
+CREATE TABLE `customer` (
+  `id` INT(11),
+  `fullname` VARCHAR(100) NOT NULL,
+  `phone` VARCHAR(100) DEFAULT NULL,
+  `email` VARCHAR(40) DEFAULT NULL,
+  `phone` VARCHAR(100) DEFAULT NULL,
+  `address` TEXT DEFAULT NULL
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

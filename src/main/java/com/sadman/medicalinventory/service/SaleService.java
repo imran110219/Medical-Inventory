@@ -17,6 +17,10 @@ public class SaleService {
         return repository.findAll();
     }
 
+    public List<Sale> getAllSalesByInvoiceId(String invoiceId) {
+        return repository.findAllByInvoiceId(invoiceId);
+    }
+
     public Sale getSaleById(Long id) throws RecordNotFoundException {
         return repository.findById(id).orElseThrow(() -> new RecordNotFoundException(id));
     }

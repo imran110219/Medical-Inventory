@@ -14,6 +14,7 @@ import lombok.*;
 public class MedicineDTO {
     private Long brandId;
     private Long stockId;
+    private double unitPrice;
     private double quantity;
     private double discount;
     private double total;

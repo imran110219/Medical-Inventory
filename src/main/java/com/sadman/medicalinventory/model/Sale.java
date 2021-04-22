@@ -24,6 +24,8 @@ public class Sale {
     @JoinColumn(name = "stock_id")
     private Stock stock;
 
+    @Column(name = "discount")
+    private double discount;
     @Column(name = "quantity")
     private double quantity;
     @Column(name = "unit_price")

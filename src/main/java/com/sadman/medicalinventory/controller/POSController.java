@@ -3,10 +3,7 @@ package com.sadman.medicalinventory.controller;
 import com.sadman.medicalinventory.dto.InvoiceDTO;
 import com.sadman.medicalinventory.dto.MedicineDTO;
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
-import com.sadman.medicalinventory.model.Brand;
-import com.sadman.medicalinventory.model.Purchase;
-import com.sadman.medicalinventory.model.Stock;
-import com.sadman.medicalinventory.model.User;
+import com.sadman.medicalinventory.model.*;
 import com.sadman.medicalinventory.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,6 +34,12 @@ public class POSController {
 
     @Autowired
     private POSService posService;
+
+    @Autowired
+    private InvoiceService invoiceService;
+
+    @Autowired
+    private SaleService saleService;
 
     @PostMapping(value="/pos/brand/{id}")
     public ResponseEntity<Brand> getBrandById(@PathVariable(value = "id") Long brandId) throws RecordNotFoundException {
@@ -69,8 +72,15 @@ public class POSController {
     }
 
     @PostMapping(value="/pos/payment")
-    public String makePayment(InvoiceDTO invoiceDTO){
-        posService.makePayment(invoiceDTO);
+    public ResponseEntity<Invoice> makePayment(InvoiceDTO invoiceDTO){
+        Invoice invoice = posService.makePayment(invoiceDTO);
+        return new ResponseEntity<>(invoice, HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/pos/invoice/{invoiceId}")
+    public String getInvoice(@PathVariable(value = "invoiceId") String invoiceId) throws RecordNotFoundException {
+        Invoice invoice = invoiceService.getInvoiceById(invoiceId);
+        List<Sale> saleList = saleService.getAllSalesByInvoiceId(invoiceId);
         return "invoice/invoice";
     }
 }

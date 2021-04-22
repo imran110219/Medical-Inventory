@@ -20,4 +20,6 @@ public class InvoiceDTO {
     private double averageDiscount;
     private double totalDiscount;
     private double grandTotal;
+    private double paidAmount;
+    private double changeAmount;
 }
