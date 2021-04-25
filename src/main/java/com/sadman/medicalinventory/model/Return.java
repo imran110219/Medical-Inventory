@@ -10,7 +10,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="return")
+@Table(name="returned")
 public class Return {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,6 +22,12 @@ public class Return {
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "purchase_id")
     private Purchase purchase;
+    @Column(name = "quantity")
+    private double quantity;
+    @Column(name = "unit_price")
+    private double unitPrice;
+    @Column(name = "deduction")
+    private double deduction;
     @Column(name = "total")
     private double total;
     @Column(name = "wastage")

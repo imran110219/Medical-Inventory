@@ -14,7 +14,6 @@ public class ManufacturerController {
     @Autowired
     private ManufacturerService service;
 
-
     @RequestMapping(value = "/manufacturers")
     public String getAllUsers(Model model) {
         List<Manufacturer> list = service.getAllManufacturers();

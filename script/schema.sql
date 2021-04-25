@@ -89,13 +89,29 @@ CREATE TABLE `indication_generic` (
   `generic_id` INT(11) NOT NULL
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
-/*Table structure for table `invoice` */
+/*Table structure for table `sale_invoice` */
 
-DROP TABLE IF EXISTS `invoice`;
+DROP TABLE IF EXISTS `sale_invoice`;
 
-CREATE TABLE `invoice` (
-  `id` VARCHAR(13),
+CREATE TABLE `sale_invoice` (
+  `id` VARCHAR(15),
   `user_id` INT(11) NOT NULL,
+  `total` DOUBLE NOT NULL,
+  `vat` DOUBLE NOT NULL,
+  `discount` DOUBLE NOT NULL,
+  `payable` DOUBLE NOT NULL,
+  `paid` DOUBLE NOT NULL,
+  `returned` DOUBLE NOT NULL,
+  `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+/*Table structure for table `purchase_invoice` */
+
+DROP TABLE IF EXISTS `purchase_invoice`;
+
+CREATE TABLE `purchase_invoice` (
+  `id` VARCHAR(15),
+  `supplier_id` INT(11) DEFAULT NULL,
   `total` DOUBLE NOT NULL,
   `vat` DOUBLE NOT NULL,
   `discount` DOUBLE NOT NULL,
@@ -112,8 +128,9 @@ DROP TABLE IF EXISTS `purchase`;
 CREATE TABLE `purchase` (
   `id` INT(11),
   `brand_id` INT(11) NOT NULL,
-  `supplier_id` INT(11) DEFAULT NULL,
+  `purchase_invoice_id` VARCHAR(15) NOT NULL,
   `batch_no` VARCHAR(14) NOT NULL,
+  `box_id` INT(11) NOT NULL,
   `quantity` INT(11) NOT NULL,
   `total` DOUBLE NOT NULL,
   `unit_price` DOUBLE DEFAULT NULL,
@@ -139,7 +156,7 @@ DROP TABLE IF EXISTS `sale`;
 
 CREATE TABLE `sale` (
   `id` INT(11),
-  `invoice_id` VARCHAR(13) NOT NULL,
+  `sale_invoice_id` VARCHAR(15) NOT NULL,
   `stock_id` INT(11) NOT NULL,
   `quantity` INT(11) NOT NULL,
   `unit_price` DOUBLE NOT NULL,
@@ -152,15 +169,15 @@ CREATE TABLE `sale` (
 
 DROP TABLE IF EXISTS `return`;
 
-CREATE TABLE `return` (
+CREATE TABLE `returned` (
   `id` INT(11),
-  `invoice_id` VARCHAR(13) DEFAULT NULL,
-  `purchase_id` INT(11) DEFAULT NULL,
+  `sale_invoice_id` VARCHAR(15) DEFAULT NULL,
+  `purchase_invoice_id` VARCHAR(15) DEFAULT NULL,
   `quantity` INT(11) NOT NULL,
   `unit_price` DOUBLE NOT NULL,
   `deduction` DOUBLE NOT NULL,
   `total` DOUBLE NOT NULL,
-  `wastage` BIT(1) DEFAULT NULL,
+  `wastage` BIT(1) NOT NULL,
   `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
@@ -202,6 +219,8 @@ CREATE TABLE `role` (
 
 /*Table structure for table `user_role` */
 
+DROP TABLE IF EXISTS `user_role`;
+
 CREATE TABLE `user_role` (
   `id` INT(11),
   `user_id` INT(11) NOT NULL,
@@ -210,12 +229,24 @@ CREATE TABLE `user_role` (
 
 /*Table structure for table `customer` */
 
+DROP TABLE IF EXISTS `customer`;
+
 CREATE TABLE `customer` (
   `id` INT(11),
   `fullname` VARCHAR(100) NOT NULL,
   `phone` VARCHAR(100) DEFAULT NULL,
   `email` VARCHAR(40) DEFAULT NULL,
   `address` TEXT DEFAULT NULL
+) ENGINE=INNODB DEFAULT CHARSET=utf8;
+
+/*Table structure for table `box` */
+
+DROP TABLE IF EXISTS `box`;
+
+CREATE TABLE `box` (
+  `id` INT(11),
+  `name` VARCHAR(50) NOT NULL,
+  `quantity` INT(11) NOT NULL
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;

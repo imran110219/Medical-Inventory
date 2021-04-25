@@ -39,7 +39,6 @@ public class PurchaseService {
         return repository.findById(id)
                 .map(purchase -> {
                     purchase.setBrand(newPurchase.getBrand());
-                    purchase.setSupplier(newPurchase.getSupplier());
                     purchase.setBatchNo(newPurchase.getBatchNo());
                     purchase.setUnitPrice(newPurchase.getUnitPrice());
                     purchase.setQuantity(newPurchase.getQuantity());

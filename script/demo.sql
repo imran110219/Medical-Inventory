@@ -48,7 +48,7 @@ INSERT  INTO `indication`(`id`,`name`) VALUES
 (4,'Abscesses'),
 (5,'Absence seizures');
 
-insert  into `user`(`id`,`firstname`,`lastname`,`username`,`email`,`password`,`phone`,`address`,`active`) values
+INSERT  INTO `user`(`id`,`firstname`,`lastname`,`username`,`email`,`password`,`phone`,`address`,`active`) VALUES
 (1,'John','Player','john','john@gmail.com','$2a$10$cBi8wPjrntyeUmf0I1dYLe8lIiVnl4D52VILNkXRl4kYpUf1h2StG','01912070224','Dhaka',''),
 (2,'Sadman','Sobhan','imran','imran@gmail.com','$2a$10$cBi8wPjrntyeUmf0I1dYLe8lIiVnl4D52VILNkXRl4kYpUf1h2StG','01912070224','Dhaka',''),
 (3,'Md','Amin','amin','amin@gmail.com','$2a$10$cBi8wPjrntyeUmf0I1dYLe8lIiVnl4D52VILNkXRl4kYpUf1h2StG','01912070224','Dhaka',''),
@@ -69,8 +69,11 @@ INSERT  INTO `user_role`(`id`,`user_id`,`role_id`) VALUES
 (5,'5','2'),
 (6,'6','3');
 
-INSERT INTO `invoice` (`id`, `user_id`, `total`, `vat`, `discount`, `payable`, `paid`, `returned`, `datetime`) VALUES
-('1618989514455', 2, 760, 19, 5, 774, 800, 26, '2017-01-09 15:26:13');
+INSERT INTO `sale_invoice` (`id`, `user_id`, `total`, `vat`, `discount`, `payable`, `paid`, `returned`, `datetime`) VALUES
+('SI1618989514455', 2, 760, 19, 5, 774, 800, 26, '2017-01-09 15:26:13');
+
+INSERT INTO `purchase_invoice` (`id`, `supplier_id`, `total`, `vat`, `discount`, `payable`, `paid`, `returned`, `datetime`) VALUES
+('PI1618989514455', 2, 760, 19, 5, 774, 800, 26, '2017-01-09 15:26:13');
 
 INSERT  INTO `supplier`(`id`,`name`,`phone`,`address`) VALUES
 (1,'Maruf Hossain','01911202020','Dhaka'),
@@ -78,15 +81,16 @@ INSERT  INTO `supplier`(`id`,`name`,`phone`,`address`) VALUES
 (3,'Mohiuddin Jahangir','01811404040','Dhaka'),
 (4,'Ali Banat','01611808080','Dhaka');
 
-INSERT  INTO `purchase`(`id`,`brand_id`,`supplier_id`,`batch_no`,`quantity`,`total`,`unit_price`,`expiry_datetime`,`datetime`) VALUES
-(1,1,1,'B1491729973342',10,90,9,'2022-01-02 15:41:59','2021-02-02 15:22:02'),
-(2,2,2,'B1491729973342',5,500,100,'2022-01-02 15:41:59','2021-02-02 15:22:02'),
-(3,3,3,'B1491729973342',20,2000,100,'2022-02-02 15:23:00','2021-02-02 15:22:02'),
-(4,4,3,'B1491729973342',30,3000,100,'2022-02-02 15:23:23','2021-02-02 15:22:02'),
-(5,1,2,'B1491729973342',20,100,5,'2022-02-02 15:24:24','2021-02-02 15:22:02'),
-(6,3,1,'B1491729973342',55,330,6,'2022-02-02 15:25:30','2021-02-02 15:22:02');
 
-insert  into `stock`(`id`,`purchase_id`,`location_id`,`quantity`,`datetime`) values
+INSERT  INTO `purchase`(`id`,`brand_id`,`purchase_invoice_id`,`batch_no`,`box_id`,`quantity`,`total`,`unit_price`,`expiry_datetime`,`datetime`) VALUES
+(1,1,'PI1618989514455','B1491729973342',1,10,90,9,'2022-01-02 15:41:59','2021-02-02 15:22:02'),
+(2,2,'PI1618989514455','B1491729973342',2,,5,500,100,'2022-01-02 15:41:59','2021-02-02 15:22:02'),
+(3,3,'PI1618989514455','B1491729973342',3,,20,2000,100,'2022-02-02 15:23:00','2021-02-02 15:22:02'),
+(4,4,'PI1618989514455','B1491729973342',1,,30,3000,100,'2022-02-02 15:23:23','2021-02-02 15:22:02'),
+(5,1,'PI1618989514455','B1491729973342',2,20,100,5,'2022-02-02 15:24:24','2021-02-02 15:22:02'),
+(6,3,'PI1618989514455','B1491729973342',3,55,330,6,'2022-02-02 15:25:30','2021-02-02 15:22:02');
+
+INSERT  INTO `stock`(`id`,`purchase_id`,`location_id`,`quantity`,`datetime`) VALUES
 (1,1,1,10,'2021-02-03 15:41:43'),
 (2,2,2,5,'2021-02-03 15:42:12'),
 (3,3,3,20,'2021-02-03 15:42:44'),
@@ -94,8 +98,14 @@ insert  into `stock`(`id`,`purchase_id`,`location_id`,`quantity`,`datetime`) val
 (5,5,5,20,'2021-02-03 15:43:44'),
 (6,6,5,55,'2021-02-03 15:44:08');
 
-insert  into `sale`(`id`,`invoice_id`,`stock_id`,`quantity`,`unit_price`,`discount`,`total`,`datetime`) values
-(1,'1618989514455',1,1,10,0,10,'2021-02-02 15:28:26');
+INSERT  INTO `sale`(`id`,`sale_invoice_id`,`stock_id`,`quantity`,`unit_price`,`discount`,`total`,`datetime`) VALUES
+(1,'SI1618989514455',1,1,10,0,10,'2021-02-02 15:28:26');
+
+
+INSERT  INTO `returned`(`id`,`sale_invoice_id`,`purchase_invoice_id`,`quantity`,`unit_price`,`deduction`,`total`,`wastage`,`datetime`) VALUES 
+(1,'SI1618989514455',NULL,5,5,5,555,'','2021-04-24 14:41:14'),
+(2,NULL,'PI1618989514455',5,5,5,555,'','2021-04-24 14:48:30');
+
 
 
 

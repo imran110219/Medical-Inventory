@@ -18,7 +18,7 @@ public class ReturnController {
     private ReturnService service;
 
     @RequestMapping(value = "/returns")
-    public String getAllUsers(Model model) {
+    public String getAllReturns(Model model) {
         List<Return> list = service.getAllReturns();
         model.addAttribute("returns", list);
         return "return-list";

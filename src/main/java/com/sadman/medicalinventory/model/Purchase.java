@@ -21,9 +21,6 @@ public class Purchase {
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "brand_id")
     private Brand brand;
-    @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "supplier_id")
-    private Supplier supplier;
     @Column(name = "batch_no")
     private String batchNo;
     @Column(name = "quantity")

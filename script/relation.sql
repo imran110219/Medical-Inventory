@@ -18,12 +18,17 @@ ALTER TABLE `indication`
 ALTER TABLE `role`
   ADD PRIMARY KEY (`id`);
   
-ALTER TABLE `invoice`
-  ADD PRIMARY KEY (`id`);  
+ALTER TABLE `sale_invoice`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);  
+  
+ALTER TABLE `purchase_invoice`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `supplier_id` (`supplier_id`);  
 
 ALTER TABLE `sale`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `invoice_id` (`invoice_id`),
+  ADD KEY `sale_invoice_id` (`sale_invoice_id`),
   ADD KEY `stock_id` (`stock_id`);
 
 ALTER TABLE `indication_generic`
@@ -40,17 +45,17 @@ ALTER TABLE `brand`
 ALTER TABLE `purchase`
   ADD PRIMARY KEY (`id`),
   ADD KEY `brand_id` (`brand_id`),
-  ADD KEY `supplier_id` (`supplier_id`);
+  ADD KEY `purchase_invoice_id` (`purchase_invoice_id`);
 
 ALTER TABLE `stock`
   ADD PRIMARY KEY (`id`),
   ADD KEY `location_id` (`location_id`),
   ADD KEY `purchase_id` (`purchase_id`);
 
-ALTER TABLE `return`
+ALTER TABLE `returned`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `invoice_id` (`invoice_id`),
-  ADD KEY `purchase_id` (`purchase_id`);
+  ADD KEY `sale_invoice_id` (`sale_invoice_id`),
+  ADD KEY `purchase_invoice_id` (`purchase_invoice_id`);
 
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
@@ -61,6 +66,9 @@ ALTER TABLE `user_role`
   ADD KEY `role_id` (`role_id`);
   
 ALTER TABLE `supplier`
+  ADD PRIMARY KEY (`id`);
+  
+ALTER TABLE `box`
   ADD PRIMARY KEY (`id`);
 
 -- Enable Auto Increment
@@ -92,8 +100,8 @@ ALTER TABLE `purchase`
 ALTER TABLE `stock`
   MODIFY `id` INT(11) AUTO_INCREMENT, AUTO_INCREMENT=7;
 
-ALTER TABLE `return`
-  MODIFY `id` INT(11) AUTO_INCREMENT, AUTO_INCREMENT=1;
+ALTER TABLE `returned`
+  MODIFY `id` INT(11) AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 ALTER TABLE `role`
   MODIFY `id` INT(11) AUTO_INCREMENT, AUTO_INCREMENT=4;
@@ -109,6 +117,9 @@ ALTER TABLE `supplier`
 
 ALTER TABLE `user`
   MODIFY `id` INT(11) AUTO_INCREMENT, AUTO_INCREMENT=5;
+  
+ALTER TABLE `box`
+  MODIFY `id` INT(11) AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 -- Add Foreign Key
 
@@ -127,19 +138,22 @@ ALTER TABLE `user_role`
   
 ALTER TABLE `purchase`
   ADD CONSTRAINT `purchase_fk_brand` FOREIGN KEY (`brand_id`) REFERENCES `brand` (`id`),
-  ADD CONSTRAINT `purchase_fk_supplier` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`id`);
+  ADD CONSTRAINT `purchase_fk_purchase_invoice` FOREIGN KEY (`purchase_invoice_id`) REFERENCES `purchase_invoice` (`id`);
 
 ALTER TABLE `stock`
   ADD CONSTRAINT `stock_fk_location` FOREIGN KEY (`location_id`) REFERENCES `purchase` (`id`),
   ADD CONSTRAINT `stock_fk_purchase` FOREIGN KEY (`purchase_id`) REFERENCES `purchase` (`id`);
 
-ALTER TABLE `return`
-  ADD CONSTRAINT `return_fk_invoice` FOREIGN KEY (`invoice_id`) REFERENCES `invoice` (`id`),
-  ADD CONSTRAINT `return_fk_purchase` FOREIGN KEY (`purchase_id`) REFERENCES `purchase` (`id`);
+ALTER TABLE `returned`
+  ADD CONSTRAINT `returned_fk_sale_invoice` FOREIGN KEY (`sale_invoice_id`) REFERENCES `sale_invoice` (`id`),
+  ADD CONSTRAINT `returned_fk_purchase_invoice` FOREIGN KEY (`purchase_invoice_id`) REFERENCES `purchase_invoice` (`id`);
   
 ALTER TABLE `sale`
-  ADD CONSTRAINT `sale_fk_invoice` FOREIGN KEY (`invoice_id`) REFERENCES `invoice` (`id`),
+  ADD CONSTRAINT `sale_fk_sale_invoice` FOREIGN KEY (`sale_invoice_id`) REFERENCES `sale_invoice` (`id`),
   ADD CONSTRAINT `sale_fk_stock` FOREIGN KEY (`stock_id`) REFERENCES `stock` (`id`);
   
-ALTER TABLE `invoice`
-  ADD CONSTRAINT `invoice_fk_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+ALTER TABLE `sale_invoice`
+  ADD CONSTRAINT `sale_invoice_fk_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+
+ALTER TABLE `purchase_invoice`
+  ADD CONSTRAINT `purchase_invoice_fk_supplier` FOREIGN KEY (`supplier_id`) REFERENCES `supplier` (`id`);

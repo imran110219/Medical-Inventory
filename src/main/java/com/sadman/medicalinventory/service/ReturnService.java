@@ -25,8 +25,7 @@ public class ReturnService {
         return repository.save(returnObject);
     }
 
-    public Return updateReturn(Return newReturn, Long id)
-    {
+    public Return updateReturn(Return newReturn, Long id) {
         return repository.findById(id)
                 .map(returnObject -> {
                     returnObject.setInvoice(newReturn.getInvoice());
