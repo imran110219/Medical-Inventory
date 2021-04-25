@@ -17,8 +17,8 @@ public class Sale {
     private long id;
 
     @ManyToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "invoice_id")
-    private Invoice invoice;
+    @JoinColumn(name = "sale_invoice_id")
+    private SaleInvoice saleInvoice;
 
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "stock_id")

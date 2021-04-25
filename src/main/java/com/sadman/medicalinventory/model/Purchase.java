@@ -21,8 +21,14 @@ public class Purchase {
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "brand_id")
     private Brand brand;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "purchase_invoice_id")
+    private PurchaseInvoice purchaseInvoice;
     @Column(name = "batch_no")
     private String batchNo;
+    @ManyToOne(cascade = CascadeType.MERGE)
+    @JoinColumn(name = "box_id")
+    private Box box;
     @Column(name = "quantity")
     private double quantity;
     @Column(name = "unit_price")

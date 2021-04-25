@@ -1,15 +1,12 @@
 package com.sadman.medicalinventory.service;
 
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
-import com.sadman.medicalinventory.model.Invoice;
-import com.sadman.medicalinventory.model.Indication;
+import com.sadman.medicalinventory.model.SaleInvoice;
 import com.sadman.medicalinventory.repository.InvoiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class InvoiceService {
@@ -17,19 +14,19 @@ public class InvoiceService {
     @Autowired
     InvoiceRepository repository;
 
-    public List<Invoice> getAllInvoices() {
+    public List<SaleInvoice> getAllInvoices() {
         return repository.findAll();
     }
 
-    public Invoice getInvoiceById(String id) throws RecordNotFoundException {
+    public SaleInvoice getInvoiceById(String id) throws RecordNotFoundException {
         return repository.findById(id).orElseThrow(() -> new RecordNotFoundException(id));
     }
 
-    public Invoice createInvoice(Invoice invoice){
+    public SaleInvoice createInvoice(SaleInvoice invoice){
         return repository.save(invoice);
     }
 
-    public Invoice updateInvoice(Invoice newInvoice, String id)
+    public SaleInvoice updateInvoice(SaleInvoice newInvoice, String id)
     {
         return repository.findById(id)
                 .map(invoice -> {

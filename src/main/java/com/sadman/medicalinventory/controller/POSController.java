@@ -73,14 +73,14 @@ public class POSController {
     }
 
     @PostMapping(value="/pos/payment")
-    public ResponseEntity<Invoice> makePayment(InvoiceDTO invoiceDTO){
-        Invoice invoice = posService.makePayment(invoiceDTO);
+    public ResponseEntity<SaleInvoice> makePayment(InvoiceDTO invoiceDTO){
+        SaleInvoice invoice = posService.makePayment(invoiceDTO);
         return new ResponseEntity<>(invoice, HttpStatus.OK);
     }
 
     @GetMapping(value = "/pos/invoice/{invoiceId}")
     public String getInvoice(Model model, @PathVariable(value = "invoiceId") String invoiceId) throws RecordNotFoundException {
-        Invoice invoice = invoiceService.getInvoiceById(invoiceId);
+        SaleInvoice invoice = invoiceService.getInvoiceById(invoiceId);
         List<Sale> saleList = saleService.getAllSalesByInvoiceId(invoiceId);
         model.addAttribute("invoice", invoice);
         model.addAttribute("saleList", saleList);
@@ -89,7 +89,7 @@ public class POSController {
 
     @GetMapping(value = "/pos/invoice/{invoiceId}/print")
     public String printInvoice(Model model, @PathVariable(value = "invoiceId") String invoiceId) throws RecordNotFoundException {
-        Invoice invoice = invoiceService.getInvoiceById(invoiceId);
+        SaleInvoice invoice = invoiceService.getInvoiceById(invoiceId);
         List<Sale> saleList = saleService.getAllSalesByInvoiceId(invoiceId);
         model.addAttribute("invoice", invoice);
         model.addAttribute("saleList", saleList);

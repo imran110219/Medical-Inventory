@@ -1,7 +1,7 @@
 package com.sadman.medicalinventory.controller.api;
 
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
-import com.sadman.medicalinventory.model.Invoice;
+import com.sadman.medicalinventory.model.SaleInvoice;
 import com.sadman.medicalinventory.service.InvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,24 +18,24 @@ public class InvoiceApiController {
     InvoiceService service;
 
     @GetMapping("/invoices")
-    public List<Invoice> getAllInvoices(Model model) {
+    public List<SaleInvoice> getAllInvoices(Model model) {
         return service.getAllInvoices();
     }
 
     @GetMapping("/invoices/{id}")
-    public ResponseEntity<Invoice> getInvoiceById(@PathVariable(value = "id") String invoiceId)
+    public ResponseEntity<SaleInvoice> getInvoiceById(@PathVariable(value = "id") String invoiceId)
             throws RecordNotFoundException {
-        Invoice invoice = service.getInvoiceById(invoiceId);
+        SaleInvoice invoice = service.getInvoiceById(invoiceId);
         return ResponseEntity.ok().body(invoice);
     }
 
     @PostMapping("/invoices")
-    public Invoice createInvoice(@Valid @RequestBody Invoice invoice) {
+    public SaleInvoice createInvoice(@Valid @RequestBody SaleInvoice invoice) {
         return service.createInvoice(invoice);
     }
 
     @PutMapping("/invoices/edit/{id}")
-    public Invoice editInvoicesById(@RequestBody Invoice newInvoice, @PathVariable(value = "id") String invoiceId) {
+    public SaleInvoice editInvoicesById(@RequestBody SaleInvoice newInvoice, @PathVariable(value = "id") String invoiceId) {
         return service.updateInvoice(newInvoice, invoiceId);
     }
 

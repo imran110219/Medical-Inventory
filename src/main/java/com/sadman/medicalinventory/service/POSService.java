@@ -2,7 +2,7 @@ package com.sadman.medicalinventory.service;
 
 import com.sadman.medicalinventory.dto.InvoiceDTO;
 import com.sadman.medicalinventory.dto.MedicineDTO;
-import com.sadman.medicalinventory.model.Invoice;
+import com.sadman.medicalinventory.model.SaleInvoice;
 import com.sadman.medicalinventory.model.Sale;
 import com.sadman.medicalinventory.model.Stock;
 import com.sadman.medicalinventory.model.User;
@@ -15,7 +15,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
-import java.security.Principal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,14 +37,14 @@ public class POSService {
     @Autowired
     SaleRepository saleRepository;
 
-    public Invoice makePayment(InvoiceDTO invoiceDTO) {
+    public SaleInvoice makePayment(InvoiceDTO invoiceDTO) {
         String invoiceId = String.valueOf(new Timestamp(System.currentTimeMillis()).getTime());
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
         User user = userRepository.findByUserName(userName);
 
-        Invoice invoice = new Invoice();
+        SaleInvoice invoice = new SaleInvoice();
         invoice.setId(invoiceId);
         invoice.setUser(user);
         invoice.setTotal(invoiceDTO.getGrandTotal()+invoiceDTO.getTotalDiscount());

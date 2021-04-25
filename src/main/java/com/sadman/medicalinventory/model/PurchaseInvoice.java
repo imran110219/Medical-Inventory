@@ -1,6 +1,5 @@
 package com.sadman.medicalinventory.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.persistence.*;
@@ -12,15 +11,15 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "invoice")
-public class Invoice {
+@Table(name = "purchase_invoice")
+public class PurchaseInvoice {
     @Id
     @Column(name = "id")
     private String id;
 
     @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "supplier_id")
+    private Supplier supplier;
 
     @Column(name = "total")
     private double total;
