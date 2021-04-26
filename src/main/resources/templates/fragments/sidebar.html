@@ -126,18 +126,37 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-file-invoice"></i>
+                            <p>
+                                Invoice
+                                <i class="fas fa-angle-left right"></i>
+                            </p>
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a th:href="@{/saleinvoices}" class="nav-link">
+                                    <i class="nav-icon fas fa-file-invoice-dollar"></i>
+                                    <p>
+                                        Sale
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a th:href="@{/purchaseinvoices}" class="nav-link">
+                                    <i class="nav-icon fas fa-receipt"></i>
+                                    <p>
+                                        Purchase
+                                    </p>
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
                         <a th:href="@{/purchases}" class="nav-link">
                             <i class="nav-icon fas fa-shopping-cart"></i>
                             <p>
                                 Purchase
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a th:href="@{/invoices}" class="nav-link">
-                            <i class="nav-icon fas fa-file-invoice"></i>
-                            <p>
-                                Invoice
                             </p>
                         </a>
                     </li>

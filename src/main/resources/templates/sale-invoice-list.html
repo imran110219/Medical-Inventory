@@ -29,7 +29,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>List of Invoices</h1>
+                        <h1>List of Sale Invoices</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -51,15 +51,15 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="col-sm-2 col-md-1">
-                                    <button type="button" class="btn btn-block btn-success btn-sm"
-                                            data-toggle="modal" data-target="#modal-default">Add
+                                    <button type="button" class="btn btn-block btn-success btn-sm" onclick="addSaleInvoice();">
+                                        Add
                                     </button>
                                 </div>
                             </div>
 
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped" th:switch="${invoices}">
+                                <table id="example1" class="table table-bordered table-striped" th:switch="${saleinvoices}">
                                     <thead>
                                     <tr>
                                         <th>Invoice Id</th>
@@ -74,22 +74,22 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="invoice : ${invoices}">
-                                        <td th:text="${invoice.id}"></td>
-                                        <td th:text="${invoice.user.userName}"></td>
-                                        <td th:text="${invoice.total}"></td>
-                                        <td th:text="${invoice.vat}"></td>
-                                        <td th:text="${invoice.discount}"></td>
-                                        <td th:text="${invoice.payable}"></td>
-                                        <td th:text="${invoice.paid}"></td>
-                                        <td th:text="${invoice.returned}"></td>
+                                    <tr th:each="saleinvoice : ${saleinvoices}">
+                                        <td th:text="${saleinvoice.id}"></td>
+                                        <td th:text="${saleinvoice.user.userName}"></td>
+                                        <td th:text="${saleinvoice.total}"></td>
+                                        <td th:text="${saleinvoice.vat}"></td>
+                                        <td th:text="${saleinvoice.discount}"></td>
+                                        <td th:text="${saleinvoice.payable}"></td>
+                                        <td th:text="${saleinvoice.paid}"></td>
+                                        <td th:text="${saleinvoice.returned}"></td>
                                         <td>
                                             <div class="btn-group" style="margin-left: 23px">
-                                                <input type="hidden" id="invoiceId" th:value="${invoice.id}">
+                                                <input type="hidden" id="invoiceId" th:value="${saleinvoice.id}">
                                                 <button type="button" id="btnView"
                                                         class="btn btn-block btn-info btn-sm"
                                                         style="margin-top: 8px;border-radius: 3px 0px 0px 3px;"
-                                                        onclick="viewInvoice();"
+                                                        onclick="viewSaleInvoice();"
                                                 ><i class="fas fa-eye"></i>
                                                 </button>
                                                 <button type="button" id="btnEdit"
@@ -127,52 +127,48 @@
                 </div>
             </div>
 
-            <div class="modal fade" id="modal-default">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Add Invoice</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="quickForm">
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputname">Name</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="inputname" name="name"
-                                               placeholder="Enter Name">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputphone">Phone No</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="inputphone" name="phone"
-                                               placeholder="Enter Phone No">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputaddress">Address</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="inputaddress" name="address"
-                                               placeholder="Enter Address">
-                                    </div>
-                                </div>
-                                <div class="modal-footer justify-content-between">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Save</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
-            <!-- /.modal -->
+<!--            <div class="modal fade" id="modal-default">-->
+<!--                <div class="modal-dialog">-->
+<!--                    <div class="modal-content">-->
+<!--                        <div class="modal-header">-->
+<!--                            <h4 class="modal-title">Add Invoice</h4>-->
+<!--                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                                <span aria-hidden="true">&times;</span>-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                        <div class="modal-body">-->
+<!--                            <form id="quickForm">-->
+<!--                                <div class="form-group row">-->
+<!--                                    <label class="col-sm-3 col-form-label" for="inputname">Name</label>-->
+<!--                                    <div class="col-sm-9">-->
+<!--                                        <input type="text" class="form-control" id="inputname" name="name"-->
+<!--                                               placeholder="Enter Name">-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="form-group row">-->
+<!--                                    <label class="col-sm-3 col-form-label" for="inputphone">Phone No</label>-->
+<!--                                    <div class="col-sm-9">-->
+<!--                                        <input type="text" class="form-control" id="inputphone" name="phone"-->
+<!--                                               placeholder="Enter Phone No">-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="form-group row">-->
+<!--                                    <label class="col-sm-3 col-form-label" for="inputaddress">Address</label>-->
+<!--                                    <div class="col-sm-9">-->
+<!--                                        <input type="text" class="form-control" id="inputaddress" name="address"-->
+<!--                                               placeholder="Enter Address">-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="modal-footer justify-content-between">-->
+<!--                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+<!--                                    <button type="submit" class="btn btn-primary">Save</button>-->
+<!--                                </div>-->
+<!--                            </form>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>-->
         </section>
-        <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
 
@@ -245,10 +241,14 @@
             });
         });
 
-        function viewInvoice() {
+        function viewSaleInvoice() {
             var parameter = document.getElementById("invoiceId").value;
             console.log(parameter);
-            window.location.href = '/pos/invoice/'+parameter;
+            window.location.href = '/pos/saleinvoice/'+parameter;
+        }
+
+        function addSaleInvoice() {
+            window.location.href = '/pos';
         }
     </script>
 </th:block>

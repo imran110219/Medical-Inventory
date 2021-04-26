@@ -2,6 +2,8 @@ package com.sadman.medicalinventory.controller;
 
 import com.sadman.medicalinventory.dto.InvoiceDTO;
 import com.sadman.medicalinventory.dto.MedicineDTO;
+import com.sadman.medicalinventory.dto.PurchaseInvoiceDTO;
+import com.sadman.medicalinventory.dto.PurchaseMedicineDTO;
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
 import com.sadman.medicalinventory.model.*;
 import com.sadman.medicalinventory.service.*;
@@ -22,7 +24,7 @@ import java.util.List;
  * @author Sadman
  */
 @Controller
-public class POSController {
+public class POPController {
 
     @Autowired
     private BrandService brandService;
@@ -42,6 +44,9 @@ public class POSController {
     @Autowired
     private SaleService saleService;
 
+    @Autowired
+    private SupplierService supplierService;
+
     @PostMapping(value="/pos/brand/{id}")
     public ResponseEntity<Brand> getBrandById(@PathVariable(value = "id") Long brandId) throws RecordNotFoundException {
         Brand brand = brandService.getBrandById(brandId);
@@ -60,16 +65,18 @@ public class POSController {
         return new ResponseEntity<>(stock, HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/pos")
-    public String getPOS(Model model) {
+    @RequestMapping(value = "/pop")
+    public String getPOP(Model model) {
         List<Brand> brandList = brandService.getAllBrands();
-        List<MedicineDTO> medicineDTOList = new ArrayList<>();
-        InvoiceDTO invoiceDTO = new InvoiceDTO();
-        invoiceDTO.setMedicineDTOList(medicineDTOList);
+        List<Supplier> supplierList = supplierService.getAllSuppliers();
+        List<PurchaseMedicineDTO> purchaseMedicineDTOList = new ArrayList<>();
+        PurchaseInvoiceDTO purchaseInvoiceDTO = new PurchaseInvoiceDTO();
+        purchaseInvoiceDTO.setPurchaseMedicineDTOList(purchaseMedicineDTOList);
         model.addAttribute("medicinedto", new MedicineDTO());
-        model.addAttribute("invoicedto", invoiceDTO);
+        model.addAttribute("suppliers",supplierList);
+        model.addAttribute("purchaseinvoicedto", purchaseInvoiceDTO);
         model.addAttribute("brands", brandList);
-        return "pos";
+        return "pop";
     }
 
     @PostMapping(value="/pos/payment")

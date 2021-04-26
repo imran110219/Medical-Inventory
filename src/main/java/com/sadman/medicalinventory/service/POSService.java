@@ -6,7 +6,7 @@ import com.sadman.medicalinventory.model.SaleInvoice;
 import com.sadman.medicalinventory.model.Sale;
 import com.sadman.medicalinventory.model.Stock;
 import com.sadman.medicalinventory.model.User;
-import com.sadman.medicalinventory.repository.InvoiceRepository;
+import com.sadman.medicalinventory.repository.SaleInvoiceRepository;
 import com.sadman.medicalinventory.repository.SaleRepository;
 import com.sadman.medicalinventory.repository.StockRepository;
 import com.sadman.medicalinventory.repository.UserRepository;
@@ -29,7 +29,7 @@ public class POSService {
     private UserRepository userRepository;
 
     @Autowired
-    InvoiceRepository invoiceRepository;
+    SaleInvoiceRepository saleInvoiceRepository;
 
     @Autowired
     StockRepository stockRepository;
@@ -54,7 +54,7 @@ public class POSService {
         invoice.setPaid(invoiceDTO.getPaidAmount());
         invoice.setReturned(invoiceDTO.getChangeAmount());
 
-        invoiceRepository.save(invoice);
+        saleInvoiceRepository.save(invoice);
 
         List<Sale> saleList = new ArrayList<>();
         for (int i = 0; i < invoiceDTO.getMedicineDTOList().size(); i++) {
@@ -62,7 +62,7 @@ public class POSService {
             Stock stock = stockRepository.getOne(medicineDTO.getStockId());
             stock.setQuantity(stock.getQuantity()-medicineDTO.getQuantity());
             Sale sale = new Sale();
-            sale.setInvoice(invoiceRepository.getOne(invoiceId));
+            sale.setSaleInvoice(saleInvoiceRepository.getOne(invoiceId));
             sale.setStock(stock);
             sale.setDiscount(medicineDTO.getDiscount());
             sale.setQuantity(medicineDTO.getQuantity());

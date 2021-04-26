@@ -1,7 +1,7 @@
 package com.sadman.medicalinventory.controller;
 
 import com.sadman.medicalinventory.model.SaleInvoice;
-import com.sadman.medicalinventory.service.InvoiceService;
+import com.sadman.medicalinventory.service.SaleInvoiceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.List;
 
 @Controller
-public class InvoiceController {
+public class SaleInvoiceController {
     @Autowired
-    private InvoiceService service;
+    private SaleInvoiceService service;
     
-    @RequestMapping(value = "/invoices")
+    @RequestMapping(value = "/saleinvoices")
     public String getAllUsers(Model model) {
-        List<SaleInvoice> list = service.getAllInvoices();
-        model.addAttribute("invoices", list);
-        return "invoice-list";
+        List<SaleInvoice> list = service.getAllSaleInvoices();
+        model.addAttribute("saleinvoices", list);
+        return "sale-invoice-list";
     }
 
 }

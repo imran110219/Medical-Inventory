@@ -17,8 +17,7 @@ public class PurchaseService {
     @Autowired
     PurchaseRepository repository;
 
-    public List<Purchase> getAllPurchases()
-    {
+    public List<Purchase> getAllPurchases() {
         return repository.findAll();
     }
 
@@ -34,12 +33,13 @@ public class PurchaseService {
         return repository.save(purchase);
     }
 
-    public Purchase updatePurchase(Purchase newPurchase, Long id)
-    {
+    public Purchase updatePurchase(Purchase newPurchase, Long id) {
         return repository.findById(id)
                 .map(purchase -> {
                     purchase.setBrand(newPurchase.getBrand());
+                    purchase.setPurchaseInvoice(newPurchase.getPurchaseInvoice());
                     purchase.setBatchNo(newPurchase.getBatchNo());
+                    purchase.setBox(newPurchase.getBox());
                     purchase.setUnitPrice(newPurchase.getUnitPrice());
                     purchase.setQuantity(newPurchase.getQuantity());
                     purchase.setTotal(newPurchase.getTotal());

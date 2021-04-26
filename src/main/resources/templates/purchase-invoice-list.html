@@ -29,7 +29,7 @@
             <div class="container-fluid">
                 <div class="row mb-2">
                     <div class="col-sm-6">
-                        <h1>List of Purchases</h1>
+                        <h1>List of Purchase Invoices</h1>
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
@@ -42,7 +42,6 @@
             </div>
         </section>
 
-        <!-- Main content -->
         <section class="content">
 
             <div class="container-fluid">
@@ -53,38 +52,46 @@
                             <div class="card-header">
                                 <div class="col-sm-2 col-md-1">
                                     <button type="button" class="btn btn-block btn-success btn-sm"
-                                            data-toggle="modal" data-target="#modal-default">Add</button>
+                                            data-toggle="modal" data-target="#modal-default">Add
+                                    </button>
                                 </div>
                             </div>
 
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped" th:switch="${purchases}">
+                                <table id="example1" class="table table-bordered table-striped" th:switch="${purchaseinvoices}">
                                     <thead>
                                     <tr>
-                                        <th>Brand Name</th>
                                         <th>Invoice Id</th>
-                                        <th>Batch No</th>
-                                        <th>Box Size</th>
-                                        <th>Quantity</th>
-                                        <th>Unit Price</th>
+                                        <th>Supplier</th>
                                         <th>Total</th>
-                                        <th>Expiry Date</th>
+                                        <th>Vat</th>
+                                        <th>Discount</th>
+                                        <th>Payable</th>
+                                        <th>Paid</th>
+                                        <th>Return</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="purchase : ${purchases}">
-                                        <td th:text="${purchase.brand.name}"></td>
-                                        <td th:text="${purchase.purchaseInvoice.id}"></td>
-                                        <td th:text="${purchase.batchNo}"></td>
-                                        <td th:text="${purchase.box.name}"></td>
-                                        <td th:text="${purchase.quantity}"></td>
-                                        <td th:text="${purchase.unitPrice}"></td>
-                                        <td th:text="${purchase.total}"></td>
-                                        <td th:text="${#dates.format(purchase.getExpiryDate(), 'dd.MM.yyyy')}"></td>
+                                    <tr th:each="purchaseinvoice : ${purchaseinvoices}">
+                                        <td th:text="${purchaseinvoice.id}"></td>
+                                        <td th:text="${purchaseinvoice.supplier.name}"></td>
+                                        <td th:text="${purchaseinvoice.total}"></td>
+                                        <td th:text="${purchaseinvoice.vat}"></td>
+                                        <td th:text="${purchaseinvoice.discount}"></td>
+                                        <td th:text="${purchaseinvoice.payable}"></td>
+                                        <td th:text="${purchaseinvoice.paid}"></td>
+                                        <td th:text="${purchaseinvoice.returned}"></td>
                                         <td>
-                                            <div class="btn-group">
+                                            <div class="btn-group" style="margin-left: 23px">
+                                                <input type="hidden" id="invoiceId" th:value="${purchaseinvoice.id}">
+                                                <button type="button" id="btnView"
+                                                        class="btn btn-block btn-info btn-sm"
+                                                        style="margin-top: 8px;border-radius: 3px 0px 0px 3px;"
+                                                        onclick="viewPurchaseInvoice();"
+                                                ><i class="fas fa-eye"></i>
+                                                </button>
                                                 <button type="button" id="btnEdit"
                                                         class="btn btn-block btn-primary btn-sm"
                                                         style="margin-top: 8px"
@@ -100,14 +107,14 @@
                                     </tbody>
                                     <tfoot>
                                     <tr>
-                                        <th>Brand Name</th>
                                         <th>Invoice Id</th>
-                                        <th>Batch No</th>
-                                        <th>Box Size</th>
-                                        <th>Quantity</th>
-                                        <th>Unit Price</th>
+                                        <th>Supplier</th>
                                         <th>Total</th>
-                                        <th>Expiry Date</th>
+                                        <th>Vat</th>
+                                        <th>Discount</th>
+                                        <th>Payable</th>
+                                        <th>Paid</th>
+                                        <th>Return</th>
                                         <th>Action</th>
                                     </tr>
                                     </tfoot>
@@ -124,7 +131,7 @@
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add Purchase</h4>
+                            <h4 class="modal-title">Add Invoice</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -135,14 +142,21 @@
                                     <label class="col-sm-3 col-form-label" for="inputname">Name</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" id="inputname" name="name"
-                                               placeholder="Enter Indication">
+                                               placeholder="Enter Name">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputdescription">Description</label>
+                                    <label class="col-sm-3 col-form-label" for="inputphone">Phone No</label>
                                     <div class="col-sm-9">
-                                            <textarea id="inputdescription" name="description" class="form-control" rows="4"
-                                                      cols="50" placeholder="Enter Indication Description"></textarea>
+                                        <input type="text" class="form-control" id="inputphone" name="phone"
+                                               placeholder="Enter Phone No">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="inputaddress">Address</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="inputaddress" name="address"
+                                               placeholder="Enter Address">
                                     </div>
                                 </div>
                                 <div class="modal-footer justify-content-between">
@@ -230,6 +244,12 @@
                 }
             });
         });
+
+        // function viewPurchaseInvoice() {
+        //     var parameter = document.getElementById("invoiceId").value;
+        //     console.log(parameter);
+        //     window.location.href = '/pos/purchaseinvoice/'+parameter;
+        // }
     </script>
 </th:block>
 </body>

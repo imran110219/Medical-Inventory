@@ -28,8 +28,8 @@ public class ReturnService {
     public Return updateReturn(Return newReturn, Long id) {
         return repository.findById(id)
                 .map(returnObject -> {
-                    returnObject.setInvoice(newReturn.getInvoice());
-                    returnObject.setPurchase(newReturn.getPurchase());
+                    returnObject.setSaleInvoice(newReturn.getSaleInvoice());
+                    returnObject.setPurchaseInvoice(newReturn.getPurchaseInvoice());
                     returnObject.setTotal(newReturn.getTotal());
                     returnObject.setWastage(newReturn.getWastage());
                     return repository.save(returnObject);

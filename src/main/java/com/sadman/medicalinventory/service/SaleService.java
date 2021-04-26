@@ -17,8 +17,8 @@ public class SaleService {
         return repository.findAll();
     }
 
-    public List<Sale> getAllSalesByInvoiceId(String invoiceId) {
-        return repository.findAllByInvoiceId(invoiceId);
+    public List<Sale> getAllSalesBySaleInvoiceId(String saleInvoiceId) {
+        return repository.findAllBySaleInvoiceId(saleInvoiceId);
     }
 
     public Sale getSaleById(Long id) throws RecordNotFoundException {
@@ -33,7 +33,7 @@ public class SaleService {
         return repository.findById(id)
                 .map(sale -> {
                     sale.setStock(newSale.getStock());
-                    sale.setInvoice(newSale.getInvoice());
+                    sale.setSaleInvoice(newSale.getSaleInvoice());
                     sale.setUnitPrice(newSale.getUnitPrice());
                     sale.setQuantity(newSale.getQuantity());
                     sale.setTotal(newSale.getTotal());
