@@ -99,6 +99,7 @@
                                         <div class="col-sm-3">
                                             <select id="selectManufacturer" class="form-control select2"
                                                     th:field="*{manufacturerId}"
+                                                    onchange="changeManufacturer(this);"
                                                     style="width: 100%;">
                                                 <option value=""> --</option>
                                                 <option th:each="manufacturer : ${manufacturers}"
@@ -428,6 +429,27 @@
         });
 
         /*]]>*/
+
+        function changeManufacturer(selectObject) {
+            var purchaseId = selectObject.value;
+            var selectid = selectObject.id;
+            var res = selectid.substring(10);
+
+            $.ajax({
+                url: '/pos/stock/' + purchaseId,
+                type: 'POST',
+                dataType: 'json',
+                contentType: "application/json",
+                success: function (data) {
+                    // console.log(data.quantity);
+                    $('#stock' + res).val(data.quantity);
+                    $('#stockId' + res).val(data.id);
+                },
+                error: function (err) {
+                    console.log(err);
+                }
+            });
+        }
 
         function changeBrand(selectObject) {
             var brandId = selectObject.value;
