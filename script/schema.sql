@@ -132,8 +132,9 @@ CREATE TABLE `purchase` (
   `batch_no` VARCHAR(14) NOT NULL,
   `box_id` INT(11) NOT NULL,
   `quantity` INT(11) NOT NULL,
-  `total` DOUBLE NOT NULL,
   `unit_price` DOUBLE DEFAULT NULL,
+  `discount` DOUBLE DEFAULT NULL,
+  `total` DOUBLE NOT NULL,
   `expiry_datetime` DATETIME NOT NULL,
   `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;

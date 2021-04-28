@@ -40,8 +40,9 @@ public class PurchaseService {
                     purchase.setPurchaseInvoice(newPurchase.getPurchaseInvoice());
                     purchase.setBatchNo(newPurchase.getBatchNo());
                     purchase.setBox(newPurchase.getBox());
-                    purchase.setUnitPrice(newPurchase.getUnitPrice());
                     purchase.setQuantity(newPurchase.getQuantity());
+                    purchase.setUnitPrice(newPurchase.getUnitPrice());
+                    purchase.setDiscount(newPurchase.getDiscount());
                     purchase.setTotal(newPurchase.getTotal());
                     purchase.setExpiryDate(newPurchase.getExpiryDate());
                     return repository.save(purchase);

@@ -33,6 +33,8 @@ public class Purchase {
     private double quantity;
     @Column(name = "unit_price")
     private double unitPrice;
+    @Column(name = "discount")
+    private double discount;
     @Column(name = "total")
     private double total;
     @Column(name = "expiry_datetime")

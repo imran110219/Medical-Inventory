@@ -80,7 +80,8 @@
                             <form id="posForm" th:object="${purchaseinvoicedto}" method="post">
                                 <div class="card-body">
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label" for="selectSupplier">Supplier Name</label>
+                                        <label class="col-sm-2 col-form-label" for="selectSupplier">Supplier
+                                            Name</label>
                                         <div class="col-sm-3">
                                             <select id="selectSupplier" class="form-control select2"
                                                     th:field="*{supplierId}"
@@ -93,15 +94,16 @@
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label" for="selectSupplier">Supplier Name</label>
+                                        <label class="col-sm-2 col-form-label" for="selectManufacturer">Manufacturer
+                                            Name</label>
                                         <div class="col-sm-3">
-                                            <select id="selectSupplier" class="form-control select2"
-                                                    th:field="*{supplierId}"
+                                            <select id="selectManufacturer" class="form-control select2"
+                                                    th:field="*{manufacturerId}"
                                                     style="width: 100%;">
                                                 <option value=""> --</option>
-                                                <option th:each="supplier : ${suppliers}"
-                                                        th:value="${supplier.id}"
-                                                        th:utext="${supplier.name}">
+                                                <option th:each="manufacturer : ${manufacturers}"
+                                                        th:value="${manufacturer.id}"
+                                                        th:utext="${manufacturer.name}">
                                             </select>
                                         </div>
                                     </div>
@@ -117,8 +119,9 @@
                                         <thead>
                                         <tr>
                                             <th>Brand Name</th>
-                                            <th>Expired Date</th>
-                                            <th>Stock</th>
+                                            <th>Batch No</th>
+                                            <th>Expiry Date</th>
+                                            <th>Box Size</th>
                                             <th>Quantity</th>
                                             <th>Price</th>
                                             <th>Discount %</th>
@@ -128,9 +131,9 @@
                                         </thead>
                                         <tbody>
                                         <tr>
-                                            <td>
+                                            <td style="width:15%">
                                                 <select id="selectBrand1" class="form-control select2"
-                                                        th:field="*{medicineDTOList[0].brandId}"
+                                                        th:field="*{purchaseMedicineDTOList[0].brandId}"
                                                         onchange="changeBrand(this);"
                                                         style="width: 100%;">
                                                     <option value=""> --</option>
@@ -140,98 +143,58 @@
                                                 </select>
                                             </td>
                                             <td style="width:15%">
-                                                <select id="selectDate1" class="form-control select2"
-                                                        onchange="changeDate(this);"
+                                                <input type="text" class="form-control" id="batch1"
+                                                       th:field="*{purchaseMedicineDTOList[0].batchNo}"
+                                                       placeholder="">
+                                            </td>
+                                            <td style="width:18%">
+                                                <div class="input-group date" id="reservationdate" data-target-input="nearest">
+                                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate"/>
+                                                    <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
+                                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td style="width:11%">
+                                                <select id="selectBox1" class="form-control select2"
+                                                        onchange="changeBox(this);"
                                                         style="width: 100%;">
                                                     <option value=""> --</option>
+                                                    <option th:each="box : ${boxes}"
+                                                            th:value="${box.id}"
+                                                            th:utext="${box.name}">
                                                 </select>
                                             </td>
                                             <td style="width:10%">
-                                                <input type="number" class="form-control" id="stock1"
-                                                       placeholder="" disabled>
-                                                <input type="hidden" id="stockId1" th:field="*{medicineDTOList[0].stockId}">
-                                            </td>
-                                            <td style="width:10%">
                                                 <input type="number" class="form-control" id="quantity1"
-                                                       th:field="*{medicineDTOList[0].quantity}"
+                                                       th:field="*{purchaseMedicineDTOList[0].quantity}"
                                                        onchange="changeQuantity(this);"
                                                        placeholder="">
                                             </td>
-                                            <td style="width:12%">
+                                            <td style="width:9%">
                                                 <input type="number" class="form-control" id="price1"
-                                                       th:field="*{medicineDTOList[0].unitPrice}"
-                                                       placeholder="" readonly>
+                                                       th:field="*{purchaseMedicineDTOList[0].unitPrice}"
+                                                       placeholder="">
                                             </td>
                                             <td style="width:12%">
                                                 <input type="number" class="form-control" id="discount1"
                                                        onchange="changeDiscount(this);"
                                                        placeholder="0">
-                                                <input type="hidden" id="discountAmount1" th:field="*{medicineDTOList[0].discount}">
+                                                <input type="hidden" id="discountAmount1"
+                                                       th:field="*{purchaseMedicineDTOList[0].discount}">
                                             </td>
                                             <td style="width:12%">
                                                 <input type="number" class="form-control" id="total1"
-                                                       th:field="*{medicineDTOList[0].total}"
+                                                       th:field="*{purchaseMedicineDTOList[0].total}"
                                                        placeholder="" readonly>
                                             </td>
                                             <td>
                                                 <button type="button"
                                                         class="btn btn-block btn-danger btn-sm delete-row">
-                                                    Delete
+                                                    <i class="fas fa-trash"></i>
                                                 </button>
                                             </td>
                                         </tr>
-<!--                                        <tr>-->
-<!--                                            <td>-->
-<!--                                                <select id="selectBrand2" class="form-control select2"-->
-<!--                                                        th:field="*{medicineDTOList[1].brandId}"-->
-<!--                                                        onchange="changeBrand(this);"-->
-<!--                                                        style="width: 100%;">-->
-<!--                                                    <option value=""> &#45;&#45;</option>-->
-<!--                                                    <option th:each="brand : ${brands}"-->
-<!--                                                            th:value="${brand.id}"-->
-<!--                                                            th:utext="${brand.name}">-->
-<!--                                                </select>-->
-<!--                                            </td>-->
-<!--                                            <td style="width:15%">-->
-<!--                                                <select id="selectDate2" class="form-control select2"-->
-<!--                                                        onchange="changeDate(this);"-->
-<!--                                                        style="width: 100%;">-->
-<!--                                                    <option value=""> &#45;&#45;</option>-->
-<!--                                                </select>-->
-<!--                                            </td>-->
-<!--                                            <td style="width:10%">-->
-<!--                                                <input type="number" class="form-control" id="stock2"-->
-<!--                                                       placeholder="" disabled>-->
-<!--                                                <input type="hidden" id="stockId2" th:field="*{medicineDTOList[1].stockId}">-->
-<!--                                            </td>-->
-<!--                                            <td style="width:10%">-->
-<!--                                                <input type="number" class="form-control" id="quantity2"-->
-<!--                                                       th:field="*{medicineDTOList[1].quantity}"-->
-<!--                                                       onchange="changeQuantity(this);"-->
-<!--                                                       placeholder="">-->
-<!--                                            </td>-->
-<!--                                            <td style="width:12%">-->
-<!--                                                <input type="number" class="form-control" id="price2"-->
-<!--                                                       placeholder="" disabled>-->
-<!--                                            </td>-->
-<!--                                            <td style="width:12%">-->
-<!--                                                <input type="number" class="form-control" id="discount2"-->
-<!--                                                       onchange="changeDiscount(this);"-->
-<!--                                                       placeholder="0">-->
-<!--                                                <input type="hidden" id="discountAmount2" th:field="*{medicineDTOList[1].discount}">-->
-<!--                                            </td>-->
-<!--                                            <td style="width:12%">-->
-<!--                                                <input type="number" class="form-control" id="total2"-->
-<!--                                                       th:field="*{medicineDTOList[1].total}"-->
-<!--                                                       placeholder="" readonly>-->
-<!--                                            </td>-->
-<!--                                            <td>-->
-<!--                                                <button type="button"-->
-<!--                                                        class="btn btn-block btn-danger btn-sm delete-row">-->
-<!--                                                    Delete-->
-<!--                                                </button>-->
-<!--                                            </td>-->
-<!--                                        </tr>-->
                                         </tbody>
                                     </table>
                                     </br>
@@ -429,12 +392,12 @@
                     // formData.append("medicineDTOList[" + i + "].discount", 5);
                     // formData.append("medicineDTOList[" + i + "].total", 95);
 
-                    formData.append("medicineDTOList[" + i + "].brandId", $('#selectBrand'+ (i+1)).val());
-                    formData.append("medicineDTOList[" + i + "].stockId", $('#stockId' + (i+1)).val());
-                    formData.append("medicineDTOList[" + i + "].unitPrice", $('#price' + (i+1)).val());
-                    formData.append("medicineDTOList[" + i + "].quantity", $('#quantity' + (i+1)).val());
-                    formData.append("medicineDTOList[" + i + "].discount", $('#discountAmount' + (i+1)).val());
-                    formData.append("medicineDTOList[" + i + "].total", $('#total' + (i+1)).val());
+                    formData.append("medicineDTOList[" + i + "].brandId", $('#selectBrand' + (i + 1)).val());
+                    formData.append("medicineDTOList[" + i + "].stockId", $('#stockId' + (i + 1)).val());
+                    formData.append("medicineDTOList[" + i + "].unitPrice", $('#price' + (i + 1)).val());
+                    formData.append("medicineDTOList[" + i + "].quantity", $('#quantity' + (i + 1)).val());
+                    formData.append("medicineDTOList[" + i + "].discount", $('#discountAmount' + (i + 1)).val());
+                    formData.append("medicineDTOList[" + i + "].total", $('#total' + (i + 1)).val());
                 }
                 // for (var pair of formData.entries()) {
                 //     console.log(pair[0]+ ', ' + pair[1]);
@@ -448,7 +411,7 @@
                     data: formData,
                     success: function (data) {
                         console.log(data);
-                        window.location.href = '/pos/invoice/'+data.id;
+                        window.location.href = '/pos/invoice/' + data.id;
                     },
 
                     error: function (xhr, exception) {
@@ -600,6 +563,11 @@
         $(function () {
             //Initialize Select2 Elements
             $('.select2').select2()
+
+            //Date range picker
+            $('#reservationdate').datetimepicker({
+                format: 'L'
+            });
         })
     </script>
 </th:block>
