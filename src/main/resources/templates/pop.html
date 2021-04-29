@@ -93,21 +93,21 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label" for="selectManufacturer">Manufacturer
-                                            Name</label>
-                                        <div class="col-sm-3">
-                                            <select id="selectManufacturer" class="form-control select2"
-                                                    th:field="*{manufacturerId}"
-                                                    onchange="changeManufacturer(this);"
-                                                    style="width: 100%;">
-                                                <option value=""> --</option>
-                                                <option th:each="manufacturer : ${manufacturers}"
-                                                        th:value="${manufacturer.id}"
-                                                        th:utext="${manufacturer.name}">
-                                            </select>
-                                        </div>
-                                    </div>
+                                    <!--                                    <div class="form-group row">-->
+                                    <!--                                        <label class="col-sm-2 col-form-label" for="selectManufacturer">Manufacturer-->
+                                    <!--                                            Name</label>-->
+                                    <!--                                        <div class="col-sm-3">-->
+                                    <!--                                            <select id="selectManufacturer" class="form-control select2"-->
+                                    <!--                                                    th:field="*{manufacturerId}"-->
+                                    <!--                                                    onchange="changeManufacturer(this);"-->
+                                    <!--                                                    style="width: 100%;">-->
+                                    <!--                                                <option value=""> &#45;&#45;</option>-->
+                                    <!--                                                <option th:each="manufacturer : ${manufacturers}"-->
+                                    <!--                                                        th:value="${manufacturer.id}"-->
+                                    <!--                                                        th:utext="${manufacturer.name}">-->
+                                    <!--                                            </select>-->
+                                    <!--                                        </div>-->
+                                    <!--                                    </div>-->
                                     <div class="col-sm-4 col-md-2">
                                         <button type="button" class="btn btn-success btn-sm add-row">
                                             Add
@@ -143,16 +143,20 @@
                                                             th:utext="${brand.name}">
                                                 </select>
                                             </td>
-                                            <td style="width:15%">
+                                            <td style="width:12%">
                                                 <input type="text" class="form-control" id="batch1"
                                                        th:field="*{purchaseMedicineDTOList[0].batchNo}"
                                                        placeholder="">
                                             </td>
                                             <td style="width:18%">
-                                                <div class="input-group date" id="reservationdate" data-target-input="nearest">
-                                                    <input type="text" class="form-control datetimepicker-input" data-target="#reservationdate"/>
-                                                    <div class="input-group-append" data-target="#reservationdate" data-toggle="datetimepicker">
-                                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                                <div class="input-group date" id="reservationdate"
+                                                     data-target-input="nearest">
+                                                    <input type="text" class="form-control datetimepicker-input"
+                                                           data-target="#reservationdate"/>
+                                                    <div class="input-group-append" data-target="#reservationdate"
+                                                         data-toggle="datetimepicker">
+                                                        <div class="input-group-text"><i class="fa fa-calendar"></i>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </td>
@@ -361,6 +365,15 @@
         /*<![CDATA[*/
         $(document).ready(function () {
 
+            var dddd = $("#selectManufacturer").val();
+            console.log(dddd);
+            if (dddd) {
+                console.log("Undefined");
+            } else {
+                console.log("Defined");
+            }
+            // alert($("#selectManufacturer").val());
+
             $(".add-row").click(function () {
                 var index = $("tbody tr").length;
                 var row = index + 1;
@@ -430,26 +443,27 @@
 
         /*]]>*/
 
-        function changeManufacturer(selectObject) {
-            var purchaseId = selectObject.value;
-            var selectid = selectObject.id;
-            var res = selectid.substring(10);
-
-            $.ajax({
-                url: '/pos/stock/' + purchaseId,
-                type: 'POST',
-                dataType: 'json',
-                contentType: "application/json",
-                success: function (data) {
-                    // console.log(data.quantity);
-                    $('#stock' + res).val(data.quantity);
-                    $('#stockId' + res).val(data.id);
-                },
-                error: function (err) {
-                    console.log(err);
-                }
-            });
-        }
+        // function changeManufacturer(selectObject) {
+        //     var manufacturerId = selectObject.value;
+        //
+        //     $.ajax({
+        //         url: '/pop/manufacturer/' + manufacturerId,
+        //         type: 'POST',
+        //         dataType: 'json',
+        //         contentType: "application/json",
+        //         success: function (data) {
+        //             $('#selectDate' + res).children().remove();
+        //             $('#selectDate' + res).append('<option value=' + 0 + '> --</option>');
+        //             for (var i = 0; i < data.length; i++) {
+        //                 // console.log(data[i].id + '  ' + data[i].expiryDate);
+        //                 $('#selectDate' + res).append('<option value=' + data[i].id + '>' + data[i].expiryDate + '</option>');
+        //             }
+        //         },
+        //         error: function (err) {
+        //             console.log(err);
+        //         }
+        //     });
+        // }
 
         function changeBrand(selectObject) {
             var brandId = selectObject.value;

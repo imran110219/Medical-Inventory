@@ -59,11 +59,11 @@ public class POPController {
 //        return new ResponseEntity<>(brand, HttpStatus.OK);
 //    }
 
-//    @PostMapping(value="/pos/purchases/{id}")
-//    public ResponseEntity<List<Purchase>> getPurchasesByBrandId(@PathVariable(value = "id") Long brandId){
-//        List<Purchase> PurchaseList = purchaseService.getPurchasesByBrandId(brandId);
-//        return new ResponseEntity<>(PurchaseList, HttpStatus.OK);
-//    }
+    @PostMapping(value="/pop/manufacturer/{id}")
+    public ResponseEntity<List<Brand>> getPurchasesByBrandId(@PathVariable(value = "id") Long manufacturerId){
+        List<Brand> brandList = brandService.getBrandsByManufacturerId(manufacturerId);
+        return new ResponseEntity<>(brandList, HttpStatus.OK);
+    }
 
 //    @PostMapping(value="/pos/stock/{id}")
 //    public ResponseEntity<Stock> getStockByPurchaseId(@PathVariable(value = "id") Long purchaseId){

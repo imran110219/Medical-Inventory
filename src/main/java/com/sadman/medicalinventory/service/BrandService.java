@@ -18,7 +18,7 @@ public class BrandService {
         return repository.findAll();
     }
 
-    public List<Brand> getBrandsByCompanyId(Long manufacturerId)
+    public List<Brand> getBrandsByManufacturerId(Long manufacturerId)
     {
         return repository.getBrandsByManufacturerId(manufacturerId);
     }

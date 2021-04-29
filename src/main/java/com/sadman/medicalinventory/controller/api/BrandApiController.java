@@ -25,8 +25,8 @@ public class BrandApiController {
     }
 
     @GetMapping("/brands/company/{id}")
-    public List<Brand> getBrandsByCompanyId(@PathVariable(value = "id") Long companyId){
-        return service.getBrandsByCompanyId(companyId);
+    public List<Brand> getBrandsByCompanyId(@PathVariable(value = "id") Long manufacturerId){
+        return service.getBrandsByManufacturerId(manufacturerId);
     }
 
     @GetMapping("/brands/generic/{id}")
