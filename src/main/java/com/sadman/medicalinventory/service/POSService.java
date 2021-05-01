@@ -29,13 +29,13 @@ public class POSService {
     private UserRepository userRepository;
 
     @Autowired
-    SaleInvoiceRepository saleInvoiceRepository;
+    private SaleInvoiceRepository saleInvoiceRepository;
 
     @Autowired
-    StockRepository stockRepository;
+    private StockRepository stockRepository;
 
     @Autowired
-    SaleRepository saleRepository;
+    private SaleRepository saleRepository;
 
     public SaleInvoice makePayment(InvoiceDTO invoiceDTO) {
         String invoiceId = String.valueOf(new Timestamp(System.currentTimeMillis()).getTime());

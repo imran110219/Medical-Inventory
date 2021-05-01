@@ -129,7 +129,7 @@ CREATE TABLE `purchase` (
   `id` INT(11),
   `brand_id` INT(11) NOT NULL,
   `purchase_invoice_id` VARCHAR(15) NOT NULL,
-  `batch_no` VARCHAR(14) NOT NULL,
+  `batch_no` VARCHAR(15) NOT NULL,
   `box_id` INT(11) NOT NULL,
   `quantity` INT(11) NOT NULL,
   `unit_price` DOUBLE DEFAULT NULL,

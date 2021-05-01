@@ -26,8 +26,7 @@ public class PurchaseInvoiceService {
         return repository.save(purchaseInvoice);
     }
 
-    public PurchaseInvoice updatePurchaseInvoice(PurchaseInvoice newPurchaseInvoice, String id)
-    {
+    public PurchaseInvoice updatePurchaseInvoice(PurchaseInvoice newPurchaseInvoice, String id) {
         return repository.findById(id)
                 .map(purchaseInvoice -> {
                     purchaseInvoice.setSupplier(newPurchaseInvoice.getSupplier());

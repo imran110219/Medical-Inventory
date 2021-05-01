@@ -4,6 +4,7 @@ import com.sadman.medicalinventory.exception.RecordNotFoundException;
 import com.sadman.medicalinventory.model.Brand;
 import com.sadman.medicalinventory.model.Purchase;
 import com.sadman.medicalinventory.model.Indication;
+import com.sadman.medicalinventory.model.Sale;
 import com.sadman.medicalinventory.repository.PurchaseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,10 @@ public class PurchaseService {
 
     public List<Purchase> getPurchasesByBrandId(Long brandId) {
         return repository.getPurchasesByBrandId(brandId);
+    }
+
+    public List<Purchase> getPurchasesByPurchaseInvoiceId(String purchaseInvoiceId) {
+        return repository.getPurchasesByPurchaseInvoiceId(purchaseInvoiceId);
     }
 
     public Purchase getPurchaseById(Long id) throws RecordNotFoundException {

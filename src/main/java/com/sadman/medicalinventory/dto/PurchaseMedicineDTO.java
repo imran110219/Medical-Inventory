@@ -17,7 +17,7 @@ public class PurchaseMedicineDTO {
     private Long brandId;
     private String batchNo;
     private Long boxId;
-    private Long stockId;
+    private Long locationId;
     private double unitPrice;
     private double quantity;
     private double discount;

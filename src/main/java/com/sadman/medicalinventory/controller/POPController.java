@@ -36,10 +36,10 @@ public class POPController {
     private StockService stockService;
 
     @Autowired
-    private POSService posService;
+    private POPService popService;
 
     @Autowired
-    private SaleInvoiceService saleInvoiceService;
+    private PurchaseInvoiceService purchaseInvoiceService;
 
     @Autowired
     private SaleService saleService;
@@ -52,6 +52,9 @@ public class POPController {
 
     @Autowired
     private BoxService boxService;
+
+    @Autowired
+    private LocationService locationService;
 
 //    @PostMapping(value="/pos/brand/{id}")
 //    public ResponseEntity<Brand> getBrandById(@PathVariable(value = "id") Long brandId) throws RecordNotFoundException {
@@ -76,6 +79,7 @@ public class POPController {
         List<Brand> brandList = brandService.getAllBrands();
         List<Supplier> supplierList = supplierService.getAllSuppliers();
         List<Box> boxList = boxService.getAllBoxes();
+        List<Location> locationList = locationService.getAllLocations();
         List<Manufacturer> manufacturerList = manufacturerService.getAllManufacturers();
         List<PurchaseMedicineDTO> purchaseMedicineDTOList = new ArrayList<>();
         PurchaseInvoiceDTO purchaseInvoiceDTO = new PurchaseInvoiceDTO();
@@ -84,25 +88,26 @@ public class POPController {
         model.addAttribute("suppliers",supplierList);
         model.addAttribute("manufacturers",manufacturerList);
         model.addAttribute("boxes",boxList);
+        model.addAttribute("locations",locationList);
         model.addAttribute("purchaseinvoicedto", purchaseInvoiceDTO);
         model.addAttribute("brands", brandList);
         return "pop";
     }
 
-//    @PostMapping(value="/pos/payment")
-//    public ResponseEntity<SaleInvoice> makePayment(InvoiceDTO invoiceDTO){
-//        SaleInvoice invoice = posService.makePayment(invoiceDTO);
-//        return new ResponseEntity<>(invoice, HttpStatus.OK);
-//    }
+    @PostMapping(value="/pop/payment")
+    public ResponseEntity<PurchaseInvoice> makePayment(PurchaseInvoiceDTO purchaseInvoiceDTO){
+        PurchaseInvoice invoice = popService.makePayment(purchaseInvoiceDTO);
+        return new ResponseEntity<>(invoice, HttpStatus.OK);
+    }
 
-//    @GetMapping(value = "/pos/invoice/{invoiceId}")
-//    public String getInvoice(Model model, @PathVariable(value = "invoiceId") String saleInvoiceId) throws RecordNotFoundException {
-//        SaleInvoice saleInvoice = saleInvoiceService.getSaleInvoiceById(saleInvoiceId);
-//        List<Sale> saleList = saleService.getAllSalesBySaleInvoiceId(saleInvoiceId);
-//        model.addAttribute("invoice", saleInvoice);
-//        model.addAttribute("saleList", saleList);
-//        return "invoice/invoice";
-//    }
+    @GetMapping(value = "/pop/invoice/{invoiceId}")
+    public String getInvoice(Model model, @PathVariable(value = "invoiceId") String purchaseInvoiceId) throws RecordNotFoundException {
+        PurchaseInvoice purchaseInvoice = purchaseInvoiceService.getPurchaseInvoiceById(purchaseInvoiceId);
+        List<Purchase> purchaseList = purchaseService.getPurchasesByPurchaseInvoiceId(purchaseInvoiceId);
+        model.addAttribute("invoice", purchaseInvoice);
+        model.addAttribute("purchaseList", purchaseList);
+        return "invoice/invoice";
+    }
 
 //    @GetMapping(value = "/pos/invoice/{invoiceId}/print")
 //    public String printInvoice(Model model, @PathVariable(value = "invoiceId") String saleInvoiceId) throws RecordNotFoundException {

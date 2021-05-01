@@ -26,8 +26,7 @@ public class SaleInvoiceService {
         return repository.save(saleInvoice);
     }
 
-    public SaleInvoice updateSaleInvoice(SaleInvoice newSaleInvoice, String id)
-    {
+    public SaleInvoice updateSaleInvoice(SaleInvoice newSaleInvoice, String id) {
         return repository.findById(id)
                 .map(invoice -> {
                     invoice.setUser(newSaleInvoice.getUser());

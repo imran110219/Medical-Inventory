@@ -36,13 +36,11 @@
 
     </th:block>
 
-
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
 <!-- Site wrapper -->
 <div class="wrapper">
-
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper" layout:fragment="content">
 
@@ -69,7 +67,6 @@
                 <div class="row">
                     <!-- left column -->
                     <div class="col-md-12">
-
                         <!-- general form elements -->
                         <div class="card card-primary">
                             <div class="card-header">
@@ -77,7 +74,7 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form id="posForm" th:object="${purchaseinvoicedto}" method="post">
+                            <form id="popForm" th:object="${purchaseinvoicedto}" method="post">
                                 <div class="card-body">
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label" for="selectSupplier">Supplier
@@ -93,21 +90,6 @@
                                             </select>
                                         </div>
                                     </div>
-                                    <!--                                    <div class="form-group row">-->
-                                    <!--                                        <label class="col-sm-2 col-form-label" for="selectManufacturer">Manufacturer-->
-                                    <!--                                            Name</label>-->
-                                    <!--                                        <div class="col-sm-3">-->
-                                    <!--                                            <select id="selectManufacturer" class="form-control select2"-->
-                                    <!--                                                    th:field="*{manufacturerId}"-->
-                                    <!--                                                    onchange="changeManufacturer(this);"-->
-                                    <!--                                                    style="width: 100%;">-->
-                                    <!--                                                <option value=""> &#45;&#45;</option>-->
-                                    <!--                                                <option th:each="manufacturer : ${manufacturers}"-->
-                                    <!--                                                        th:value="${manufacturer.id}"-->
-                                    <!--                                                        th:utext="${manufacturer.name}">-->
-                                    <!--                                            </select>-->
-                                    <!--                                        </div>-->
-                                    <!--                                    </div>-->
                                     <div class="col-sm-4 col-md-2">
                                         <button type="button" class="btn btn-success btn-sm add-row">
                                             Add
@@ -123,11 +105,12 @@
                                             <th>Batch No</th>
                                             <th>Expiry Date</th>
                                             <th>Box Size</th>
+                                            <th>Location</th>
                                             <th>Quantity</th>
                                             <th>Price</th>
-                                            <th>Discount %</th>
+                                            <th>Deduct</th>
                                             <th>Total</th>
-                                            <th>Action</th>
+                                            <th>#</th>
                                         </tr>
                                         </thead>
                                         <tbody>
@@ -135,7 +118,6 @@
                                             <td style="width:15%">
                                                 <select id="selectBrand1" class="form-control select2"
                                                         th:field="*{purchaseMedicineDTOList[0].brandId}"
-                                                        onchange="changeBrand(this);"
                                                         style="width: 100%;">
                                                     <option value=""> --</option>
                                                     <option th:each="brand : ${brands}"
@@ -143,26 +125,29 @@
                                                             th:utext="${brand.name}">
                                                 </select>
                                             </td>
-                                            <td style="width:12%">
-                                                <input type="text" class="form-control" id="batch1"
+                                            <td style="width:10%">
+                                                <input type="text" class="form-control" id="batchNo1"
                                                        th:field="*{purchaseMedicineDTOList[0].batchNo}"
                                                        placeholder="">
                                             </td>
-                                            <td style="width:18%">
-                                                <div class="input-group date" id="reservationdate"
+                                            <td style="width:15%">
+                                                <div class="input-group date" id="expirydate1"
                                                      data-target-input="nearest">
                                                     <input type="text" class="form-control datetimepicker-input"
-                                                           data-target="#reservationdate"/>
-                                                    <div class="input-group-append" data-target="#reservationdate"
+                                                           id="exdate1"
+                                                           th:field="*{purchaseMedicineDTOList[0].expiryDate}"
+                                                           data-target="#expirydate1"/>
+                                                    <div class="input-group-append" data-target="#expirydate1"
                                                          data-toggle="datetimepicker">
-                                                        <div class="input-group-text"><i class="fa fa-calendar"></i>
+                                                        <div class="input-group-text">
+                                                            <i class="fa fa-calendar"></i>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </td>
-                                            <td style="width:11%">
+                                            <td style="width:10%">
                                                 <select id="selectBox1" class="form-control select2"
-                                                        onchange="changeBox(this);"
+                                                        th:field="*{purchaseMedicineDTOList[0].boxId}"
                                                         style="width: 100%;">
                                                     <option value=""> --</option>
                                                     <option th:each="box : ${boxes}"
@@ -171,6 +156,16 @@
                                                 </select>
                                             </td>
                                             <td style="width:10%">
+                                                <select id="selectLocation1" class="form-control select2"
+                                                        th:field="*{purchaseMedicineDTOList[0].locationId}"
+                                                        style="width: 100%;">
+                                                    <option value=""> --</option>
+                                                    <option th:each="location : ${locations}"
+                                                            th:value="${location.id}"
+                                                            th:utext="${location.name}">
+                                                </select>
+                                            </td>
+                                            <td style="width:9%">
                                                 <input type="number" class="form-control" id="quantity1"
                                                        th:field="*{purchaseMedicineDTOList[0].quantity}"
                                                        onchange="changeQuantity(this);"
@@ -179,21 +174,22 @@
                                             <td style="width:9%">
                                                 <input type="number" class="form-control" id="price1"
                                                        th:field="*{purchaseMedicineDTOList[0].unitPrice}"
+                                                       onchange="changePrice(this);"
                                                        placeholder="">
                                             </td>
-                                            <td style="width:12%">
+                                            <td style="width:9%">
                                                 <input type="number" class="form-control" id="discount1"
                                                        onchange="changeDiscount(this);"
-                                                       placeholder="0">
+                                                       placeholder="%">
                                                 <input type="hidden" id="discountAmount1"
                                                        th:field="*{purchaseMedicineDTOList[0].discount}">
                                             </td>
-                                            <td style="width:12%">
+                                            <td style="width:9%">
                                                 <input type="number" class="form-control" id="total1"
                                                        th:field="*{purchaseMedicineDTOList[0].total}"
                                                        placeholder="" readonly>
                                             </td>
-                                            <td>
+                                            <td style="width:5%">
                                                 <button type="button"
                                                         class="btn btn-block btn-danger btn-sm delete-row">
                                                     <i class="fas fa-trash"></i>
@@ -365,20 +361,11 @@
         /*<![CDATA[*/
         $(document).ready(function () {
 
-            var dddd = $("#selectManufacturer").val();
-            console.log(dddd);
-            if (dddd) {
-                console.log("Undefined");
-            } else {
-                console.log("Defined");
-            }
-            // alert($("#selectManufacturer").val());
-
             $(".add-row").click(function () {
                 var index = $("tbody tr").length;
                 var row = index + 1;
-                var tr = "<tr id='tr" + row + "'> <td> <select id='selectBrand" + row + "' class='form-control select2' onchange='changeBrand(this);' style='width: 100%;'> </select> </td> <td style='width:15%'> <select id='selectDate" + row + "' class='form-control select2' onchange='changeDate(this);' style='width: 100%;'> <option value=''> --</option> </select> </td> <td style='width:10%'> <input type='number' class='form-control' id='stock" + row + "' placeholder='' disabled> <input type='hidden' id='stockId" + row + "'> </td> <td style='width:10%'> <input type='number' class='form-control' id='quantity" + row + "' onchange='changeQuantity(this);' placeholder=''> </td> <td style='width:12%'> <input type='number' class='form-control' id='price" + row + "' placeholder='' readonly> </td> <td style='width:12%'> <input type='number' class='form-control' id='discount" + row + "' onchange='changeDiscount(this);' placeholder='0'> <input type='hidden' id='discountAmount" + row + "'> </td> <td style='width:12%'> <input type='number' class='form-control' id='total" + row + "' placeholder='' readonly> </td> <td> <button type='button' class='btn btn-block btn-danger btn-sm delete-row'> Delete </button> </td> </tr>";
-                // var tr = '<tr id="tr' + row + '"> <td> <select id="selectBrand' + row + '" class="form-control select2" th:field="*{medicineDTOList[' + index + '].brandId}" onchange="changeBrand(this);" style="width: 100%;"> </select> </td> <td style="width:15%"> <select id="selectDate' + row + '" class="form-control select2" onchange="changeDate(this);" style="width: 100%;"> <option value=""> --</option> </select> </td> <td style="width:10%"> <input type="number" class="form-control" id="stock' + row + '" placeholder="" disabled> <input type="hidden" id="stockId' + row + '" th:field="*{medicineDTOList[' + index + '].stockId}"> </td> <td style="width:10%"> <input type="number" class="form-control" id="quantity' + row + '" th:field="*{medicineDTOList[' + index + "].quantity}" onchange="changeQuantity(this);" placeholder=""> </td> <td style="width:12%"> <input type="number" class="form-control" id="price' + row + '" placeholder="" disabled> </td> <td style="width:12%"> <input type="number" class="form-control" id="discount' + row + '" onchange="changeDiscount(this);" placeholder="0"> <input type="hidden" id="discountAmount' + row + '" th:field="*{medicineDTOList[' + index + '].discount}"> </td> <td style="width:12%"> <input type="number" class="form-control" id="total' + row + '" th:field="*{medicineDTOList[' + index + '].total}" placeholder="" readonly> </td> <td> <button type="button" class="btn btn-block btn-danger btn-sm delete-row"> Delete </button> </td> </tr>';
+                // var tr = "<tr id='tr" + row + "'> <td> <select id='selectBrand" + row + "' class='form-control select2' onchange='changeBrand(this);' style='width: 100%;'> </select> </td> <td style='width:15%'> <select id='selectDate" + row + "' class='form-control select2' onchange='changeDate(this);' style='width: 100%;'> <option value=''> --</option> </select> </td> <td style='width:10%'> <input type='number' class='form-control' id='stock" + row + "' placeholder='' disabled> <input type='hidden' id='stockId" + row + "'> </td> <td style='width:10%'> <input type='number' class='form-control' id='quantity" + row + "' onchange='changeQuantity(this);' placeholder=''> </td> <td style='width:12%'> <input type='number' class='form-control' id='price" + row + "' placeholder='' readonly> </td> <td style='width:12%'> <input type='number' class='form-control' id='discount" + row + "' onchange='changeDiscount(this);' placeholder='0'> <input type='hidden' id='discountAmount" + row + "'> </td> <td style='width:12%'> <input type='number' class='form-control' id='total" + row + "' placeholder='' readonly> </td> <td> <button type='button' class='btn btn-block btn-danger btn-sm delete-row'> Delete </button> </td> </tr>";
+                var tr = "<tr id='tr" + row + "' > <td style='width:15%'> <select id='selectBrand" + row + "' class='form-control select2' style='width: 100%;'> </select> </td> <td style='width:10%'> <input type='text' class='form-control' id='batch" + row + "' placeholder=''> </td> <td style='width:15%'> <div class='input-group date' id='expirydate" + row + "' data-target-input='nearest'> <input type='text' class='form-control datetimepicker-input' id='exdate" + row + "' data-target='#expirydate1" + row + "' /> <div class='input-group-append' data-target='#expirydate" + row + "' data-toggle='datetimepicker'> <div class='input-group-text'><i class='fa fa-calendar'></i> </div> </div> </div> </td> <td style='width:10%'> <select id='selectBox" + row + "' class='form-control select2' style='width: 100%;'> </select> <td style='width:10%'> <select id='selectLocation" + row + "' class='form-control select2' style='width: 100%;'> </select> </td> </td> <td style='width:9%'> <input type='number' class='form-control' id='quantity1" + row + "' onchange='changeQuantity(this);' placeholder=''> </td> <td style='width:9%'> <input type='number' class='form-control' id='price" + row + "' onchange='changePrice(this);' placeholder=''> </td> <td style='width:9%'> <input type='number' class='form-control' id='discount" + row + "' onchange='changeDiscount(this);' placeholder='%'> <input type='hidden' id='discountAmount" + row + "'> </td> <td style='width:9%'> <input type='number' class='form-control' id='total1" + row + "' placeholder='' readonly> </td> <td style='width:5%'> <button type='button' class='btn btn-block btn-danger btn-sm delete-row'> <i class='fas fa-trash'></i> </button> </td> </tr>";
                 $("#brand_tbl").append(tr);
                 $('.select2').select2();
 
@@ -389,43 +376,60 @@
                     $('#selectBrand' + row).append('<option value=' + brandList[i].id + '>' + brandList[i].name + '</option>');
                     // console.log(brandList[i]);
                 }
+
+                var boxList = [[${boxes}]];
+                $('#selectBox' + row).append('<option value=' + 0 + '> --</option>');
+                for (i = 0; i < boxList.length; i++) {
+                    $('#selectBox' + row).append('<option value=' + boxList[i].id + '>' + boxList[i].name + '</option>');
+                }
+
+                var locationList = [[${locations}]];
+                $('#selectLocation' + row).append('<option value=' + 0 + '> --</option>');
+                for (i = 0; i < locationList.length; i++) {
+                    $('#selectLocation' + row).append('<option value=' + locationList[i].id + '>' + locationList[i].name + '</option>');
+                }
+
+                $(function() {
+                    $('#expirydate' + row).datetimepicker({
+                        format: 'L'
+                    });
+
+                    $('#expirydate' + row).on('change.datetimepicker', ({date, oldDate}) => {
+                        // console.log($('#expirydate1').val());
+                        // console.log(date);
+                        var dateObject = $('#exdate' + row).val();
+                        console.log(dateObject);
+                    });
+                });
             });
 
-            $("#posForm").submit(function (e) {
+            $("#popForm").submit(function (e) {
                 e.preventDefault();
-                // var invoice_dto = [[${invoicedto}]];
-                // var medicine_dto = [[${medicinedto}]];
-                let myForm = document.getElementById('posForm');
+
+                let myForm = document.getElementById('popForm');
                 var formData = new FormData(myForm);
-                // var invoice_dto = $('#posForm').serialize();
                 var size = $("tbody tr").length;
                 for (i = 1; i < size; i++) {
-                    // formData.append("medicineDTOList[" + i + "].brandId", 1);
-                    // formData.append("medicineDTOList[" + i + "].stockId", 1);
-                    // formData.append("medicineDTOList[" + i + "].quantity", 5);
-                    // formData.append("medicineDTOList[" + i + "].discount", 5);
-                    // formData.append("medicineDTOList[" + i + "].total", 95);
-
-                    formData.append("medicineDTOList[" + i + "].brandId", $('#selectBrand' + (i + 1)).val());
-                    formData.append("medicineDTOList[" + i + "].stockId", $('#stockId' + (i + 1)).val());
-                    formData.append("medicineDTOList[" + i + "].unitPrice", $('#price' + (i + 1)).val());
-                    formData.append("medicineDTOList[" + i + "].quantity", $('#quantity' + (i + 1)).val());
-                    formData.append("medicineDTOList[" + i + "].discount", $('#discountAmount' + (i + 1)).val());
-                    formData.append("medicineDTOList[" + i + "].total", $('#total' + (i + 1)).val());
+                    formData.append("purchaseMedicineDTOList[" + i + "].brandId", $('#selectBrand' + (i + 1)).val());
+                    formData.append("purchaseMedicineDTOList[" + i + "].batchNo", $('#batchNo' + (i + 1)).val());
+                    formData.append("purchaseMedicineDTOList[" + i + "].boxId", $('#selectBox' + (i + 1)).val());
+                    formData.append("purchaseMedicineDTOList[" + i + "].locationId", $('#selectLocatin' + (i + 1)).val());
+                    formData.append("purchaseMedicineDTOList[" + i + "].unitPrice", $('#price' + (i + 1)).val());
+                    formData.append("purchaseMedicineDTOList[" + i + "].quantity", $('#quantity' + (i + 1)).val());
+                    formData.append("purchaseMedicineDTOList[" + i + "].discount", $('#discountAmount' + (i + 1)).val());
+                    formData.append("purchaseMedicineDTOList[" + i + "].total", $('#total' + (i + 1)).val());
+                    formData.append("purchaseMedicineDTOList[" + i + "].expiryDate", $('#exdate' + (i + 1)).val());
                 }
-                // for (var pair of formData.entries()) {
-                //     console.log(pair[0]+ ', ' + pair[1]);
-                // }
-                // console.log(formData);
+
                 $.ajax({
                     processData: false,
                     contentType: false,
                     type: 'post',
-                    url: "/pos/payment",
+                    url: "/pop/payment",
                     data: formData,
                     success: function (data) {
                         console.log(data);
-                        window.location.href = '/pos/invoice/' + data.id;
+                        window.location.href = '/pop/invoice/' + data.id;
                     },
 
                     error: function (xhr, exception) {
@@ -442,87 +446,6 @@
         });
 
         /*]]>*/
-
-        // function changeManufacturer(selectObject) {
-        //     var manufacturerId = selectObject.value;
-        //
-        //     $.ajax({
-        //         url: '/pop/manufacturer/' + manufacturerId,
-        //         type: 'POST',
-        //         dataType: 'json',
-        //         contentType: "application/json",
-        //         success: function (data) {
-        //             $('#selectDate' + res).children().remove();
-        //             $('#selectDate' + res).append('<option value=' + 0 + '> --</option>');
-        //             for (var i = 0; i < data.length; i++) {
-        //                 // console.log(data[i].id + '  ' + data[i].expiryDate);
-        //                 $('#selectDate' + res).append('<option value=' + data[i].id + '>' + data[i].expiryDate + '</option>');
-        //             }
-        //         },
-        //         error: function (err) {
-        //             console.log(err);
-        //         }
-        //     });
-        // }
-
-        function changeBrand(selectObject) {
-            var brandId = selectObject.value;
-            var selectid = selectObject.id;
-            var res = selectid.substring(11);
-
-            $.ajax({
-                url: '/pos/brand/' + brandId,
-                type: 'POST',
-                dataType: 'json',
-                contentType: "application/json",
-                success: function (data) {
-                    // console.log(data.salePrice);
-                    $('#price' + res).val(data.salePrice);
-                },
-                error: function (err) {
-                    console.log(err);
-                }
-            });
-
-            $.ajax({
-                url: '/pos/purchases/' + brandId,
-                type: 'POST',
-                dataType: 'json',
-                contentType: "application/json",
-                success: function (data) {
-                    $('#selectDate' + res).children().remove();
-                    $('#selectDate' + res).append('<option value=' + 0 + '> --</option>');
-                    for (var i = 0; i < data.length; i++) {
-                        // console.log(data[i].id + '  ' + data[i].expiryDate);
-                        $('#selectDate' + res).append('<option value=' + data[i].id + '>' + data[i].expiryDate + '</option>');
-                    }
-                },
-                error: function (err) {
-                    console.log(err);
-                }
-            });
-        }
-
-        function changeDate(selectObject) {
-            var purchaseId = selectObject.value;
-            var selectid = selectObject.id;
-            var res = selectid.substring(10);
-
-            $.ajax({
-                url: '/pos/stock/' + purchaseId,
-                type: 'POST',
-                dataType: 'json',
-                contentType: "application/json",
-                success: function (data) {
-                    // console.log(data.quantity);
-                    $('#stock' + res).val(data.quantity);
-                    $('#stockId' + res).val(data.id);
-                },
-                error: function (err) {
-                    console.log(err);
-                }
-            });
-        }
 
         function calculate(serial) {
             var quanti = $('#quantity' + serial).val();
@@ -563,18 +486,17 @@
         }
 
         function changeQuantity(selectObject) {
-            var quantityId = selectObject.value;
             var selectid = selectObject.id;
             var res = selectid.substring(8);
 
-            var stoc = $('#stock' + res).val();
-            var quanti = $('#quantity' + res).val();
+            calculate(res);
+        }
 
-            if (Number(quanti) > Number(stoc) && quanti != null) {
-                alert('Limited Stock');
-            } else {
-                calculate(res);
-            }
+        function changePrice(selectObject) {
+            var selectid = selectObject.id;
+            var res = selectid.substring(5);
+
+            calculate(res);
         }
 
         function changeAverageDiscount() {
@@ -582,7 +504,6 @@
         }
 
         function changeDiscount(selectObject) {
-            var quantityId = selectObject.value;
             var selectid = selectObject.id;
             var res = selectid.substring(8);
 
@@ -600,10 +521,15 @@
             //Initialize Select2 Elements
             $('.select2').select2()
 
-            //Date range picker
-            $('#reservationdate').datetimepicker({
+            $('#expirydate1').datetimepicker({
                 format: 'L'
             });
+
+            $('#expirydate1').on('change.datetimepicker', ({date, oldDate}) => {
+                // console.log(date);
+                var dateObject = $("#exdate1").val();
+                console.log(dateObject);
+            })
         })
     </script>
 </th:block>
