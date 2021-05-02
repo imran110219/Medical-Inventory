@@ -61,7 +61,7 @@ public class POPService {
             Purchase purchase = new Purchase();
             purchase.setBrand(brandRepository.getOne(purchaseMedicineDTO.getBrandId()));
             purchase.setPurchaseInvoice(purchaseInvoiceRepository.getOne(invoiceId));
-            if(purchaseMedicineDTO.getBatchNo() == null){
+            if(purchaseMedicineDTO.getBatchNo() == null || purchaseMedicineDTO.getBatchNo().equals("")){
                 String batchId = "B" + serial + (i+1) ;
                 purchase.setBatchNo(batchId);
             }

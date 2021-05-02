@@ -96,8 +96,8 @@ public class POPController {
 
     @PostMapping(value="/pop/payment")
     public ResponseEntity<PurchaseInvoice> makePayment(PurchaseInvoiceDTO purchaseInvoiceDTO){
-        PurchaseInvoice invoice = popService.makePayment(purchaseInvoiceDTO);
-        return new ResponseEntity<>(invoice, HttpStatus.OK);
+        PurchaseInvoice purchaseInvoice = popService.makePayment(purchaseInvoiceDTO);
+        return new ResponseEntity<>(purchaseInvoice, HttpStatus.OK);
     }
 
     @GetMapping(value = "/pop/invoice/{invoiceId}")
@@ -106,7 +106,7 @@ public class POPController {
         List<Purchase> purchaseList = purchaseService.getPurchasesByPurchaseInvoiceId(purchaseInvoiceId);
         model.addAttribute("invoice", purchaseInvoice);
         model.addAttribute("purchaseList", purchaseList);
-        return "invoice/invoice";
+        return "invoice/purchase-invoice";
     }
 
 //    @GetMapping(value = "/pos/invoice/{invoiceId}/print")

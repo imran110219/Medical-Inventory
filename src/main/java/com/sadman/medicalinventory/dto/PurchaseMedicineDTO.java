@@ -1,5 +1,6 @@
 package com.sadman.medicalinventory.dto;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.*;
 
 import java.util.Date;
@@ -13,6 +14,7 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class PurchaseMedicineDTO {
     private Long brandId;
     private String batchNo;

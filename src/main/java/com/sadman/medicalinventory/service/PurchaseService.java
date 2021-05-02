@@ -27,7 +27,7 @@ public class PurchaseService {
     }
 
     public List<Purchase> getPurchasesByPurchaseInvoiceId(String purchaseInvoiceId) {
-        return repository.getPurchasesByPurchaseInvoiceId(purchaseInvoiceId);
+        return repository.findAllByPurchaseInvoiceId(purchaseInvoiceId);
     }
 
     public Purchase getPurchaseById(Long id) throws RecordNotFoundException {

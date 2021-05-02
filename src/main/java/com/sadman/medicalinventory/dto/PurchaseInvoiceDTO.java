@@ -1,5 +1,6 @@
 package com.sadman.medicalinventory.dto;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import lombok.*;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonAutoDetect(fieldVisibility = JsonAutoDetect.Visibility.ANY)
 public class PurchaseInvoiceDTO {
     private Long supplierId;
     private Long manufacturerId;
