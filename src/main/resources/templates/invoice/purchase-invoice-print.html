@@ -64,7 +64,7 @@
     <!-- Table row -->
     <div class="row">
       <div class="col-12 table-responsive">
-        <table class="table table-striped" th:switch="${saleList}">
+        <table class="table table-striped" th:switch="${purchaseList}">
           <thead>
           <tr>
           <tr>
@@ -76,12 +76,12 @@
           </tr>
           </thead>
           <tbody>
-          <tr th:each="sale : ${saleList}">
-            <td th:text="${sale.stock.purchase.brand.name}"></td>
-            <td th:text="${sale.quantity}"></td>
-            <td th:text="${sale.unitPrice}"></td>
-            <td th:text="${sale.discount}"></td>
-            <td th:text="${sale.total}"></td>
+          <tr th:each="purchase : ${purchaseList}">
+            <td th:text="${purchase.brand.name}"></td>
+            <td th:text="${purchase.quantity}"></td>
+            <td th:text="${purchase.unitPrice}"></td>
+            <td th:text="${purchase.discount}"></td>
+            <td th:text="${purchase.total}"></td>
           </tr>
           </tbody>
         </table>

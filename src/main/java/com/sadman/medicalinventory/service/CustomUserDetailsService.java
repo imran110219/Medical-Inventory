@@ -3,8 +3,10 @@ package com.sadman.medicalinventory.service;
 import com.sadman.medicalinventory.model.Role;
 import com.sadman.medicalinventory.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
@@ -40,5 +42,12 @@ public class CustomUserDetailsService implements UserDetailsService {
     private UserDetails buildUserForAuthentication(User user, List<GrantedAuthority> authorities) {
         return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(),
                 user.getActive(), true, true, true, authorities);
+    }
+
+    public String getFullName() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userName = authentication.getName();
+        User user = userService.findUserByUserName(userName);
+        return user.getFirstName() + " " + user.getLastName();
     }
 }

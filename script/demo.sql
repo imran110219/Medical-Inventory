@@ -102,9 +102,9 @@ INSERT  INTO `sale`(`id`,`sale_invoice_id`,`stock_id`,`quantity`,`unit_price`,`d
 (1,'SI1618989514455',1,1,10,0,10,'2021-02-02 15:28:26');
 
 
-INSERT  INTO `returned`(`id`,`sale_invoice_id`,`purchase_invoice_id`,`quantity`,`unit_price`,`deduction`,`total`,`wastage`,`datetime`) VALUES 
-(1,'SI1618989514455',NULL,5,5,5,555,'','2021-04-24 14:41:14'),
-(2,NULL,'PI1618989514455',5,5,5,555,'','2021-04-24 14:48:30');
+INSERT  INTO `returned`(`id`,`sale_id`,`purchase_id`,`quantity`,`unit_price`,`deduction`,`total`,`wastage`,`datetime`) VALUES
+(1,1,NULL,5,5,5,555,'','2021-04-24 14:41:14'),
+(2,NULL,1,5,5,5,555,'','2021-04-24 14:48:30');
 
 
 

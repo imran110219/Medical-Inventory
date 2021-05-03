@@ -54,8 +54,8 @@ ALTER TABLE `stock`
 
 ALTER TABLE `returned`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `sale_invoice_id` (`sale_invoice_id`),
-  ADD KEY `purchase_invoice_id` (`purchase_invoice_id`);
+  ADD KEY `sale_id` (`sale_id`),
+  ADD KEY `purchase_id` (`purchase_id`);
 
 ALTER TABLE `user`
   ADD PRIMARY KEY (`id`);
@@ -145,8 +145,8 @@ ALTER TABLE `stock`
   ADD CONSTRAINT `stock_fk_purchase` FOREIGN KEY (`purchase_id`) REFERENCES `purchase` (`id`);
 
 ALTER TABLE `returned`
-  ADD CONSTRAINT `returned_fk_sale_invoice` FOREIGN KEY (`sale_invoice_id`) REFERENCES `sale_invoice` (`id`),
-  ADD CONSTRAINT `returned_fk_purchase_invoice` FOREIGN KEY (`purchase_invoice_id`) REFERENCES `purchase_invoice` (`id`);
+  ADD CONSTRAINT `returned_fk_sale` FOREIGN KEY (`sale_id`) REFERENCES `sale` (`id`),
+  ADD CONSTRAINT `returned_fk_purchase` FOREIGN KEY (`purchase_id`) REFERENCES `purchase` (`id`);
   
 ALTER TABLE `sale`
   ADD CONSTRAINT `sale_fk_sale_invoice` FOREIGN KEY (`sale_invoice_id`) REFERENCES `sale_invoice` (`id`),

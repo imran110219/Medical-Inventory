@@ -17,11 +17,11 @@ public class Return {
     @Column(name = "id")
     private long id;
     @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "sale_invoice_id")
-    private SaleInvoice saleInvoice;
+    @JoinColumn(name = "sale_id")
+    private Sale sale;
     @OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "purchase_invoice_id")
-    private PurchaseInvoice purchaseInvoice;
+    @JoinColumn(name = "purchase_id")
+    private Purchase purchase;
     @Column(name = "quantity")
     private double quantity;
     @Column(name = "unit_price")

@@ -172,8 +172,8 @@ DROP TABLE IF EXISTS `return`;
 
 CREATE TABLE `returned` (
   `id` INT(11),
-  `sale_invoice_id` VARCHAR(15) DEFAULT NULL,
-  `purchase_invoice_id` VARCHAR(15) DEFAULT NULL,
+  `sale_id` INT(11) DEFAULT NULL,
+  `purchase_id` INT(11) DEFAULT NULL,
   `quantity` INT(11) NOT NULL,
   `unit_price` DOUBLE NOT NULL,
   `deduction` DOUBLE NOT NULL,

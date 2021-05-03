@@ -1,5 +1,6 @@
 package com.sadman.medicalinventory.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.*;
 
 import javax.persistence.*;
@@ -19,6 +20,7 @@ public class PurchaseInvoice {
 
     @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "supplier_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Supplier supplier;
 
     @Column(name = "total")

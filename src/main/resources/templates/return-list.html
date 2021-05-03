@@ -61,7 +61,7 @@
                                 <table id="example1" class="table table-bordered table-striped" th:switch="${returns}">
                                     <thead>
                                     <tr>
-                                        <th>Invoice Id</th>
+                                        <th>Sale Id</th>
                                         <th>Purchase Id</th>
                                         <th>Quantity</th>
                                         <th>Unit Price</th>
@@ -73,8 +73,8 @@
                                     </thead>
                                     <tbody>
                                     <tr th:each="return : ${returns}">
-                                        <td th:text="${return.invoice.id}"></td>
-                                        <td th:text="${return.purchase.id}"></td>
+                                        <td th:text="${return.sale != null} ? ${return.sale.id} : 'N/A'"></td>
+                                        <td th:text="${return.purchase != null} ? ${return.purchase.id} : 'N/A'"></td>
                                         <td th:text="${return.quantity}"></td>
                                         <td th:text="${return.unitPrice}"></td>
                                         <td th:text="${return.deduction}"></td>
@@ -86,6 +86,12 @@
                                         </td>
                                         <td>
                                             <div class="btn-group" style="margin-left: 23px">
+                                                <input type="hidden" id="returnId" th:value="${return.id}">
+                                                <button type="button" id="btnView"
+                                                        class="btn btn-block btn-info btn-sm"
+                                                        style="margin-top: 8px;border-radius: 3px 0 0 3px;"
+                                                ><i class="fas fa-eye"></i>
+                                                </button>
                                                 <button type="button" id="btnEdit"
                                                         class="btn btn-block btn-primary btn-sm"
                                                         style="margin-top: 8px;border-radius: 3px 0px 0px 3px;"
@@ -101,7 +107,7 @@
                                     </tbody>
                                     <tfoot>
                                     <tr>
-                                        <th>Invoice Id</th>
+                                        <th>Sale Id</th>
                                         <th>Purchase Id</th>
                                         <th>Quantity</th>
                                         <th>Unit Price</th>

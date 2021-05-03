@@ -64,7 +64,7 @@
                                         <strong th:text="${invoice.supplier.name}"></strong><br>
                                         [(${@environment.getProperty('shop.adddress1')})]<br>
                                         [(${@environment.getProperty('shop.adddress2')})]<br>
-                                        [(${invoice.phone})]<br>
+                                        [(${invoice.supplier.phone})]<br>
                                         [(${@environment.getProperty('shop.email')})]
                                     </address>
                                 </div>

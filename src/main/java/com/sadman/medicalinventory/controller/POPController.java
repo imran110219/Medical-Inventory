@@ -109,12 +109,12 @@ public class POPController {
         return "invoice/purchase-invoice";
     }
 
-//    @GetMapping(value = "/pos/invoice/{invoiceId}/print")
-//    public String printInvoice(Model model, @PathVariable(value = "invoiceId") String saleInvoiceId) throws RecordNotFoundException {
-//        SaleInvoice saleInvoice = saleInvoiceService.getSaleInvoiceById(saleInvoiceId);
-//        List<Sale> saleList = saleService.getAllSalesBySaleInvoiceId(saleInvoiceId);
-//        model.addAttribute("invoice", saleInvoice);
-//        model.addAttribute("saleList", saleList);
-//        return "invoice/invoice-print";
-//    }
+    @GetMapping(value = "/pop/invoice/{invoiceId}/print")
+    public String printInvoice(Model model, @PathVariable(value = "invoiceId") String purchaseInvoiceId) throws RecordNotFoundException {
+        PurchaseInvoice purchaseInvoice = purchaseInvoiceService.getPurchaseInvoiceById(purchaseInvoiceId);
+        List<Purchase> purchaseList = purchaseService.getPurchasesByPurchaseInvoiceId(purchaseInvoiceId);
+        model.addAttribute("invoice", purchaseInvoice);
+        model.addAttribute("purchaseList", purchaseList);
+        return "invoice/purchase-invoice-print";
+    }
 }
