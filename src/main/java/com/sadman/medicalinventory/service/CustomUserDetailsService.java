@@ -44,10 +44,4 @@ public class CustomUserDetailsService implements UserDetailsService {
                 user.getActive(), true, true, true, authorities);
     }
 
-    public String getFullName() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userName = authentication.getName();
-        User user = userService.findUserByUserName(userName);
-        return user.getFirstName() + " " + user.getLastName();
-    }
 }
