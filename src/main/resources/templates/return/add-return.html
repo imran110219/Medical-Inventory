@@ -77,22 +77,38 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form id="posForm" th:action="@{/pos/payment}" th:object="${invoicedto}" method="post">
+                            <form id="returnForm">
                                 <div class="card-body">
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label" for="name">Customer Name <span style="color: red;">*</span></label>
+                                        <label class="col-sm-2 col-form-label">Select Type</label>
                                         <div class="col-sm-3">
-                                            <input type="text" class="form-control" id="name"
-                                                   th:field="*{customerName}"
-                                                   placeholder="Enter Customer Name">
+                                            <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                                <label class="btn bg-olive active">
+                                                    <input type="radio" name="options" onclick="handleClick(this);" value="purchase" autocomplete="off" checked> Purchase
+                                                </label>
+                                                <label class="btn bg-olive">
+                                                    <input type="radio" name="options" onclick="handleClick(this);" value="sale" autocomplete="off"> Sale
+                                                </label>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="form-group row">
-                                        <label class="col-sm-2 col-form-label" for="mobile">Mobile No</label>
+                                        <label class="col-sm-2 col-form-label" id="labeInvoice" for="selectInvoice">Purchase Invoice</label>
                                         <div class="col-sm-3">
-                                            <input type="text" class="form-control" id="mobile"
-                                                   th:field="*{mobileNumber}"
-                                                   placeholder="Enter Mobile Number">
+                                            <select id="selectInvoice" class="form-control select2"
+                                                    onchange="changeInvoice(this);"
+                                                    style="width: 100%;">
+                                                <option value=""> --</option>
+                                                <option th:each="purchaseinvoice : ${purchaseinvoices}"
+                                                        th:value="${purchaseinvoice}"
+                                                        th:utext="${purchaseinvoice.id}">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label" id="labelName" for="name">Supplier Name</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="name" placeholder="" readonly>
                                         </div>
                                     </div>
                                     <div class="col-sm-4 col-md-2">
@@ -103,175 +119,175 @@
                                             Reset
                                         </button>
                                     </div>
-                                    <table class="table" id="brand_tbl">
-                                        <thead>
-                                        <tr>
-                                            <th>Brand Name</th>
-                                            <th>Expired Date</th>
-                                            <th>Stock</th>
-                                            <th>Quantity</th>
-                                            <th>Price</th>
-                                            <th>Discount %</th>
-                                            <th>Total</th>
-                                            <th>Action</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td>
-                                                <select id="selectBrand1" class="form-control select2"
-                                                        th:field="*{medicineDTOList[0].brandId}"
-                                                        onchange="changeBrand(this);"
-                                                        style="width: 100%;">
-                                                    <option value=""> --</option>
-                                                    <option th:each="brand : ${brands}"
-                                                            th:value="${brand.id}"
-                                                            th:utext="${brand.name}">
-                                                </select>
-                                            </td>
-                                            <td style="width:15%">
-                                                <select id="selectDate1" class="form-control select2"
-                                                        onchange="changeDate(this);"
-                                                        style="width: 100%;">
-                                                    <option value=""> --</option>
-                                                </select>
-                                            </td>
-                                            <td style="width:10%">
-                                                <input type="number" class="form-control" id="stock1"
-                                                       placeholder="" disabled>
-                                                <input type="hidden" id="stockId1" th:field="*{medicineDTOList[0].stockId}">
-                                            </td>
-                                            <td style="width:10%">
-                                                <input type="number" class="form-control" id="quantity1"
-                                                       th:field="*{medicineDTOList[0].quantity}"
-                                                       onchange="changeQuantity(this);"
-                                                       placeholder="">
-                                            </td>
-                                            <td style="width:12%">
-                                                <input type="number" class="form-control" id="price1"
-                                                       th:field="*{medicineDTOList[0].unitPrice}"
-                                                       placeholder="" readonly>
-                                            </td>
-                                            <td style="width:12%">
-                                                <input type="number" class="form-control" id="discount1"
-                                                       onchange="changeDiscount(this);"
-                                                       placeholder="0">
-                                                <input type="hidden" id="discountAmount1" th:field="*{medicineDTOList[0].discount}">
-                                            </td>
-                                            <td style="width:12%">
-                                                <input type="number" class="form-control" id="total1"
-                                                       th:field="*{medicineDTOList[0].total}"
-                                                       placeholder="" readonly>
-                                            </td>
-                                            <td style="width:4%">
-                                                <button type="button"
-                                                        class="btn btn-block btn-danger btn-sm delete-row">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
+<!--                                    <table class="table" id="brand_tbl">-->
+<!--                                        <thead>-->
+<!--                                        <tr>-->
+<!--                                            <th>Brand Name</th>-->
+<!--                                            <th>Expired Date</th>-->
+<!--                                            <th>Stock</th>-->
+<!--                                            <th>Quantity</th>-->
+<!--                                            <th>Price</th>-->
+<!--                                            <th>Discount %</th>-->
+<!--                                            <th>Total</th>-->
+<!--                                            <th>Action</th>-->
+<!--                                        </tr>-->
+<!--                                        </thead>-->
+<!--                                        <tbody>-->
+<!--                                        <tr>-->
+<!--                                            <td>-->
+<!--                                                <select id="selectBrand1" class="form-control select2"-->
+<!--                                                        th:field="*{medicineDTOList[0].brandId}"-->
+<!--                                                        onchange="changeBrand(this);"-->
+<!--                                                        style="width: 100%;">-->
+<!--                                                    <option value=""> &#45;&#45;</option>-->
+<!--                                                    <option th:each="brand : ${brands}"-->
+<!--                                                            th:value="${brand.id}"-->
+<!--                                                            th:utext="${brand.name}">-->
+<!--                                                </select>-->
+<!--                                            </td>-->
+<!--                                            <td style="width:15%">-->
+<!--                                                <select id="selectDate1" class="form-control select2"-->
+<!--                                                        onchange="changeDate(this);"-->
+<!--                                                        style="width: 100%;">-->
+<!--                                                    <option value=""> &#45;&#45;</option>-->
+<!--                                                </select>-->
+<!--                                            </td>-->
+<!--                                            <td style="width:10%">-->
+<!--                                                <input type="number" class="form-control" id="stock1"-->
+<!--                                                       placeholder="" disabled>-->
+<!--                                                <input type="hidden" id="stockId1" th:field="*{medicineDTOList[0].stockId}">-->
+<!--                                            </td>-->
+<!--                                            <td style="width:10%">-->
+<!--                                                <input type="number" class="form-control" id="quantity1"-->
+<!--                                                       th:field="*{medicineDTOList[0].quantity}"-->
+<!--                                                       onchange="changeQuantity(this);"-->
+<!--                                                       placeholder="">-->
+<!--                                            </td>-->
+<!--                                            <td style="width:12%">-->
+<!--                                                <input type="number" class="form-control" id="price1"-->
+<!--                                                       th:field="*{medicineDTOList[0].unitPrice}"-->
+<!--                                                       placeholder="" readonly>-->
+<!--                                            </td>-->
+<!--                                            <td style="width:12%">-->
+<!--                                                <input type="number" class="form-control" id="discount1"-->
+<!--                                                       onchange="changeDiscount(this);"-->
+<!--                                                       placeholder="0">-->
+<!--                                                <input type="hidden" id="discountAmount1" th:field="*{medicineDTOList[0].discount}">-->
+<!--                                            </td>-->
+<!--                                            <td style="width:12%">-->
+<!--                                                <input type="number" class="form-control" id="total1"-->
+<!--                                                       th:field="*{medicineDTOList[0].total}"-->
+<!--                                                       placeholder="" readonly>-->
+<!--                                            </td>-->
+<!--                                            <td style="width:4%">-->
+<!--                                                <button type="button"-->
+<!--                                                        class="btn btn-block btn-danger btn-sm delete-row">-->
+<!--                                                    <i class="fas fa-trash"></i>-->
+<!--                                                </button>-->
+<!--                                            </td>-->
+<!--                                        </tr>-->
+<!--                                        </tbody>-->
+<!--                                    </table>-->
                                     </br>
                                     </br>
                                     </br>
-                                    <div class="form-group row justify-content-end">
-                                        <label class="col-sm-2 col-form-label" for="average_discount">
-                                            Average Discount
-                                        </label>
-                                        <div class="col-sm-2">
-                                            <input type="number" class="form-control" id="average_discount"
-                                                   th:field="*{averageDiscount}"
-                                                   onchange="changeAverageDiscount();">
-                                        </div>
-                                        <div class="col-sm-1">
+<!--                                    <div class="form-group row justify-content-end">-->
+<!--                                        <label class="col-sm-2 col-form-label" for="average_discount">-->
+<!--                                            Average Discount-->
+<!--                                        </label>-->
+<!--                                        <div class="col-sm-2">-->
+<!--                                            <input type="number" class="form-control" id="average_discount"-->
+<!--                                                   th:field="*{averageDiscount}"-->
+<!--                                                   onchange="changeAverageDiscount();">-->
+<!--                                        </div>-->
+<!--                                        <div class="col-sm-1">-->
 
-                                        </div>
-                                    </div>
-                                    <div class="form-group row justify-content-end">
-                                        <label class="col-sm-2 col-form-label justify-content-end" for="total_discount">
-                                            Total Discount
-                                        </label>
-                                        <div class="col-sm-2">
-                                            <input type="number" class="form-control" id="total_discount"
-                                                   th:field="*{totalDiscount}"
-                                                   readonly>
-                                        </div>
-                                        <div class="col-sm-1">
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="form-group row justify-content-end">-->
+<!--                                        <label class="col-sm-2 col-form-label justify-content-end" for="total_discount">-->
+<!--                                            Total Discount-->
+<!--                                        </label>-->
+<!--                                        <div class="col-sm-2">-->
+<!--                                            <input type="number" class="form-control" id="total_discount"-->
+<!--                                                   th:field="*{totalDiscount}"-->
+<!--                                                   readonly>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-sm-1">-->
 
-                                        </div>
-                                    </div>
-                                    <div class="form-group row justify-content-end">
-                                        <label class="col-sm-2 col-form-label" for="vat">
-                                            Vat
-                                        </label>
-                                        <div class="col-sm-2">
-                                            <input type="number" class="form-control" id="vat" disabled>
-                                        </div>
-                                        <div class="col-sm-1">
-                                            <input type="checkbox" id="vat_checkbox" name="vat_checkbox">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row justify-content-end">
-                                        <label class="col-sm-2 col-form-label" for="tax">
-                                            Tax
-                                        </label>
-                                        <div class="col-sm-2">
-                                            <input type="number" class="form-control" id="tax" disabled>
-                                        </div>
-                                        <div class="col-sm-1">
-                                            <input type="checkbox" id="tax_checkbox" name="tax_checkbox">
-                                        </div>
-                                    </div>
-                                    <div class="form-group row justify-content-end">
-                                        <label class="col-sm-2 col-form-label" for="total_tax">
-                                            Total Tax
-                                        </label>
-                                        <div class="col-sm-2">
-                                            <input type="number" class="form-control" id="total_tax" disabled>
-                                        </div>
-                                        <div class="col-sm-1">
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="form-group row justify-content-end">-->
+<!--                                        <label class="col-sm-2 col-form-label" for="vat">-->
+<!--                                            Vat-->
+<!--                                        </label>-->
+<!--                                        <div class="col-sm-2">-->
+<!--                                            <input type="number" class="form-control" id="vat" disabled>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-sm-1">-->
+<!--                                            <input type="checkbox" id="vat_checkbox" name="vat_checkbox">-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="form-group row justify-content-end">-->
+<!--                                        <label class="col-sm-2 col-form-label" for="tax">-->
+<!--                                            Tax-->
+<!--                                        </label>-->
+<!--                                        <div class="col-sm-2">-->
+<!--                                            <input type="number" class="form-control" id="tax" disabled>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-sm-1">-->
+<!--                                            <input type="checkbox" id="tax_checkbox" name="tax_checkbox">-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="form-group row justify-content-end">-->
+<!--                                        <label class="col-sm-2 col-form-label" for="total_tax">-->
+<!--                                            Total Tax-->
+<!--                                        </label>-->
+<!--                                        <div class="col-sm-2">-->
+<!--                                            <input type="number" class="form-control" id="total_tax" disabled>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-sm-1">-->
 
-                                        </div>
-                                    </div>
-                                    <div class="form-group row justify-content-end">
-                                        <label class="col-sm-2 col-form-label" for="grand_total">
-                                            Grand Total
-                                        </label>
-                                        <div class="col-sm-2">
-                                            <input type="number" class="form-control" id="grand_total"
-                                                   th:field="*{grandTotal}"
-                                                   readonly>
-                                        </div>
-                                        <div class="col-sm-1">
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="form-group row justify-content-end">-->
+<!--                                        <label class="col-sm-2 col-form-label" for="grand_total">-->
+<!--                                            Grand Total-->
+<!--                                        </label>-->
+<!--                                        <div class="col-sm-2">-->
+<!--                                            <input type="number" class="form-control" id="grand_total"-->
+<!--                                                   th:field="*{grandTotal}"-->
+<!--                                                   readonly>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-sm-1">-->
 
-                                        </div>
-                                    </div>
-                                    <div class="form-group row justify-content-end">
-                                        <label class="col-sm-2 col-form-label" for="paid_amount">
-                                            Paid Amount
-                                        </label>
-                                        <div class="col-sm-2">
-                                            <input type="number" class="form-control" id="paid_amount"
-                                                   th:field="*{paidAmount}"
-                                                   onchange="changePaidAmount();">
-                                        </div>
-                                        <div class="col-sm-1">
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="form-group row justify-content-end">-->
+<!--                                        <label class="col-sm-2 col-form-label" for="paid_amount">-->
+<!--                                            Paid Amount-->
+<!--                                        </label>-->
+<!--                                        <div class="col-sm-2">-->
+<!--                                            <input type="number" class="form-control" id="paid_amount"-->
+<!--                                                   th:field="*{paidAmount}"-->
+<!--                                                   onchange="changePaidAmount();">-->
+<!--                                        </div>-->
+<!--                                        <div class="col-sm-1">-->
 
-                                        </div>
-                                    </div>
-                                    <div class="form-group row justify-content-end">
-                                        <label class="col-sm-2 col-form-label" for="change">
-                                            Change
-                                        </label>
-                                        <div class="col-sm-2">
-                                            <input type="number" class="form-control" id="change"
-                                                   th:field="*{changeAmount}" readonly>
-                                        </div>
-                                        <div class="col-sm-1">
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                    <div class="form-group row justify-content-end">-->
+<!--                                        <label class="col-sm-2 col-form-label" for="change">-->
+<!--                                            Change-->
+<!--                                        </label>-->
+<!--                                        <div class="col-sm-2">-->
+<!--                                            <input type="number" class="form-control" id="change"-->
+<!--                                                   th:field="*{changeAmount}" readonly>-->
+<!--                                        </div>-->
+<!--                                        <div class="col-sm-1">-->
 
-                                        </div>
-                                    </div>
+<!--                                        </div>-->
+<!--                                    </div>-->
                                 </div>
                                 <!-- /.card-body -->
 
@@ -332,6 +348,7 @@
     <!-- AdminLTE for demo purposes -->
     <!--    <script src="/dist/js/demo.js"></script>-->
     <script type="text/javascript" th:inline="javascript">
+
         /*<![CDATA[*/
         $(document).ready(function () {
 
@@ -394,44 +411,34 @@
 
         });
 
+        function handleClick(myRadio) {
+            if(myRadio.value === "purchase") {
+                var purchaseInvoicesList = [[${purchaseinvoices}]];
+                $("#labeInvoice").text('Purchase Invoice');
+                $("#labelName").text('Supplier Name');
+                $('#selectInvoice').children().remove();
+                $('#selectInvoice').append('<option value=' + 0 + '> --</option>');
+                for (var i = 0; i < purchaseInvoicesList.length; i++) {
+                    $('#selectInvoice').append('<option value=' + purchaseInvoicesList[i].id + '>' + purchaseInvoicesList[i].id + '</option>');
+                }
+            }
+            else {
+                var saleInvoicesList = [[${saleinvoices}]];
+                $("#labeInvoice").text('Sale Invoice');
+                $("#labelName").text('Customer Name');
+                $('#selectInvoice').children().remove();
+                $('#selectInvoice').append('<option value=' + 0 + '> --</option>');
+                for (var i = 0; i < saleInvoicesList.length; i++) {
+                    $('#selectInvoice').append('<option value=' + saleInvoicesList[i].id + '>' + saleInvoicesList[i].id + '</option>');
+                }
+            }
+        }
+
         /*]]>*/
 
-        function changeBrand(selectObject) {
-            var brandId = selectObject.value;
-            var selectid = selectObject.id;
-            var res = selectid.substring(11);
-
-            $.ajax({
-                url: '/pos/brand/' + brandId,
-                type: 'POST',
-                dataType: 'json',
-                contentType: "application/json",
-                success: function (data) {
-                    // console.log(data.salePrice);
-                    $('#price' + res).val(data.salePrice);
-                },
-                error: function (err) {
-                    console.log(err);
-                }
-            });
-
-            $.ajax({
-                url: '/pos/purchases/' + brandId,
-                type: 'POST',
-                dataType: 'json',
-                contentType: "application/json",
-                success: function (data) {
-                    $('#selectDate' + res).children().remove();
-                    $('#selectDate' + res).append('<option value=' + 0 + '> --</option>');
-                    for (var i = 0; i < data.length; i++) {
-                        // console.log(data[i].id + '  ' + data[i].expiryDate);
-                        $('#selectDate' + res).append('<option value=' + data[i].id + '>' + data[i].expiryDate + '</option>');
-                    }
-                },
-                error: function (err) {
-                    console.log(err);
-                }
-            });
+        function changeInvoice(selectObject) {
+            var invoiceId = selectObject.value;
+            console.log(invoiceId.);
         }
 
         function changeDate(selectObject) {
