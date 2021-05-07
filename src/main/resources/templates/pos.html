@@ -107,8 +107,9 @@
                                         <thead>
                                         <tr>
                                             <th>Brand Name</th>
-                                            <th>Expired Date</th>
+                                            <th>Expiry Date</th>
                                             <th>Stock</th>
+                                            <th>Location</th>
                                             <th>Quantity</th>
                                             <th>Price</th>
                                             <th>Discount %</th>
@@ -140,6 +141,10 @@
                                                 <input type="number" class="form-control" id="stock1"
                                                        placeholder="" disabled>
                                                 <input type="hidden" id="stockId1" th:field="*{medicineDTOList[0].stockId}">
+                                            </td>
+                                            <td style="width:10%">
+                                                <input type="text" class="form-control" id="location1"
+                                                       placeholder="" disabled>
                                             </td>
                                             <td style="width:10%">
                                                 <input type="number" class="form-control" id="quantity1"
@@ -338,7 +343,7 @@
             $(".add-row").click(function () {
                 var index = $("tbody tr").length;
                 var row = index + 1;
-                var tr = "<tr id='tr" + row + "'> <td> <select id='selectBrand" + row + "' class='form-control select2' onchange='changeBrand(this);' style='width: 100%;'> </select> </td> <td style='width:15%'> <select id='selectDate" + row + "' class='form-control select2' onchange='changeDate(this);' style='width: 100%;'> <option value=''> --</option> </select> </td> <td style='width:10%'> <input type='number' class='form-control' id='stock" + row + "' placeholder='' disabled> <input type='hidden' id='stockId" + row + "'> </td> <td style='width:10%'> <input type='number' class='form-control' id='quantity" + row + "' onchange='changeQuantity(this);' placeholder=''> </td> <td style='width:12%'> <input type='number' class='form-control' id='price" + row + "' placeholder='' readonly> </td> <td style='width:12%'> <input type='number' class='form-control' id='discount" + row + "' onchange='changeDiscount(this);' placeholder='0'> <input type='hidden' id='discountAmount" + row + "'> </td> <td style='width:12%'> <input type='number' class='form-control' id='total" + row + "' placeholder='' readonly> </td> <td> <button type='button' class='btn btn-block btn-danger btn-sm delete-row'> Delete </button> </td> </tr>";
+                var tr = "<tr id='tr" + row + "'> <td> <select id='selectBrand" + row + "' class='form-control select2' onchange='changeBrand(this);' style='width: 100%;'> </select> </td> <td style='width:15%'> <select id='selectDate" + row + "' class='form-control select2' onchange='changeDate(this);' style='width: 100%;'> <option value=''> --</option> </select> </td> <td style='width:10%'> <input type='number' class='form-control' id='stock" + row + "' placeholder='' disabled> <input type='hidden' id='stockId" + row + "'> </td> <td style='width:10%'> <input type='text' class='form-control' id='location" + row + "' placeholder='' disabled> </td> <td style='width:10%'> <input type='number' class='form-control' id='quantity" + row + "' onchange='changeQuantity(this);' placeholder=''> </td> <td style='width:12%'> <input type='number' class='form-control' id='price" + row + "' placeholder='' readonly> </td> <td style='width:12%'> <input type='number' class='form-control' id='discount" + row + "' onchange='changeDiscount(this);' placeholder='0'> <input type='hidden' id='discountAmount" + row + "'> </td> <td style='width:12%'> <input type='number' class='form-control' id='total" + row + "' placeholder='' readonly> </td> <td> <button type='button' class='btn btn-block btn-danger btn-sm delete-row'> Delete </button> </td> </tr>";
                 // var tr = '<tr id="tr' + row + '"> <td> <select id="selectBrand' + row + '" class="form-control select2" th:field="*{medicineDTOList[' + index + '].brandId}" onchange="changeBrand(this);" style="width: 100%;"> </select> </td> <td style="width:15%"> <select id="selectDate' + row + '" class="form-control select2" onchange="changeDate(this);" style="width: 100%;"> <option value=""> --</option> </select> </td> <td style="width:10%"> <input type="number" class="form-control" id="stock' + row + '" placeholder="" disabled> <input type="hidden" id="stockId' + row + '" th:field="*{medicineDTOList[' + index + '].stockId}"> </td> <td style="width:10%"> <input type="number" class="form-control" id="quantity' + row + '" th:field="*{medicineDTOList[' + index + "].quantity}" onchange="changeQuantity(this);" placeholder=""> </td> <td style="width:12%"> <input type="number" class="form-control" id="price' + row + '" placeholder="" disabled> </td> <td style="width:12%"> <input type="number" class="form-control" id="discount' + row + '" onchange="changeDiscount(this);" placeholder="0"> <input type="hidden" id="discountAmount' + row + '" th:field="*{medicineDTOList[' + index + '].discount}"> </td> <td style="width:12%"> <input type="number" class="form-control" id="total' + row + '" th:field="*{medicineDTOList[' + index + '].total}" placeholder="" readonly> </td> <td> <button type="button" class="btn btn-block btn-danger btn-sm delete-row"> Delete </button> </td> </tr>';
                 $("#brand_tbl").append(tr);
                 $('.select2').select2();
@@ -447,6 +452,8 @@
                 success: function (data) {
                     // console.log(data.quantity);
                     $('#stock' + res).val(data.quantity);
+                    $('#location' + res).val(data.location.name);
+                    console.log(data.location.name);
                     $('#stockId' + res).val(data.id);
                 },
                 error: function (err) {
