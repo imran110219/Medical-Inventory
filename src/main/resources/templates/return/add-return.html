@@ -116,77 +116,134 @@
                                             <input type="text" class="form-control" id="name" placeholder="" readonly>
                                         </div>
                                     </div>
-                                    <div class="col-sm-4 col-md-2">
-                                        <button type="button" class="btn btn-success btn-sm add-row">
-                                            Add
-                                        </button>
-                                        <button type="reset" class="btn btn-primary btn-sm">
-                                            Reset
-                                        </button>
+                                    <!--                                    <div class="col-sm-4 col-md-2">-->
+                                    <!--                                        <button type="button" class="btn btn-success btn-sm add-row">-->
+                                    <!--                                            Add-->
+                                    <!--                                        </button>-->
+                                    <!--                                        <button type="reset" class="btn btn-primary btn-sm">-->
+                                    <!--                                            Reset-->
+                                    <!--                                        </button>-->
+                                    <!--                                    </div>-->
+                                    <div>
+                                        <table class="table" id="brand_tbl" th:switch="${purchases}">
+                                            <thead>
+                                            <tr id="purchaseHead">
+                                                <th>Brand Name</th>
+                                                <th>Batch No</th>
+                                                <th>Expiry Date</th>
+                                                <th>Box</th>
+                                                <th>Quantity</th>
+                                                <th>Cost Price</th>
+                                                <th>Deduct</th>
+                                                <th>Return Price</th>
+                                                <th>Waste</th>
+                                                <th>#</th>
+                                            </tr>
+                                            <tr id="saleHead" style="display:none">
+                                                <th>Brand Name</th>
+                                                <th>Expiry Date</th>
+                                                <th>Stock</th>
+                                                <th>Quantity</th>
+                                                <th>Sale Price</th>
+                                                <th>Deduction %</th>
+                                                <th>Return Price</th>
+                                                <th>#</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody th:each="purchase : ${purchases}">
+                                            <tr>
+                                                <td>
+                                                    <input type="text" class="form-control" id="brand"
+                                                           th:value="${purchase.brand.name}" readonly>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" id="batch"
+                                                           th:value="${purchase.batchNo}" readonly>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" id="expiryDate"
+                                                           th:value="${#dates.format(purchase.expiryDate, 'dd.MM.yyyy')}"
+                                                           readonly>
+                                                </td>
+                                                <td>
+                                                    <input type="text" class="form-control" id="box"
+                                                           th:value="${purchase.box.name}" readonly>
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control" id="quantity"
+                                                           th:value="${purchase.quantity}">
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control" id="purchasePrice"
+                                                           th:value="${purchase.total}" readonly>
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control" id="deduction"
+                                                           placeholder="%">
+                                                </td>
+                                                <td>
+                                                    <input type="number" class="form-control" id="returnPrice"
+                                                           placeholder="">
+                                                </td>
+                                                <td style="text-align: center;">
+                                                    <input type="checkbox" id="isWastage" name="wastage"/>
+                                                </td>
+                                                <td>
+                                                    <button type="button"
+                                                            class="btn btn-block btn-danger btn-sm delete-row">
+                                                        <i class="fas fa-trash"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+<!--                                            <tbody th:each="purchase : ${purchases}">-->
+<!--                                            <tr>-->
+<!--                                                <td>-->
+<!--                                                    <input type="text" class="form-control" id="brand"-->
+<!--                                                           th:value="${purchase.brand.name}" readonly>-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <input type="text" class="form-control" id="batch"-->
+<!--                                                           th:value="${purchase.batchNo}" readonly>-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <input type="text" class="form-control" id="expiryDate"-->
+<!--                                                           th:value="${#dates.format(purchase.expiryDate, 'dd.MM.yyyy')}"-->
+<!--                                                           readonly>-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <input type="text" class="form-control" id="box"-->
+<!--                                                           th:value="${purchase.box.name}" readonly>-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <input type="number" class="form-control" id="quantity"-->
+<!--                                                           th:value="${purchase.quantity}">-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <input type="number" class="form-control" id="purchasePrice"-->
+<!--                                                           th:value="${purchase.total}" readonly>-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <input type="number" class="form-control" id="deduction"-->
+<!--                                                           placeholder="%">-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <input type="number" class="form-control" id="returnPrice"-->
+<!--                                                           placeholder="">-->
+<!--                                                </td>-->
+<!--                                                <td style="text-align: center;">-->
+<!--                                                    <input type="checkbox" id="isWastage" name="wastage"/>-->
+<!--                                                </td>-->
+<!--                                                <td>-->
+<!--                                                    <button type="button"-->
+<!--                                                            class="btn btn-block btn-danger btn-sm delete-row">-->
+<!--                                                        <i class="fas fa-trash"></i>-->
+<!--                                                    </button>-->
+<!--                                                </td>-->
+<!--                                            </tr>-->
+<!--                                            </tbody>-->
+                                        </table>
                                     </div>
-                                    <table class="table" id="brand_tbl">
-                                        <thead>
-                                        <tr>
-                                            <th>Brand Name</th>
-                                            <th>Batch No</th>
-                                            <th>Expiry Date</th>
-                                            <th>Box</th>
-                                            <th>Quantity</th>
-                                            <th>Purchase Price</th>
-                                            <th>Deduction %</th>
-                                            <th>Return Price</th>
-                                            <th>Action</th>
-                                        </tr>
-                                        <tr>
-                                            <th>Brand Name</th>
-                                            <th>Expiry Date</th>
-                                            <th>Stock</th>
-                                            <th>Quantity</th>
-                                            <th>Sale Price</th>
-                                            <th>Deduction %</th>
-                                            <th>Return Price</th>
-                                            <th>Action</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                        <tr>
-                                            <td style="width:10%">
-                                                <input type="text" class="form-control" id="brand"
-                                                       placeholder="" readonly>
-                                            </td>
-                                            <td style="width:10%">
-                                                <input type="text" class="form-control" id="batch"
-                                                       placeholder="" readonly>
-                                            </td>
-                                            <td style="width:12%">
-                                                <input type="text" class="form-control" id="box"
-                                                       placeholder="" readonly>
-                                            </td>
-                                            <td style="width:12%">
-                                                <input type="number" class="form-control" id="quantity"
-                                                       placeholder="">
-                                            </td>
-                                            <td style="width:12%">
-                                                <input type="number" class="form-control" id="purchasePrice"
-                                                       placeholder="" readonly>
-                                            </td>
-                                            <td style="width:12%">
-                                                <input type="number" class="form-control" id="deduction"
-                                                       placeholder="0">
-                                            </td>
-                                            <td style="width:12%">
-                                                <input type="number" class="form-control" id="returnPrice"
-                                                       placeholder="">
-                                            </td>
-                                            <td style="width:4%">
-                                                <button type="button"
-                                                        class="btn btn-block btn-danger btn-sm delete-row">
-                                                    <i class="fas fa-trash"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
                                     </br>
                                     </br>
                                     </br>
@@ -420,6 +477,8 @@
                 for (var i = 0; i < purchaseInvoicesList.length; i++) {
                     $('#selectInvoice').append('<option value=' + purchaseInvoicesList[i].id + ' title="' + purchaseInvoicesList[i].supplier.name + '">' + purchaseInvoicesList[i].id + '</option>');
                 }
+                $("#saleHead").hide();
+                $("#purchaseHead").show();
             } else {
                 var saleInvoicesList = [[${saleinvoices}]];
                 $("#labeInvoice").text('Sale Invoice');
@@ -429,6 +488,8 @@
                 for (var i = 0; i < saleInvoicesList.length; i++) {
                     $('#selectInvoice').append('<option value=' + saleInvoicesList[i].id + ' title="' + saleInvoicesList[i].id + '">' + saleInvoicesList[i].id + '</option>');
                 }
+                $("#purchaseHead").hide();
+                $("#saleHead").show();
             }
         }
 
@@ -436,25 +497,52 @@
             var invoiceId = selectObject.value;
             var title = document.getElementById('select2-selectInvoice-container').title;
             $('#name').val(title);
+            var radioValue = $("input[name='options']:checked").val();
+            console.log(radioValue);
 
-            $.ajax({
-                url: '/returns/purchases/' + invoiceId,
-                type: 'POST',
-                dataType: 'json',
-                contentType: "application/json",
-                success: function (data) {
-                    $('#selectDate' + res).children().remove();
-                    $('#selectDate' + res).append('<option value=' + 0 + '> --</option>');
-                    for (var i = 0; i < data.length; i++) {
-                        // console.log(data[i].id + '  ' + data[i].expiryDate);
-                        $('#selectDate' + res).append('<option value=' + data[i].id + '>' + data[i].expiryDate + '</option>');
-                    }
-                },
-                error: function (err) {
-                    console.log(err);
-                }
-            });
-
+            // if(radioValue === "purchase") {
+            //     $('#brand_tbl>thead').children().remove();
+            //     $("#brand_tbl>thead").append("<tr> <th>Brand Name</th> <th>Batch No</th> <th>Expiry Date</th> <th>Box</th> <th>Quantity</th> <th>Purchase Price</th> <th>Deduction %</th> <th>Return Price</th> <th>Action</th> </tr>");
+            //
+            //     $.ajax({
+            //         url: '/returns/purchases/' + invoiceId,
+            //         type: 'POST',
+            //         dataType: 'json',
+            //         contentType: "application/json",
+            //         success: function (data) {
+            //             $('#brand_tbl>tbody').children().remove();
+            //             for (var i = 0; i < data.length; i++) {
+            //                 console.log(data[i].id + '  ' + data[i].brand.name);
+            //                 $('#brand_tbl>tbody').append('<tr>  </tr>');
+            //                 // $('#selectDate' + res).append('<option value=' + data[i].id + '>' + data[i].expiryDate + '</option>');
+            //             }
+            //         },
+            //         error: function (err) {
+            //             console.log(err);
+            //         }
+            //     });
+            // }
+            // else {
+            //     $('#brand_tbl>thead').children().remove();
+            //     $("#brand_tbl>thead").append("<tr> <th>Brand Name</th> <th>Expiry Date</th> <th>Stock</th> <th>Quantity</th> <th>Sale Price</th> <th>Deduction %</th> <th>Return Price</th> <th>Action</th> </tr>");
+            //     $.ajax({
+            //         url: '/returns/sales/' + invoiceId,
+            //         type: 'POST',
+            //         dataType: 'json',
+            //         contentType: "application/json",
+            //         success: function (data) {
+            //             $('#brand_tbl>tbody').children().remove();
+            //             for (var i = 0; i < data.length; i++) {
+            //                 // console.log(data[i].id + '  ' + data[i].stock.purchase.brand.name);
+            //                 // console.log(data[i].id);
+            //                 $('#selectDate' + res).append('<option value=' + data[i].id + '>' + data[i].expiryDate + '</option>');
+            //             }
+            //         },
+            //         error: function (err) {
+            //             console.log(err);
+            //         }
+            //     });
+            // }
         }
 
         /*]]>*/

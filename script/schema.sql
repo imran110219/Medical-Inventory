@@ -176,8 +176,8 @@ CREATE TABLE `returned` (
   `purchase_id` INT(11) DEFAULT NULL,
   `quantity` INT(11) NOT NULL,
   `unit_price` DOUBLE NOT NULL,
-  `deduction` DOUBLE NOT NULL,
-  `total` DOUBLE NOT NULL,
+  `deduction` DOUBLE DEFAULT NULL,
+  `total` DOUBLE DEFAULT NULL,
   `wastage` BIT(1) NOT NULL,
   `datetime` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=INNODB DEFAULT CHARSET=utf8;

@@ -3,10 +3,7 @@ package com.sadman.medicalinventory.controller;
 import com.sadman.medicalinventory.dto.InvoiceDTO;
 import com.sadman.medicalinventory.dto.MedicineDTO;
 import com.sadman.medicalinventory.model.*;
-import com.sadman.medicalinventory.service.PurchaseInvoiceService;
-import com.sadman.medicalinventory.service.PurchaseService;
-import com.sadman.medicalinventory.service.ReturnService;
-import com.sadman.medicalinventory.service.SaleInvoiceService;
+import com.sadman.medicalinventory.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -36,6 +33,9 @@ public class ReturnController {
     @Autowired
     private PurchaseService purchaseService;
 
+    @Autowired
+    private SaleService saleService;
+
     @RequestMapping(value = "/returns")
     public String getAllReturns(Model model) {
         List<Return> list = service.getAllReturns();
@@ -46,7 +46,9 @@ public class ReturnController {
     @RequestMapping(value = "/returns/add")
     public String addReturn(Model model) {
         List<PurchaseInvoice> purchaseInvoiceList = purchaseInvoiceService.getAllPurchaseInvoices();
+        List<Purchase> purchaseList = purchaseService.getAllPurchases();
         List<SaleInvoice> saleInvoiceList = saleInvoiceService.getAllSaleInvoices();
+        model.addAttribute("purchases", purchaseList);
         model.addAttribute("purchaseinvoices", purchaseInvoiceList);
         model.addAttribute("saleinvoices", saleInvoiceList);
         return "return/add-return";
@@ -54,7 +56,13 @@ public class ReturnController {
 
     @PostMapping(value="/returns/purchases/{id}")
     public ResponseEntity<List<Purchase>> getPurchasesByPurchaseInvoiceId(@PathVariable(value = "id") String invoiceId){
-        List<Purchase> PurchaseList = purchaseService.getPurchasesByPurchaseInvoiceId(invoiceId);
-        return new ResponseEntity<>(PurchaseList, HttpStatus.OK);
+        List<Purchase> purchaseList = purchaseService.getPurchasesByPurchaseInvoiceId(invoiceId);
+        return new ResponseEntity<>(purchaseList, HttpStatus.OK);
+    }
+
+    @PostMapping(value="/returns/sales/{id}")
+    public ResponseEntity<List<Sale>> getSalesBySaleInvoiceId(@PathVariable(value = "id") String invoiceId){
+        List<Sale> saleList = saleService.getAllSalesBySaleInvoiceId(invoiceId);
+        return new ResponseEntity<>(saleList, HttpStatus.OK);
     }
 }
