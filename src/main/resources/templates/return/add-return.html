@@ -127,7 +127,7 @@
                                     <div>
                                         <table class="table" id="brand_tbl" th:switch="${purchases}">
                                             <thead>
-                                            <tr id="purchaseHead">
+                                            <tr id="purchaseHead" style="display:none">
                                                 <th>Brand Name</th>
                                                 <th>Batch No</th>
                                                 <th>Expiry Date</th>
@@ -139,10 +139,10 @@
                                                 <th>Waste</th>
                                                 <th>#</th>
                                             </tr>
-                                            <tr id="saleHead" style="display:none">
+                                            <tr id="saleHead">
                                                 <th>Brand Name</th>
                                                 <th>Expiry Date</th>
-                                                <th>Stock</th>
+<!--                                                <th>Stock</th>-->
                                                 <th>Quantity</th>
                                                 <th>Sale Price</th>
                                                 <th>Deduction %</th>
@@ -150,32 +150,28 @@
                                                 <th>#</th>
                                             </tr>
                                             </thead>
-                                            <tbody th:each="purchase : ${purchases}">
+                                            <tbody th:each="sale : ${sales}">
                                             <tr>
                                                 <td>
                                                     <input type="text" class="form-control" id="brand"
-                                                           th:value="${purchase.brand.name}" readonly>
-                                                </td>
-                                                <td>
-                                                    <input type="text" class="form-control" id="batch"
-                                                           th:value="${purchase.batchNo}" readonly>
+                                                           th:value="${sale.stock.purchase.brand.name}" readonly>
                                                 </td>
                                                 <td>
                                                     <input type="text" class="form-control" id="expiryDate"
-                                                           th:value="${#dates.format(purchase.expiryDate, 'dd.MM.yyyy')}"
+                                                           th:value="${#dates.format(sale.stock.purchase.expiryDate, 'dd.MM.yyyy')}"
                                                            readonly>
                                                 </td>
-                                                <td>
-                                                    <input type="text" class="form-control" id="box"
-                                                           th:value="${purchase.box.name}" readonly>
-                                                </td>
+<!--                                                <td>-->
+<!--                                                    <input type="number" class="form-control" id="stock"-->
+<!--                                                           th:value="${sale.stock.quantity}" readonly>-->
+<!--                                                </td>-->
                                                 <td>
                                                     <input type="number" class="form-control" id="quantity"
-                                                           th:value="${purchase.quantity}">
+                                                           th:value="${sale.quantity}">
                                                 </td>
                                                 <td>
-                                                    <input type="number" class="form-control" id="purchasePrice"
-                                                           th:value="${purchase.total}" readonly>
+                                                    <input type="number" class="form-control" id="salePrice"
+                                                           th:value="${sale.total}" readonly>
                                                 </td>
                                                 <td>
                                                     <input type="number" class="form-control" id="deduction"

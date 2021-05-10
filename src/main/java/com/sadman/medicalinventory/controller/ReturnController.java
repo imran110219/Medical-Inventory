@@ -46,8 +46,10 @@ public class ReturnController {
     @RequestMapping(value = "/returns/add")
     public String addReturn(Model model) {
         List<PurchaseInvoice> purchaseInvoiceList = purchaseInvoiceService.getAllPurchaseInvoices();
-        List<Purchase> purchaseList = purchaseService.getAllPurchases();
         List<SaleInvoice> saleInvoiceList = saleInvoiceService.getAllSaleInvoices();
+        List<Purchase> purchaseList = purchaseService.getAllPurchases();
+        List<Sale> saleList = saleService.getAllSales();
+        model.addAttribute("sales", saleList);
         model.addAttribute("purchases", purchaseList);
         model.addAttribute("purchaseinvoices", purchaseInvoiceList);
         model.addAttribute("saleinvoices", saleInvoiceList);
