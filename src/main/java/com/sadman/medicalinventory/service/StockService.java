@@ -26,6 +26,10 @@ public class StockService {
         return repository.getStockByPurchaseId(purchaseId);
     }
 
+    List<Stock> getAllByPurchaseIdIn(List<Integer> purchaseIdList) {
+        return repository.getAllByPurchaseIdIn(purchaseIdList);
+    }
+
     public Stock createStock(Stock stock){
         return repository.save(stock);
     }
