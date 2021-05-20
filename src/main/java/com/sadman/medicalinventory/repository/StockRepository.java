@@ -10,5 +10,5 @@ import java.util.List;
 @Repository
 public interface StockRepository extends JpaRepository<Stock, Long> {
     Stock getStockByPurchaseId(Long purchaseId);
-    List<Stock> getAllByPurchaseIdIn(List<Integer> purchaseIdList);
+    List<Stock> getAllByPurchaseIdIn(List<Long> purchaseIdList);
 }

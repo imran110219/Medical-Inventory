@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Sadman
@@ -35,6 +36,9 @@ public class ReturnController {
 
     @Autowired
     private SaleService saleService;
+
+    @Autowired
+    private StockService stockService;
 
     @RequestMapping(value = "/returns")
     public String getAllReturns(Model model) {
@@ -57,9 +61,13 @@ public class ReturnController {
     }
 
     @PostMapping(value="/returns/purchases/{id}")
-    public ResponseEntity<List<Purchase>> getPurchasesByPurchaseInvoiceId(@PathVariable(value = "id") String invoiceId){
+    public ResponseEntity<List<Stock>> getPurchasesByPurchaseInvoiceId(@PathVariable(value = "id") String invoiceId){
         List<Purchase> purchaseList = purchaseService.getPurchasesByPurchaseInvoiceId(invoiceId);
-        return new ResponseEntity<>(purchaseList, HttpStatus.OK);
+        List<Long> purchaseIdList = purchaseList.stream()
+                .map(Purchase::getId)
+                .collect(Collectors.toList());
+        List<Stock> stockList = stockService.getAllByPurchaseIdIn(purchaseIdList);
+        return new ResponseEntity<>(stockList, HttpStatus.OK);
     }
 
     @PostMapping(value="/returns/sales/{id}")

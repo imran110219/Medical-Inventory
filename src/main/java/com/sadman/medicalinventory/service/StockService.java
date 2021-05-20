@@ -26,7 +26,7 @@ public class StockService {
         return repository.getStockByPurchaseId(purchaseId);
     }
 
-    List<Stock> getAllByPurchaseIdIn(List<Integer> purchaseIdList) {
+    public List<Stock> getAllByPurchaseIdIn(List<Long> purchaseIdList) {
         return repository.getAllByPurchaseIdIn(purchaseIdList);
     }
 
