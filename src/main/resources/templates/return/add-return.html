@@ -141,6 +141,7 @@
                                             <tr id="saleHead" style="display:none">
                                                 <th>Brand Name</th>
                                                 <th>Expiry Date</th>
+                                                <th>Stock</th>
                                                 <th>Quantity</th>
                                                 <th>Sale Price</th>
                                                 <th>Deduct</th>
@@ -487,12 +488,8 @@
             var title = document.getElementById('select2-selectInvoice-container').title;
             $('#name').val(title);
             var radioValue = $("input[name='options']:checked").val();
-            // console.log(radioValue);
 
             if(radioValue === "purchase") {
-                // $('#brand_tbl>thead').children().remove();
-                // $("#brand_tbl>thead").append("<tr> <th>Brand Name</th> <th>Batch No</th> <th>Expiry Date</th> <th>Box</th> <th>Quantity</th> <th>Purchase Price</th> <th>Deduction %</th> <th>Return Price</th> <th>Action</th> </tr>");
-
                 $.ajax({
                     url: '/returns/purchases/' + invoiceId,
                     type: 'POST',
@@ -506,7 +503,7 @@
                             var expiryDate = data[i].purchase.expiryDate;
                             var stock = data[i].purchase.quantity;
                             var unitPrice = data[i].purchase.unitPrice;
-                            $('#brand_tbl>tbody').append("<tr> <td> <input type='text' class='form-control' id='brand" + i + "' value='" + brandName + "' readonly> </td> <td> <input type='text' class='form-control' id='expiryDate" + i + "' value='" + expiryDate + "' readonly> </td> <td> <input type='number' class='form-control' id='stock" + i + "' value='" + stock + "' readonly> </td> <td> <input type='number' class='form-control' id='quantity" + i + "' value='" + 0 + "' onchange='changeQuantity(this);'> <input type='hidden' id='unitPrice" + i + "' value='" + unitPrice + "'> </td> <td> <input type='number' class='form-control' id='costPrice" + i + "' value='" + 0 + "' readonly> </td> <td> <input type='number' class='form-control' id='deduct" + i + "' value='" + 0 + "'> <input type='hidden' id='deductAmount" + i + "' > </td> <td> <input type='number' class='form-control' id='returnPrice" + i + "' value='" + 0 + "'> </td> <td style='text-align: center'> <input type='checkbox' id='wasteCheckbox" + i + "'> </td> <td> <button type='button' class='btn btn-block btn-danger btn-sm delete-row'> <i class='fas fa-trash'> </i> </button> </td> </tr>");
+                            $('#brand_tbl>tbody').append("<tr> <td> <input type='text' class='form-control' id='brand" + i + "' value='" + brandName + "' readonly> </td> <td> <input type='text' class='form-control' id='expiryDate" + i + "' value='" + expiryDate + "' readonly> </td> <td> <input type='number' class='form-control' id='stock" + i + "' value='" + stock + "' readonly> </td> <td> <input type='number' class='form-control' id='quantity" + i + "' value='" + 0 + "' onchange='changeQuantity(this);'> <input type='hidden' id='unitPrice" + i + "' value='" + unitPrice + "'> </td> <td> <input type='number' class='form-control' id='costPrice" + i + "' value='" + 0 + "' readonly> </td> <td> <input type='number' class='form-control' id='deduct" + i + "' value='" + 0 + "' onchange='changeDeduction(this);'> <input type='hidden' id='deductAmount" + i + "' > </td> <td> <input type='number' class='form-control' id='returnPrice" + i + "' value='" + 0 + "'> </td> <td style='text-align: center'> <input type='checkbox' id='wasteCheckbox" + i + "'> </td> <td> <button type='button' class='btn btn-block btn-danger btn-sm delete-row'> <i class='fas fa-trash'> </i> </button> </td> </tr>");
                             // $('#selectDate' + res).append('<option value=' + data[i].id + '>' + data[i].expiryDate + '</option>');
                         }
                     },
@@ -516,9 +513,6 @@
                 });
             }
             else {
-                // $('#brand_tbl>thead').children().remove();
-                // $("#brand_tbl>thead").append("<tr> <th>Brand Name</th> <th>Expiry Date</th> <th>Stock</th> <th>Quantity</th> <th>Sale Price</th> <th>Deduction %</th> <th>Return Price</th> <th>Action</th> </tr>");
-
                 $.ajax({
                     url: '/returns/sales/' + invoiceId,
                     type: 'POST',
@@ -527,9 +521,12 @@
                     success: function (data) {
                         $('#brand_tbl>tbody').children().remove();
                         for (var i = 0; i < data.length; i++) {
-                            // console.log(data[i].id + '  ' + data[i].stock.purchase.brand.name);
-                            // console.log(data[i].id);
-                            $('#selectDate' + res).append('<option value=' + data[i].id + '>' + data[i].expiryDate + '</option>');
+                            console.log(data[i].id + '  ' + data[i].stock.purchase.brand.name);
+                            var brandName = data[i].stock.purchase.brand.name;
+                            var expiryDate = data[i].stock.purchase.expiryDate;
+                            var stock = data[i].stock.purchase.quantity;
+                            var unitPrice = data[i].stock.purchase.unitPrice;
+                            $('#brand_tbl>tbody').append("<tr> <td> <input type='text' class='form-control' id='brand" + i + "' value='" + brandName + "' readonly> </td> <td> <input type='text' class='form-control' id='expiryDate" + i + "' value='" + expiryDate + "' readonly> </td> <td> <input type='number' class='form-control' id='stock" + i + "' value='" + stock + "' readonly> </td> <td> <input type='number' class='form-control' id='quantity" + i + "' value='" + 0 + "' onchange='changeQuantity(this);'> <input type='hidden' id='unitPrice" + i + "' value='" + unitPrice + "'> </td> <td> <input type='number' class='form-control' id='costPrice" + i + "' value='" + 0 + "' readonly> </td> <td> <input type='number' class='form-control' id='deduct" + i + "' value='" + 0 + "' onchange='changeDeduction(this);'> <input type='hidden' id='deductAmount" + i + "' > </td> <td> <input type='number' class='form-control' id='returnPrice" + i + "' value='" + 0 + "'> </td> <td style='text-align: center'> <input type='checkbox' id='wasteCheckbox" + i + "'> </td> <td> <button type='button' class='btn btn-block btn-danger btn-sm delete-row'> <i class='fas fa-trash'> </i> </button> </td> </tr>");
                         }
                     },
                     error: function (err) {
@@ -563,7 +560,6 @@
         }
 
         function calculate(serial) {
-            console.log("Test");
             var quanti = $('#quantity' + serial).val();
             var pric = $('#unitPrice' + serial).val();
             var dedc = $('#deduct' + serial).val();
@@ -574,6 +570,7 @@
                 dedcamount = (temp * dedc) / 100;
                 temp = temp - dedcamount;
             }
+            console.log(dedc);
             $('#deductAmount' + serial).val(dedcamount);
             $('#returnPrice' + serial).val(temp);
             // calculateSum();
@@ -621,10 +618,13 @@
             calculateSum();
         }
 
-        function changeDiscount(selectObject) {
+        function changeDeduction(selectObject) {
             var quantityId = selectObject.value;
             var selectid = selectObject.id;
             var res = selectid.substring(8);
+
+            var dedc = $('#deduct' + res).val();
+            console.log(dedc);
 
             calculate(res);
         }
