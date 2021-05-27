@@ -15,12 +15,11 @@ import java.util.Date;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class PurchaseReturnDTO {
-    private Purchase purchase;
-    private Stock stock;
-    private Date expiryDate;
+public class ReturnDTO {
+    private Long saleId;
+    private Long purchaseId;
     private double quantity;
-    private double costPrice;
+    private double unitPrice;
     private double deduction;
     private double returnPrice;
     private boolean waste;

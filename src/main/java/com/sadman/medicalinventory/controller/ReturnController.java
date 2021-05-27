@@ -2,6 +2,8 @@ package com.sadman.medicalinventory.controller;
 
 import com.sadman.medicalinventory.dto.InvoiceDTO;
 import com.sadman.medicalinventory.dto.MedicineDTO;
+import com.sadman.medicalinventory.dto.ReturnDTO;
+import com.sadman.medicalinventory.dto.ReturnListDTO;
 import com.sadman.medicalinventory.model.*;
 import com.sadman.medicalinventory.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -53,10 +56,12 @@ public class ReturnController {
         List<SaleInvoice> saleInvoiceList = saleInvoiceService.getAllSaleInvoices();
         List<Purchase> purchaseList = purchaseService.getAllPurchases();
         List<Sale> saleList = saleService.getAllSales();
+        ReturnListDTO returnListDTO = new ReturnListDTO();
         model.addAttribute("sales", saleList);
         model.addAttribute("purchases", purchaseList);
         model.addAttribute("purchaseinvoices", purchaseInvoiceList);
         model.addAttribute("saleinvoices", saleInvoiceList);
+        model.addAttribute("returns", returnListDTO);
         return "return/add-return";
     }
 
@@ -74,5 +79,11 @@ public class ReturnController {
     public ResponseEntity<List<Sale>> getSalesBySaleInvoiceId(@PathVariable(value = "id") String invoiceId){
         List<Sale> saleList = saleService.getAllSalesBySaleInvoiceId(invoiceId);
         return new ResponseEntity<>(saleList, HttpStatus.OK);
+    }
+
+    @PostMapping(value="/returns/process")
+    public ResponseEntity<String> returnProcess(ReturnListDTO returnListDTO){
+        service.returnProcess(returnListDTO);
+        return new ResponseEntity<>("Return is processed successfully", HttpStatus.OK);
     }
 }
