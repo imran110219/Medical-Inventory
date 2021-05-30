@@ -204,20 +204,6 @@
         /*<![CDATA[*/
         $(document).ready(function () {
 
-            $(".add-row").click(function () {
-                var index = $("tbody tr").length;
-                var row = index + 1;
-                var tr = "<tr id='tr" + row + "'> <td> <select id='selectBrand" + row + "' class='form-control select2' onchange='changeBrand(this);' style='width: 100%;'> </select> </td> <td style='width:15%'> <select id='selectDate" + row + "' class='form-control select2' onchange='changeDate(this);' style='width: 100%;'> <option value=''> --</option> </select> </td> <td style='width:10%'> <input type='number' class='form-control' id='stock" + row + "' placeholder='' disabled> <input type='hidden' id='stockId" + row + "'> </td> <td style='width:10%'> <input type='number' class='form-control' id='quantity" + row + "' onchange='changeQuantity(this);' placeholder=''> </td> <td style='width:12%'> <input type='number' class='form-control' id='price" + row + "' placeholder='' readonly> </td> <td style='width:12%'> <input type='number' class='form-control' id='discount" + row + "' onchange='changeDiscount(this);' placeholder='0'> <input type='hidden' id='discountAmount" + row + "'> </td> <td style='width:12%'> <input type='number' class='form-control' id='total" + row + "' placeholder='' readonly> </td> <td> <button type='button' class='btn btn-block btn-danger btn-sm delete-row'> Delete </button> </td> </tr>";
-                $("#brand_tbl").append(tr);
-                $('.select2').select2();
-
-                var brandList = [[${brands}]];
-                $('#selectBrand' + row).append('<option value=' + 0 + '> --</option>');
-                for (i = 0; i < brandList.length; i++) {
-                    $('#selectBrand' + row).append('<option value=' + brandList[i].id + '>' + brandList[i].name + '</option>');
-                }
-            });
-
             $("#returnForm").submit(function (e) {
                 e.preventDefault();
                 var radioValue = $("input[name='options']:checked").val();
@@ -226,13 +212,23 @@
                 var formData = new FormData(myForm);
                 var size = $("tbody tr").length;
                 for (i = 0; i < size; i++) {
-                    // formData.append("returns.returnDTOList[" + i + "].saleId", $('#sale' + i).val());
-                    // formData.append("returns.returnDTOList[" + i + "].purchaseId", $('#purchase' + i).val());
-                    formData.append("returns.returnDTOList[" + i + "].quantity", $('#quantity' + i).val());
-                    formData.append("returns.returnDTOList[" + i + "].unitPrice", $('#unitPrice' + i).val());
-                    formData.append("returns.returnDTOList[" + i + "].deduction", $('#deductAmount' + i).val());
-                    formData.append("returns.returnDTOList[" + i + "].returnPrice", $('#returnPrice' + i).val());
-                    // formData.append("returns.returnDTOList[" + i + "].waste", $('#isWaste' + i).val());
+                    if (typeof ($('#sale' + i).val()) === 'undefined') {
+                        formData.append("returnDTOList[" + i + "].saleId", "");
+                    }
+                    else {
+                        formData.append("returnDTOList[" + i + "].saleId", $('#sale' + i).val());
+                    }
+                    if (typeof ($('#purchase' + i).val()) === 'undefined') {
+                        formData.append("returnDTOList[" + i + "].purchaseId", "");
+                    }
+                    else {
+                        formData.append("returnDTOList[" + i + "].purchaseId", $('#purchase' + i).val());
+                    }
+                    formData.append("returnDTOList[" + i + "].quantity", $('#quantity' + i).val());
+                    formData.append("returnDTOList[" + i + "].unitPrice", $('#unitPrice' + i).val());
+                    formData.append("returnDTOList[" + i + "].deduction", $('#deductAmount' + i).val());
+                    formData.append("returnDTOList[" + i + "].returnPrice", $('#returnPrice' + i).val());
+                    formData.append("returnDTOList[" + i + "].waste", $('#isWaste' + i).val());
                 }
                 for (var value of formData.values()) {
                     console.log(value);
@@ -307,7 +303,7 @@
                             var expiryDate = data[i].purchase.expiryDate;
                             var stock = data[i].purchase.quantity;
                             var unitPrice = data[i].purchase.unitPrice;
-                            $('#brand_tbl>tbody').append("<tr> <td> <input type='text' class='form-control' id='brand" + i + "' value='" + brandName + "' readonly> <input type='hidden' id='purchase" + i + "' value='" + purchaseId + "' > </td> <td> <input type='text' class='form-control' id='expiryDate" + i + "' value='" + expiryDate + "' readonly> </td> <td> <input type='number' class='form-control' id='stock" + i + "' value='" + stock + "' readonly> </td> <td> <input type='number' class='form-control' id='quantity" + i + "' placeholder='0' onchange='changeQuantity(this);'> <input type='hidden' id='unitPrice" + i + "' value='" + unitPrice + "'> </td> <td> <input type='number' class='form-control' id='costPrice" + i + "' value='" + 0 + "' readonly> </td> <td> <input type='number' class='form-control' id='deduct" + i + "' placeholder='0' onchange='changeDeduction(this);'> <input type='hidden' id='deductAmount" + i + "' > </td> <td> <input type='number' class='form-control' id='returnPrice" + i + "' value='" + 0 + "'> </td> <td style='text-align: center'> <input type='checkbox' id='wasteCheckbox" + i + "' onchange='changeWaste(this);'> <input type='hidden' id='isWaste" + i + "'> </td> <td> <button type='button' class='btn btn-block btn-danger btn-sm delete-row'> <i class='fas fa-trash'> </i> </button> </td> </tr>");
+                            $('#brand_tbl>tbody').append("<tr> <td> <input type='text' class='form-control' id='brand" + i + "' value='" + brandName + "' readonly> <input type='hidden' id='purchase" + i + "' value='" + purchaseId + "' > </td> <td> <input type='text' class='form-control' id='expiryDate" + i + "' value='" + expiryDate + "' readonly> </td> <td> <input type='number' class='form-control' id='stock" + i + "' value='" + stock + "' readonly> </td> <td> <input type='number' class='form-control' id='quantity" + i + "' placeholder='0' onchange='changeQuantity(this);'> <input type='hidden' id='unitPrice" + i + "' value='" + unitPrice + "'> </td> <td> <input type='number' class='form-control' id='costPrice" + i + "' value='" + 0 + "' readonly> </td> <td> <input type='number' class='form-control' id='deduct" + i + "' placeholder='0' onchange='changeDeduction(this);'> <input type='hidden' id='deductAmount" + i + "' > </td> <td> <input type='number' class='form-control' id='returnPrice" + i + "' value='" + 0 + "'> </td> <td style='text-align: center'> <input type='checkbox' id='wasteCheckbox" + i + "' onchange='changeWaste(this);'> <input type='hidden' id='isWaste" + i + "' value='false'> </td> <td> <button type='button' class='btn btn-block btn-danger btn-sm delete-row'> <i class='fas fa-trash'> </i> </button> </td> </tr>");
                         }
                     },
                     error: function (err) {
@@ -328,7 +324,7 @@
                             var expiryDate = data[i].stock.purchase.expiryDate;
                             var stock = data[i].stock.purchase.quantity;
                             var unitPrice = data[i].stock.purchase.unitPrice;
-                            $('#brand_tbl>tbody').append("<tr> <td> <input type='text' class='form-control' id='brand" + i + "' value='" + brandName + "' readonly> <input type='hidden' id='sale" + i + "' value='" + saleId + "'> </td> <td> <input type='text' class='form-control' id='expiryDate" + i + "' value='" + expiryDate + "' readonly> </td> <td> <input type='number' class='form-control' id='stock" + i + "' value='" + stock + "' readonly> </td> <td> <input type='number' class='form-control' id='quantity" + i + "' placeholder='0' onchange='changeQuantity(this);'> <input type='hidden' id='unitPrice" + i + "' value='" + unitPrice + "'> </td> <td> <input type='number' class='form-control' id='costPrice" + i + "' value='" + 0 + "' readonly> </td> <td> <input type='number' class='form-control' id='deduct" + i + "' placeholder='0' onchange='changeDeduction(this);'> <input type='hidden' id='deductAmount" + i + "' > </td> <td> <input type='number' class='form-control' id='returnPrice" + i + "' value='" + 0 + "'> </td> <td style='text-align: center'> <input type='checkbox' id='wasteCheckbox" + i + "' onchange='changeWaste(this);'> <input type='hidden' id='isWaste" + i + "'> </td> <td> <button type='button' class='btn btn-block btn-danger btn-sm delete-row'> <i class='fas fa-trash'> </i> </button> </td> </tr>");
+                            $('#brand_tbl>tbody').append("<tr> <td> <input type='text' class='form-control' id='brand" + i + "' value='" + brandName + "' readonly> <input type='hidden' id='sale" + i + "' value='" + saleId + "'> </td> <td> <input type='text' class='form-control' id='expiryDate" + i + "' value='" + expiryDate + "' readonly> </td> <td> <input type='number' class='form-control' id='stock" + i + "' value='" + stock + "' readonly> </td> <td> <input type='number' class='form-control' id='quantity" + i + "' placeholder='0' onchange='changeQuantity(this);'> <input type='hidden' id='unitPrice" + i + "' value='" + unitPrice + "'> </td> <td> <input type='number' class='form-control' id='costPrice" + i + "' value='" + 0 + "' readonly> </td> <td> <input type='number' class='form-control' id='deduct" + i + "' placeholder='0' onchange='changeDeduction(this);'> <input type='hidden' id='deductAmount" + i + "' > </td> <td> <input type='number' class='form-control' id='returnPrice" + i + "' value='" + 0 + "'> </td> <td style='text-align: center'> <input type='checkbox' id='wasteCheckbox" + i + "' onchange='changeWaste(this);'> <input type='hidden' id='isWaste" + i + "' value='false'> </td> <td> <button type='button' class='btn btn-block btn-danger btn-sm delete-row'> <i class='fas fa-trash'> </i> </button> </td> </tr>");
                         }
                     },
                     error: function (err) {

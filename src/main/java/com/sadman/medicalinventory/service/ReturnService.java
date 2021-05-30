@@ -60,14 +60,19 @@ public class ReturnService {
         List<Return> returnList = new ArrayList<>();
         for (int i = 0; i < returnListDTO.getReturnDTOList().size(); i++) {
             Return ret = new Return();
-//            Purchase purchase = purchaseRepository.getOne(returnListDTO.getReturnDTOList().get(i).getPurchaseId());
-//            Sale sale = saleRepository.getOne(returnListDTO.getReturnDTOList().get(i).getSaleId());
-//            ret.setPurchase(purchase);
-//            ret.setSale(sale);
+            if(returnListDTO.getReturnDTOList().get(i).getPurchaseId() != null) {
+                Purchase purchase = purchaseRepository.getOne(returnListDTO.getReturnDTOList().get(i).getPurchaseId());
+                ret.setPurchase(purchase);
+            }
+            if(returnListDTO.getReturnDTOList().get(i).getSaleId() != null) {
+                Sale sale = saleRepository.getOne(returnListDTO.getReturnDTOList().get(i).getSaleId());
+                ret.setSale(sale);
+            }
             ret.setQuantity(returnListDTO.getReturnDTOList().get(i).getQuantity());
             ret.setUnitPrice(returnListDTO.getReturnDTOList().get(i).getUnitPrice());
             ret.setDeduction(returnListDTO.getReturnDTOList().get(i).getDeduction());
             ret.setTotal(returnListDTO.getReturnDTOList().get(i).getReturnPrice());
+            ret.setWastage(returnListDTO.getReturnDTOList().get(i).isWaste());
             returnList.add(ret);
         }
         repository.saveAll(returnList);
