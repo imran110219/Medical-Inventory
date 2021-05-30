@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Sadman
  */
 public interface DosageFormRepository  extends JpaRepository<DosageForm, Long> {
+    boolean existsByName(String name);
 }

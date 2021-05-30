@@ -84,6 +84,8 @@
                                                 <button type="button" id="btnView"
                                                         class="btn btn-block btn-info btn-sm"
                                                         style="margin-top: 8px;border-radius: 3px 0 0 3px;"
+                                                        data-toggle="modal" data-target="#modal-view"
+                                                        th:attrappend="data-user-id=${user.id}"
                                                 ><i class="fas fa-eye"></i>
                                                 </button>
                                                 <button type="button" id="btnEdit"
@@ -284,6 +286,67 @@
                 </div>
             </div>
 
+            <div class="modal fade" id="modal-view">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">View User</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form id="viewForm">
+                            <div class="modal-body">
+                                <input type="hidden" id="v-inputid"/>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="v-inputfirstname">First Name</label>
+                                    <div class="col-sm-9">
+                                        <p id="v-inputfirstname"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="v-inputlastname">Last Name</label>
+                                    <div class="col-sm-9">
+                                        <p id="v-inputlastname"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="v-inputusername">Username</label>
+                                    <div class="col-sm-9">
+                                        <p id="v-inputusername"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="v-inputemail">Email</label>
+                                    <div class="col-sm-9">
+                                        <p id="v-inputemail"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="v-inputphone">Phone</label>
+                                    <div class="col-sm-9">
+                                        <p id="v-inputphone"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="v-inputaddress">Address</label>
+                                    <div class="col-sm-9">
+                                        <p id="v-inputaddress"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="v-inputactive">Active</label>
+                                    <div class="col-sm-9">
+                                        <input type="checkbox" id="v-inputactive" name="active" disabled/>
+                                        <input type="hidden" id="v-isActive">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
             <div class="modal fade" id="modal-delete">
                 <div class="modal-dialog modal-sm">
                     <div class="modal-content">
@@ -360,6 +423,30 @@
                 });
             });
 
+            $(document).on("click", "#btnView", function () {
+                var userId = $(this).data('user-id');
+
+                $.ajax({
+                    type: 'GET',
+                    url: "/users/" + userId,
+                    dataType: "json",
+                    success: function (data) {
+                        $('#v-inputid').val(data.id);
+                        $("#v-inputfirstname").text(data.firstName)
+                        $('#v-inputlastname').text(data.lastName);
+                        $('#v-inputusername').text(data.userName);
+                        $('#v-inputemail').text(data.email);
+                        $('#v-inputphone').text(data.phone);
+                        $('#v-inputaddress').text(data.address);
+                        $('#v-isActive').val(data.active);
+                        document.getElementById("v-inputactive").checked = data.active;
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
+
             $(document).on("click", "#btnDelete", function () {
                 var userId = $(this).data('user-id');
                 $('#userId').val(userId);
@@ -375,7 +462,7 @@
                         console.log(data);
                         $('#modal-delete').modal('hide');
                         $('table#userTable tr#' + userId).remove();
-                        toastr.error(data);
+                        toastr.success(data);
                     },
                     error: function (err) {
                         console.log(err);

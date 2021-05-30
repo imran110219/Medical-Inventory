@@ -41,4 +41,8 @@ public class DosageFormService {
     public void deleteDosageFormById(Long id){
         repository.deleteById(id);
     }
+
+    public boolean existsByName(String name) {
+        return repository.existsByName(name);
+    }
 }
