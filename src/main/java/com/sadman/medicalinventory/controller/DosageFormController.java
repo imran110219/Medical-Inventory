@@ -9,10 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -41,6 +38,19 @@ public class DosageFormController {
     public ResponseEntity<String> addDosageForm(DosageForm dosageForm){
         service.createDosageForm(dosageForm);
         return new ResponseEntity<>("Dosage Form is added successfully", HttpStatus.OK);
+    }
+
+    @PutMapping("/dosageforms/edit/{id}")
+    public ResponseEntity<String> editDosageFormById(@RequestBody DosageForm newDosageForm, @PathVariable(value = "id") Long dosageFormId) {
+        service.updateDosageForm(newDosageForm, dosageFormId);
+        return new ResponseEntity<>("Dosage Form is Edited Successfully", HttpStatus.OK);
+    }
+
+    @DeleteMapping("/dosageforms/delete/{id}")
+    @ResponseBody
+    public ResponseEntity<String> deleteDosageFormById(@PathVariable(value = "id") Long dosageFormId){
+        service.deleteDosageFormById(dosageFormId);
+        return new ResponseEntity<>("Dosage Form is Deleted Successfully", HttpStatus.OK);
     }
 
     @PostMapping(value="/dosageforms/checkName")
