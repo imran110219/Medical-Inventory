@@ -1,5 +1,6 @@
 package com.sadman.medicalinventory.controller;
 
+import com.sadman.medicalinventory.exception.RecordNotFoundException;
 import com.sadman.medicalinventory.model.DosageForm;
 import com.sadman.medicalinventory.model.User;
 import com.sadman.medicalinventory.service.DosageFormService;
@@ -8,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -25,6 +28,13 @@ public class DosageFormController {
         model.addAttribute("dosageform", new DosageForm());
         model.addAttribute("dosageforms", list);
         return "dosageform-list";
+    }
+
+    @GetMapping("/dosageforms/{id}")
+    public ResponseEntity<DosageForm> getDosageFormById(@PathVariable(value = "id") Long dosageFormId)
+            throws RecordNotFoundException {
+        DosageForm dosageForm = service.getDosageFormById(dosageFormId);
+        return ResponseEntity.ok(dosageForm);
     }
 
     @PostMapping(value="/dosageforms/add")
