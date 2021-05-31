@@ -16,7 +16,7 @@
 </head>
 
 <body class="hold-transition sidebar-mini layout-fixed">
-<!-- Site wrapper -->
+
 <div class="wrapper">
 
     <div class="content-wrapper" layout:fragment="content">
@@ -53,7 +53,6 @@
                                 </div>
                             </div>
 
-                            <!-- /.card-header -->
                             <div class="card-body">
                                 <table id="dosageFormTable" class="table table-bordered table-striped"
                                        th:switch="${dosageforms}">
@@ -101,9 +100,7 @@
                                     </tfoot>
                                 </table>
                             </div>
-                            <!-- /.card-body -->
                         </div>
-                        <!-- /.card -->
                     </div>
                 </div>
             </div>
@@ -133,9 +130,7 @@
                             </form>
                         </div>
                     </div>
-                    <!-- /.modal-content -->
                 </div>
-                <!-- /.modal-dialog -->
             </div>
 
             <div class="modal fade" id="modal-view">
@@ -212,19 +207,15 @@
                     </div>
                 </div>
             </div>
-
         </section>
-        <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
 
-    <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
-        <!-- Control sidebar content goes here -->
+
     </aside>
-    <!-- /.control-sidebar -->
+
 </div>
-<!-- ./wrapper -->
+
 <th:block layout:fragment="script">
     <!-- jquery-validation -->
     <script src="/plugins/jquery-validation/jquery.validate.min.js"></script>
@@ -262,46 +253,6 @@
                     success: function (data) {
                         $('#v-inputid').val(data.id);
                         $("#v-inputname").text(data.name)
-                    },
-                    error: function (err) {
-                        console.log(err);
-                    }
-                });
-            });
-
-            $(document).on("click", "#btnDelete", function () {
-                var dosageFormId = $(this).data('dosageform-id');
-                $('#dosageFormId').val(dosageFormId);
-            });
-
-            $(document).on("click", "#confirmDelete", function () {
-                var dosageFormId = document.getElementById("dosageFormId").value;
-
-                $.ajax({
-                    type: "DELETE",
-                    url: "/dosageforms/delete/" + dosageFormId,
-                    success: function (data) {
-                        console.log(data);
-                        $('#modal-delete').modal('hide');
-                        $('table#dosageFormTable tr#' + dosageFormId).remove();
-                        toastr.success(data);
-                    },
-                    error: function (err) {
-                        console.log(err);
-                    }
-                });
-            });
-
-            $(document).on("click", "#btnEdit", function () {
-                var dosageFormId = $(this).data('dosageform-id');
-
-                $.ajax({
-                    type: 'GET',
-                    url: "/dosageforms/" + dosageFormId,
-                    dataType: "json",
-                    success: function (data) {
-                        $('#e-inputid').val(data.id);
-                        $('#e-inputname').val(data.name);
                     },
                     error: function (err) {
                         console.log(err);
@@ -360,6 +311,23 @@
                 }
             });
 
+            $(document).on("click", "#btnEdit", function () {
+                var dosageFormId = $(this).data('dosageform-id');
+
+                $.ajax({
+                    type: 'GET',
+                    url: "/dosageforms/" + dosageFormId,
+                    dataType: "json",
+                    success: function (data) {
+                        $('#e-inputid').val(data.id);
+                        $('#e-inputname').val(data.name);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
+
             $('#editForm').validate({
                 rules: {
                     name: {
@@ -408,6 +376,29 @@
                         }
                     });
                 }
+            });
+
+            $(document).on("click", "#btnDelete", function () {
+                var dosageFormId = $(this).data('dosageform-id');
+                $('#dosageFormId').val(dosageFormId);
+            });
+
+            $(document).on("click", "#confirmDelete", function () {
+                var dosageFormId = document.getElementById("dosageFormId").value;
+
+                $.ajax({
+                    type: "DELETE",
+                    url: "/dosageforms/delete/" + dosageFormId,
+                    success: function (data) {
+                        console.log(data);
+                        $('#modal-delete').modal('hide');
+                        $('table#dosageFormTable tr#' + dosageFormId).remove();
+                        toastr.success(data);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
             });
         });
     </script>

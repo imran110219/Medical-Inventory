@@ -10,6 +10,7 @@ import java.util.List;
 
 @Service
 public class DosageFormService {
+
     @Autowired
     DosageFormRepository repository;
 
@@ -21,12 +22,11 @@ public class DosageFormService {
         return repository.findById(id).orElseThrow(() -> new RecordNotFoundException(id));
     }
 
-    public DosageForm createDosageForm(DosageForm dosageForm){
+    public DosageForm createDosageForm(DosageForm dosageForm) {
         return repository.save(dosageForm);
     }
 
-    public DosageForm updateDosageForm(DosageForm newDosageForm, Long id)
-    {
+    public DosageForm updateDosageForm(DosageForm newDosageForm, Long id) {
         return repository.findById(id)
                 .map(dosageForm -> {
                     dosageForm.setName(newDosageForm.getName());
@@ -38,7 +38,7 @@ public class DosageFormService {
                 });
     }
 
-    public void deleteDosageFormById(Long id){
+    public void deleteDosageFormById(Long id) {
         repository.deleteById(id);
     }
 
