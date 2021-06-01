@@ -10,6 +10,8 @@ import java.util.List;
 
 @Repository
 public interface IndicationGenericRepository extends JpaRepository<IndicationGeneric, Long> {
-    public List<IndicationGeneric> getIndicationsByGenericId(Long genericId);
-    public List<IndicationGeneric> getGenericsByIndicationId(Long indicationId);
+    List<IndicationGeneric> getIndicationsByGenericId(Long genericId);
+    List<IndicationGeneric> getGenericsByIndicationId(Long indicationId);
+    void deleteIndicationGenericsByGenericId(Long genericId);
+    void deleteAllByIndicationId(Long indicationId);
 }

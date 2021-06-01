@@ -5,15 +5,24 @@
       layout:decorate="~{fragments/layout}">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Fixed Sidebar</title>
+<!--    <meta charset="utf-8">-->
+<!--    <meta name="viewport" content="width=device-width, initial-scale=1">-->
+<!--    <title>AdminLTE 3 | Fixed Sidebar</title>-->
 
     <th:block layout:fragment="link">
         <!-- DataTables -->
         <link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
         <link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
         <link rel="stylesheet" href="/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+        <!-- Toastr -->
+        <link rel="stylesheet" href="/plugins/toastr/toastr.min.css">
+        <!-- Select2 -->
+        <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
+        <link rel="stylesheet" href="/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+        <!-- Bootstrap4 Duallistbox -->
+        <link rel="stylesheet" href="/plugins/bootstrap4-duallistbox/bootstrap-duallistbox.min.css">
+        <!-- Custom -->
+        <link rel="stylesheet" href="/css/custom.css">
     </th:block>
 </head>
 
@@ -52,13 +61,14 @@
                             <div class="card-header">
                                 <div class="col-sm-2 col-md-1">
                                     <button type="button" class="btn btn-block btn-success btn-sm"
-                                            data-toggle="modal" data-target="#modal-default">Add</button>
+                                            data-toggle="modal" data-target="#modal-add">Add
+                                    </button>
                                 </div>
                             </div>
 
-                            <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped" th:switch="${generics}">
+                                <table id="genericTable" class="table table-bordered table-striped"
+                                       th:switch="${generics}">
                                     <thead>
                                     <tr>
                                         <th>Name</th>
@@ -67,24 +77,30 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="generic : ${generics}">
-                                        <td th:text="${generic.name}"></td>
-                                        <td th:text="${generic.description}"></td>
+                                    <tr th:id="${generic.id}" th:each="generic : ${generics}">
+                                        <td th:id="'name'+${generic.id}" th:text="${generic.name}"></td>
+                                        <td class="ellipsis" th:id="'description'+${generic.id}" th:text="${generic.description}"></td>
                                         <td>
                                             <div class="btn-group">
-                                                <input type="hidden" id="dosageformId" th:value="${generic.id}">
+                                                <input type="hidden" id="genericId" th:value="${generic.id}">
                                                 <button type="button" id="btnView"
                                                         class="btn btn-block btn-info btn-sm"
                                                         style="margin-top: 8px;border-radius: 3px 0 0 3px;"
+                                                        data-toggle="modal" data-target="#modal-view"
+                                                        th:attrappend="data-generic-id=${generic.id}"
                                                 ><i class="fas fa-eye"></i>
                                                 </button>
                                                 <button type="button" id="btnEdit"
                                                         class="btn btn-block btn-primary btn-sm"
                                                         style="margin-top: 8px"
+                                                        data-toggle="modal" data-target="#modal-edit"
+                                                        th:attrappend="data-generic-id=${generic.id}"
                                                 ><i class="fas fa-edit"></i>
                                                 </button>
                                                 <button type="button" id="btnDelete"
                                                         class="btn btn-block btn-danger btn-sm"
+                                                        data-toggle="modal" data-target="#modal-delete"
+                                                        th:attrappend="data-generic-id=${generic.id}"
                                                 ><i class="fas fa-trash"></i>
                                                 </button>
                                             </div>
@@ -107,29 +123,31 @@
                 </div>
             </div>
 
-            <div class="modal fade" id="modal-default">
+            <div class="modal fade" id="modal-add">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title">Add Indication</h4>
+                            <h4 class="modal-title">Add Generic</h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form id="quickForm">
+                            <form id="addForm" th:action="@{/generics/add}" th:object="${generic}" method="post">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputname">Name</label>
+                                    <label class="col-sm-3 col-form-label" for="a-inputname">Name</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="inputname" name="name"
-                                               placeholder="Enter Indication">
+                                        <input type="text" th:field="*{name}" class="form-control" id="a-inputname"
+                                               name="name"
+                                               placeholder="Enter Generic Name">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputdescription">Description</label>
+                                    <label class="col-sm-3 col-form-label" for="a-inputdescription">Description</label>
                                     <div class="col-sm-9">
-                                            <textarea id="inputdescription" name="description" class="form-control" rows="4"
-                                                      cols="50" placeholder="Enter Indication Description"></textarea>
+                                            <textarea id="a-inputdescription" th:field="*{description}" name="description"
+                                                      class="form-control" rows="4"
+                                                      cols="50" placeholder="Enter Generic Description"></textarea>
                                     </div>
                                 </div>
                                 <div class="modal-footer justify-content-between">
@@ -139,15 +157,117 @@
                             </form>
                         </div>
                     </div>
-                    <!-- /.modal-content -->
                 </div>
-                <!-- /.modal-dialog -->
             </div>
-            <!-- /.modal -->
+
+            <div class="modal fade" id="modal-view">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">View Generic</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form id="viewForm">
+                            <div class="modal-body">
+                                <input type="hidden" id="v-inputid"/>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="v-inputname">Name</label>
+                                    <div class="col-sm-9">
+                                        <p id="v-inputname"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="v-inputdescription">Description</label>
+                                    <div class="col-sm-9">
+                                        <p id="v-inputdescription"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="v-inputindications">Indication</label>
+                                    <div class="col-sm-9">
+                                        <p id="v-inputindications"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modal-edit">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Edit Generic</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form id="editForm" th:object="${genericdto}">
+                            <div class="modal-body">
+                                <input type="hidden" id="e-inputid"/>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="e-inputname">Name</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" th:field="*{name}" class="form-control"
+                                               id="e-inputname" name="name"
+                                               placeholder="Enter Name">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="e-inputdescription">Description</label>
+                                    <div class="col-sm-9">
+                                            <textarea id="e-inputdescription" th:field="*{description}" name="description"
+                                                      class="form-control" rows="4"
+                                                      cols="50" placeholder="Enter Generic Description"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="e-inputindications">Indications</label>
+                                    <div class="col-sm-9">
+                                        <select class="select2bs4" th:field="*{indicationIds}" id="e-inputindications" multiple="multiple" data-placeholder="Select a Indication"
+                                                style="width: 100%;">
+                                            <option th:each="indication : ${indications}"
+                                                    th:value="${indication.id}"
+                                                    th:utext="${indication.name}">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button id="confirmEdit" type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modal-delete">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Delete Generic</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Delete this generic?</p>
+                            <input type="hidden" id="d-genericid"/>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button id="confirmDelete" type="submit" class="btn btn-primary">Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </section>
-        <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
@@ -160,6 +280,10 @@
     <!-- jquery-validation -->
     <script src="/plugins/jquery-validation/jquery.validate.min.js"></script>
     <script src="/plugins/jquery-validation/additional-methods.min.js"></script>
+    <!-- Select2 -->
+    <script src="/plugins/select2/js/select2.full.min.js"></script>
+    <!-- Bootstrap4 Duallistbox -->
+    <script src="/plugins/bootstrap4-duallistbox/jquery.bootstrap-duallistbox.min.js"></script>
     <!-- DataTables  & Plugins -->
     <script src="/plugins/datatables/jquery.dataTables.min.js"></script>
     <script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
@@ -173,24 +297,54 @@
     <script src="/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <!-- Toastr -->
+    <script src="/plugins/toastr/toastr.min.js"></script>
     <script>
         $(function () {
 
-            $("#example1").DataTable({
+            $("#genericTable").DataTable({
                 "responsive": true, "lengthChange": false, "autoWidth": false,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            }).buttons().container().appendTo('#genericTable_wrapper .col-md-6:eq(0)');
 
-            $.validator.setDefaults({
-                submitHandler: function () {
-                    alert("Form successful submitted!");
-                }
+            $(document).on("click", "#btnView", function () {
+                var genericId = $(this).data('generic-id');
+                var text = "";
+
+                $.ajax({
+                    type: 'GET',
+                    url: "/generics/" + genericId,
+                    dataType: "json",
+                    success: function (data) {
+                        $('#v-inputid').val(data.id);
+                        $("#v-inputname").text(data.name);
+                        $("#v-inputdescription").text(data.description);
+                        console.log(data);
+                        // for (let i = 0; i < data.indications.length; i++) {
+                        //     text += data.indications[i];
+                        //     text += '<br>';
+                        // }
+                        // $("#v-inputindications").text(text);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
             });
 
-            $('#quickForm').validate({
+            $('#addForm').validate({
                 rules: {
                     name: {
-                        required: true
+                        required: true,
+                        remote: {
+                            url: "/generics/checkName", //make sure to return true or false with a 200 status code
+                            type: "post",
+                            data: {
+                                username: function () {
+                                    return $("#a-inputname").val();
+                                }
+                            }
+                        }
                     },
                     description: {
                         required: true
@@ -198,7 +352,8 @@
                 },
                 messages: {
                     name: {
-                        required: "Please enter name"
+                        required: "Please enter name",
+                        remote: "This name is already exist"
                     },
                     description: {
                         required: "Please enter description"
@@ -214,9 +369,138 @@
                 },
                 unhighlight: function (element, errorClass, validClass) {
                     $(element).removeClass('is-invalid');
+                },
+                submitHandler: function (form) {
+                    $.ajax({
+                        url: form.action,
+                        type: form.method,
+                        data: $(form).serialize(),
+                        success: function (data) {
+                            $('#modal-add').modal('hide');
+                            toastr.success(data);
+                            setTimeout(function () {
+                                location.reload();  //Refresh page
+                            }, 3000);
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
                 }
             });
+
+            $(document).on("click", "#btnEdit", function () {
+                var genericId = $(this).data('generic-id');
+
+                $.ajax({
+                    type: 'GET',
+                    url: "/generics/" + genericId,
+                    dataType: "json",
+                    success: function (data) {
+                        $('#e-inputid').val(data.id);
+                        $('#e-inputname').val(data.name);
+                        $('#e-inputdescription').val(data.description);
+                        $('#e-inputindications').val(data.indications);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
+
+            $('#editForm').validate({
+                rules: {
+                    name: {
+                        required: true
+                    },
+                    description: {
+                        required: true
+                    },
+                    indications: {
+                        required: true
+                    }
+                },
+                messages: {
+                    name: {
+                        required: "Please enter name"
+                    },
+                    description: {
+                        required: "Please enter description"
+                    },
+                    indications: {
+                        required: "Please select indication"
+                    }
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                },
+                submitHandler: function (form) {
+                    var genericId = document.getElementById("e-inputid").value;
+
+                    var formData = {
+                        name: $("#e-inputname").val(),
+                        description: $("#e-inputdescription").val(),
+                        indicationIds: $("#e-inputindications").val(),
+                    };
+
+                    console.log(formData.indications);
+
+                    $.ajax({
+                        type: "PUT",
+                        url: "/generics/edit/" + genericId,
+                        data: JSON.stringify(formData),
+                        contentType: 'application/json',
+                        success: function (data) {
+                            $('#modal-edit').modal('hide');
+                            toastr.success(data);
+                            setTimeout(function () {
+                                location.reload();  //Refresh page
+                            }, 3000); //3 Second
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
+                }
+            });
+
+            $(document).on("click", "#btnDelete", function () {
+                var genericId = $(this).data('generic-id');
+                $('#d-genericid').val(genericId);
+            });
+
+            $(document).on("click", "#confirmDelete", function () {
+                var genericId = document.getElementById("d-genericid").value;
+
+                $.ajax({
+                    type: "DELETE",
+                    url: "/generics/delete/" + genericId,
+                    success: function (data) {
+                        console.log(data);
+                        $('#modal-delete').modal('hide');
+                        $('table#genericTable tr#' + genericId).remove();
+                        toastr.success(data);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
+
         });
+
     </script>
 </th:block>
 </body>

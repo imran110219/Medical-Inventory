@@ -117,10 +117,10 @@
                         <div class="modal-body">
                             <form id="addForm" th:action="@{/dosageforms/add}" th:object="${dosageform}" method="post">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputname">Name</label>
+                                    <label class="col-sm-3 col-form-label" for="a-inputname">Name</label>
                                     <div class="col-sm-9">
-                                        <input type="text" th:field="*{name}" class="form-control" id="inputname" name="name"
-                                               placeholder="Enter Indication">
+                                        <input type="text" th:field="*{name}" class="form-control" id="a-inputname" name="name"
+                                               placeholder="Enter Dosage Form">
                                     </div>
                                 </div>
                                 <div class="modal-footer justify-content-between">
@@ -269,7 +269,7 @@
                             type: "post",
                             data: {
                                 username: function () {
-                                    return $("#inputname").val();
+                                    return $("#a-inputname").val();
                                 }
                             }
                         }

@@ -23,4 +23,9 @@ public class IndicationGeneric {
     @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "generic_id")
     private Generic generic;
+
+    public IndicationGeneric(Indication indication, Generic generic) {
+        this.indication = indication;
+        this.generic = generic;
+    }
 }
