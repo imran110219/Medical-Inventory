@@ -60,20 +60,20 @@ public class GenericService {
                 });
     }
 
-    @Transactional
-    public void updateGenericDTO(GenericDTO newGeneriDTO, Long id) {
-        Generic newgeneric = new Generic();
-        newgeneric.setName(newGeneriDTO.getName());
-        newgeneric.setDescription(newGeneriDTO.getDescription());
-        Generic generic = updateGeneric(newgeneric, id);
-        indicationGenericRepository.deleteIndicationGenericsByGenericId(id);
-        List<IndicationGeneric> indicationGenericList = new ArrayList<>();
-        for (int i = 0; i < newGeneriDTO.getIndicationIds().size(); i++) {
-            Indication indication = indicationRepository.getOne(newGeneriDTO.getIndicationIds().get(i));
-            IndicationGeneric indicationGeneric = new IndicationGeneric(indication,generic);
-            indicationGenericList.add(indicationGeneric);
-        }
-        indicationGenericRepository.saveAll(indicationGenericList);
+//    @Transactional
+    public void updateGenericDTO(GenericDTO newGenericDTO, Long id) {
+        Generic newGeneric = new Generic();
+        newGeneric.setName(newGenericDTO.getName());
+        newGeneric.setDescription(newGenericDTO.getDescription());
+        Generic generic = updateGeneric(newGeneric, id);
+//        indicationGenericRepository.deleteIndicationGenericsByGenericId(id);
+//        List<IndicationGeneric> indicationGenericList = new ArrayList<>();
+//        for (int i = 0; i < newGeneriDTO.getIndicationIds().size(); i++) {
+//            Indication indication = indicationRepository.getOne(newGeneriDTO.getIndicationIds().get(i));
+//            IndicationGeneric indicationGeneric = new IndicationGeneric(indication,generic);
+//            indicationGenericList.add(indicationGeneric);
+//        }
+//        indicationGenericRepository.saveAll(indicationGenericList);
     }
 
     public ResponseEntity<Object> deleteGenericById(Long id){
