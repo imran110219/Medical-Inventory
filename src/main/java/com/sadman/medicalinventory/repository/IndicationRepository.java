@@ -11,6 +11,5 @@ import java.util.List;
 
 @Repository
 public interface IndicationRepository extends JpaRepository<Indication, Long> {
-//    @Query("SELECT i.generics from Indication as i where i.id = :indicationId")
-//    public List<Generic> getGenericsById(Long indicationId);
+    boolean existsByName(String name);
 }

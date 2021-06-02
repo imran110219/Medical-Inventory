@@ -56,4 +56,9 @@ public class IndicationService {
     public void deleteIndicationById(Long id){
         repository.deleteById(id);
     }
+
+    public boolean existsByName(String name) {
+        return repository.existsByName(name);
+    }
+
 }
