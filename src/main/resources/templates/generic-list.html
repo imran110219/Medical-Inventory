@@ -184,12 +184,12 @@
                                         <p id="v-inputdescription"></p>
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="v-inputindications">Indication</label>
-                                    <div class="col-sm-9">
-                                        <p id="v-inputindications"></p>
-                                    </div>
-                                </div>
+<!--                                <div class="form-group row">-->
+<!--                                    <label class="col-sm-3 col-form-label" for="v-inputindications">Indication</label>-->
+<!--                                    <div class="col-sm-9">-->
+<!--                                        <p id="v-inputindications"></p>-->
+<!--                                    </div>-->
+<!--                                </div>-->
                             </div>
                         </form>
                     </div>
@@ -224,17 +224,17 @@
                                                       cols="50" placeholder="Enter Generic Description"></textarea>
                                     </div>
                                 </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="e-inputindications">Indications</label>
-                                    <div class="col-sm-9">
-                                        <select class="select2bs4" th:field="*{indicationIds}" id="e-inputindications" multiple="multiple" data-placeholder="Select a Indication"
-                                                style="width: 100%;">
-                                            <option th:each="indication : ${indications}"
-                                                    th:value="${indication.id}"
-                                                    th:utext="${indication.name}">
-                                        </select>
-                                    </div>
-                                </div>
+<!--                                <div class="form-group row">-->
+<!--                                    <label class="col-sm-3 col-form-label" for="e-inputindications">Indications</label>-->
+<!--                                    <div class="col-sm-9">-->
+<!--                                        <select class="select2bs4" th:field="*{indicationIds}" id="e-inputindications" multiple="multiple" data-placeholder="Select a Indication"-->
+<!--                                                style="width: 100%;">-->
+<!--                                            <option th:each="indication : ${indications}"-->
+<!--                                                    th:value="${indication.id}"-->
+<!--                                                    th:utext="${indication.name}">-->
+<!--                                        </select>-->
+<!--                                    </div>-->
+<!--                                </div>-->
                             </div>
                             <div class="modal-footer justify-content-between">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -319,12 +319,6 @@
                         $('#v-inputid').val(data.id);
                         $("#v-inputname").text(data.name);
                         $("#v-inputdescription").text(data.description);
-                        console.log(data);
-                        // for (let i = 0; i < data.indications.length; i++) {
-                        //     text += data.indications[i];
-                        //     text += '<br>';
-                        // }
-                        // $("#v-inputindications").text(text);
                     },
                     error: function (err) {
                         console.log(err);
@@ -400,7 +394,7 @@
                         $('#e-inputid').val(data.id);
                         $('#e-inputname').val(data.name);
                         $('#e-inputdescription').val(data.description);
-                        $('#e-inputindications').val(data.indications);
+                        // $('#e-inputindications').val(data.indications);
                     },
                     error: function (err) {
                         console.log(err);
@@ -447,8 +441,8 @@
 
                     var formData = {
                         name: $("#e-inputname").val(),
-                        description: $("#e-inputdescription").val(),
-                        indicationIds: $("#e-inputindications").val(),
+                        description: $("#e-inputdescription").val()
+                        // indicationIds: $("#e-inputindications").val(),
                     };
 
                     console.log(formData.indications);
@@ -490,6 +484,8 @@
                         toastr.success(data);
                     },
                     error: function (err) {
+                        $('#modal-delete').modal('hide');
+                        toastr.error("Failed to delete,  Please delete this generic from indication");
                         console.log(err);
                     }
                 });

@@ -9,6 +9,7 @@ import com.sadman.medicalinventory.repository.GenericRepository;
 import com.sadman.medicalinventory.repository.IndicationGenericRepository;
 import com.sadman.medicalinventory.repository.IndicationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -75,8 +76,16 @@ public class GenericService {
         indicationGenericRepository.saveAll(indicationGenericList);
     }
 
-    public void deleteGenericById(Long id){
-        repository.deleteById(id);
+    public ResponseEntity<Object> deleteGenericById(Long id){
+        if(repository.findById(id).isPresent()){
+            if(repository.getOne(id).getIndications().size() == 0) {
+                repository.deleteById(id);
+                if (repository.findById(id).isPresent()) {
+                    return ResponseEntity.unprocessableEntity().body("Failed to delete the specified record");
+                } else return ResponseEntity.ok().body("Successfully deleted specified record");
+            } else return ResponseEntity.unprocessableEntity().body("Failed to delete,  Please delete this generic from indication");
+        } else
+            return ResponseEntity.unprocessableEntity().body("No Records Found");
     }
 
     public boolean existsByName(String name) {

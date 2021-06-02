@@ -58,9 +58,8 @@ public class GenericController {
 
     @DeleteMapping("/generics/delete/{id}")
     @ResponseBody
-    public ResponseEntity<String> deleteGenericById(@PathVariable(value = "id") Long genericId){
-        service.deleteGenericById(genericId);
-        return new ResponseEntity<>("Generic is Deleted Successfully", HttpStatus.OK);
+    public ResponseEntity<Object> deleteGenericById(@PathVariable(value = "id") Long genericId){
+        return service.deleteGenericById(genericId);
     }
 
     @PostMapping(value="/generics/checkName")

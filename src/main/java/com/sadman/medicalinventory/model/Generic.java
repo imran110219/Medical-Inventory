@@ -31,6 +31,5 @@ public class Generic {
     @ToString.Exclude
     @ManyToMany(mappedBy = "generics", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JsonBackReference
-    @JsonSerialize
     private Set<Indication> indications = new HashSet<>();
 }
