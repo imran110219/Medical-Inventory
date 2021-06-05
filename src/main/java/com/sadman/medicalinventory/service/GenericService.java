@@ -83,7 +83,7 @@ public class GenericService {
                 if (repository.findById(id).isPresent()) {
                     return ResponseEntity.unprocessableEntity().body("Failed to delete the specified record");
                 } else return ResponseEntity.ok().body("Successfully deleted specified record");
-            } else return ResponseEntity.unprocessableEntity().body("Failed to delete,  Please delete this generic from indication");
+            } else return ResponseEntity.unprocessableEntity().body("Failed to delete, Please delete this generic from indication");
         } else
             return ResponseEntity.unprocessableEntity().body("No Records Found");
     }

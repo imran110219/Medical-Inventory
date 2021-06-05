@@ -2,17 +2,13 @@ package com.sadman.medicalinventory.controller;
 
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
 import com.sadman.medicalinventory.model.Manufacturer;
-import com.sadman.medicalinventory.model.Manufacturer;
 import com.sadman.medicalinventory.service.ManufacturerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -40,6 +36,18 @@ public class ManufacturerController {
     public ResponseEntity<String> addManufacturer(Manufacturer manufacturer){
         service.createManufacturer(manufacturer);
         return new ResponseEntity<>("Manufacturer is added successfully", HttpStatus.OK);
+    }
+
+    @PutMapping("/manufacturers/edit/{id}")
+    public ResponseEntity<String> editManufacturerById(@RequestBody Manufacturer newManufacturer, @PathVariable(value = "id") Long manufacturerId) {
+        service.updateManufacturer(newManufacturer, manufacturerId);
+        return new ResponseEntity<>("Manufacturer is Edited Successfully", HttpStatus.OK);
+    }
+
+    @DeleteMapping("/manufacturers/delete/{id}")
+    @ResponseBody
+    public ResponseEntity<Object> deleteManufacturerById(@PathVariable(value = "id") Long manufacturerId){
+        return service.deleteManufacturerById(manufacturerId);
     }
 
     @PostMapping(value="/manufacturers/checkName")
