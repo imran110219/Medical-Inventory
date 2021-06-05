@@ -10,6 +10,7 @@ import com.sadman.medicalinventory.repository.GenericRepository;
 import com.sadman.medicalinventory.repository.IndicationGenericRepository;
 import com.sadman.medicalinventory.repository.IndicationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,8 +48,7 @@ public class IndicationService {
         return repository.save(indication);
     }
 
-    public Indication updateIndication(Indication newIndication, Long id)
-    {
+    public Indication updateIndication(Indication newIndication, Long id) {
         return repository.findById(id)
                 .map(indication -> {
                     indication.setName(newIndication.getName());
@@ -67,7 +67,7 @@ public class IndicationService {
         newIndication.setName(newIndicationDTO.getName());
         newIndication.setDescription(newIndicationDTO.getDescription());
         Indication indication = updateIndication(newIndication, id);
-        indicationGenericRepository.deleteIndicationGenericsByGenericId(id);
+        indicationGenericRepository.deleteIndicationGenericsByIndicationId(id);
         List<IndicationGeneric> indicationGenericList = new ArrayList<>();
         for (int i = 0; i < newIndicationDTO.getGenericIds().size(); i++) {
             Generic generic = genericRepository.getOne(newIndicationDTO.getGenericIds().get(i));
@@ -77,8 +77,22 @@ public class IndicationService {
         indicationGenericRepository.saveAll(indicationGenericList);
     }
 
-    public void deleteIndicationById(Long id){
-        repository.deleteById(id);
+    @Transactional
+    public ResponseEntity<Object> deleteIndicationById(Long id){
+        if(repository.findById(id).isPresent()){
+            if(repository.getOne(id).getGenerics().size() == 0) {
+                repository.deleteById(id);
+                if (repository.findById(id).isPresent()) {
+                    return ResponseEntity.unprocessableEntity().body("Failed to delete the specified record");
+                } else return ResponseEntity.ok().body("Successfully deleted specified record");
+            } else {
+                indicationGenericRepository.deleteIndicationGenericsByIndicationId(id);
+                indicationGenericRepository.flush();
+                repository.deleteById(id);
+                return ResponseEntity.ok().body("Successfully deleted specified record");
+            }
+        } else
+            return ResponseEntity.unprocessableEntity().body("No Records Found");
     }
 
     public boolean existsByName(String name) {

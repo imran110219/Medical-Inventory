@@ -34,7 +34,7 @@ public class IndicationController {
         model.addAttribute("indication", new Indication());
         model.addAttribute("indicationdto", new IndicationDTO());
         model.addAttribute("indications", list);
-        model.addAttribute("generics", genericList);
+        model.addAttribute("genericList", genericList);
         return "indication-list";
     }
 
@@ -55,6 +55,12 @@ public class IndicationController {
     public ResponseEntity<String> editGenericById(@RequestBody IndicationDTO newIndicationDTO, @PathVariable(value = "id") Long indicationId) {
         service.updateIndicationDTO(newIndicationDTO, indicationId);
         return new ResponseEntity<>("Indication is Edited Successfully", HttpStatus.OK);
+    }
+
+    @DeleteMapping("/indications/delete/{id}")
+    @ResponseBody
+    public ResponseEntity<Object> deleteIndicationById(@PathVariable(value = "id") Long indicationId){
+        return service.deleteIndicationById(indicationId);
     }
 
     @PostMapping(value="/indications/checkName")

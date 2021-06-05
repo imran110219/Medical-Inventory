@@ -16,6 +16,11 @@
         <link rel="stylesheet" href="/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
         <!-- Toastr -->
         <link rel="stylesheet" href="/plugins/toastr/toastr.min.css">
+        <!-- Select2 -->
+        <link rel="stylesheet" href="/plugins/select2/css/select2.min.css">
+        <link rel="stylesheet" href="/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
+        <!-- Custom -->
+        <link rel="stylesheet" href="/css/custom.css">
     </th:block>
 </head>
 
@@ -68,9 +73,9 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="indication : ${indications}">
-                                        <td th:text="${indication.name}"></td>
-                                        <td th:text="${indication.description}"></td>
+                                    <tr th:id="${indication.id}" th:each="indication : ${indications}">
+                                        <td th:id="'name'+${indication.id}" th:text="${indication.name}"></td>
+                                        <td class="ellipsis" th:id="'description'+${indication.id}" th:text="${indication.description}"></td>
                                         <td>
                                             <div class="btn-group">
                                                 <input type="hidden" id="indicationId" th:value="${indication.id}">
@@ -84,10 +89,14 @@
                                                 <button type="button" id="btnEdit"
                                                         class="btn btn-block btn-primary btn-sm"
                                                         style="margin-top: 8px"
+                                                        data-toggle="modal" data-target="#modal-edit"
+                                                        th:attrappend="data-indication-id=${indication.id}"
                                                 ><i class="fas fa-edit"></i>
                                                 </button>
                                                 <button type="button" id="btnDelete"
                                                         class="btn btn-block btn-danger btn-sm"
+                                                        data-toggle="modal" data-target="#modal-delete"
+                                                        th:attrappend="data-indication-id=${indication.id}"
                                                 ><i class="fas fa-trash"></i>
                                                 </button>
                                             </div>
@@ -208,13 +217,13 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="e-inputgenerics">Indications</label>
+                                    <label class="col-sm-3 col-form-label" for="e-inputgenerics">Generics</label>
                                     <div class="col-sm-9">
                                         <select class="select2bs4" th:field="*{genericIds}" id="e-inputgenerics"
                                                 multiple="multiple" data-placeholder="Select a Generic"
-                                                style="width: 100%;">
-                                            <option th:each="generic: ${generics}"
-                                                    th:value="${generic.id}"
+                                                style="width: 100%;overflow-y: auto;">
+                                            <option th:each="generic: ${genericList}"
+                                                    th:value="${{generic}}"
                                                     th:utext="${generic.name}">
                                         </select>
                                     </div>
@@ -225,6 +234,27 @@
                                 <button id="confirmEdit" type="submit" class="btn btn-primary">Save</button>
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modal-delete">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Delete Indication</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Delete this indication?</p>
+                            <input type="hidden" id="d-indicationid"/>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button id="confirmDelete" type="submit" class="btn btn-primary">Yes</button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -255,6 +285,8 @@
     <script src="/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <!-- Select2 -->
+    <script src="/plugins/select2/js/select2.full.min.js"></script>
     <!-- Toastr -->
     <script src="/plugins/toastr/toastr.min.js"></script>
     <script>
@@ -349,17 +381,18 @@
             });
 
             $(document).on("click", "#btnEdit", function () {
-                var genericId = $(this).data('generic-id');
+                var indicationId = $(this).data('indication-id');
 
                 $.ajax({
                     type: 'GET',
-                    url: "/generics/" + genericId,
+                    url: "/indications/" + indicationId,
                     dataType: "json",
                     success: function (data) {
                         $('#e-inputid').val(data.id);
                         $('#e-inputname').val(data.name);
                         $('#e-inputdescription').val(data.description);
-                        $('#e-inputindications').val(data.generics);
+                        $('#e-inputgenerics').val(data.generics);
+                        console.log(data.generics);
                     },
                     error: function (err) {
                         console.log(err);
@@ -374,10 +407,10 @@
                     },
                     description: {
                         required: true
-                    },
-                    indications: {
-                        required: true
                     }
+                    // generics: {
+                    //     required: true
+                    // }
                 },
                 messages: {
                     name: {
@@ -385,10 +418,10 @@
                     },
                     description: {
                         required: "Please enter description"
-                    },
-                    indications: {
-                        required: "Please select indication"
                     }
+                    // generics: {
+                    //     required: "Please select indication"
+                    // }
                 },
                 errorElement: 'span',
                 errorPlacement: function (error, element) {
@@ -402,19 +435,19 @@
                     $(element).removeClass('is-invalid');
                 },
                 submitHandler: function (form) {
-                    var genericId = document.getElementById("e-inputid").value;
+                    var indicationId = document.getElementById("e-inputid").value;
 
                     var formData = {
                         name: $("#e-inputname").val(),
-                        description: $("#e-inputdescription").val()
-                        // indicationIds: $("#e-inputindications").val(),
+                        description: $("#e-inputdescription").val(),
+                        genericIds: $("#e-inputgenerics").val(),
                     };
 
-                    console.log(formData.indications);
+                    console.log(formData);
 
                     $.ajax({
                         type: "PUT",
-                        url: "/generics/edit/" + genericId,
+                        url: "/indications/edit/" + indicationId,
                         data: JSON.stringify(formData),
                         contentType: 'application/json',
                         success: function (data) {
@@ -430,6 +463,35 @@
                     });
                 }
             });
+
+            $(document).on("click", "#btnDelete", function () {
+                var indicationId = $(this).data('indication-id');
+                $('#d-indicationid').val(indicationId);
+            });
+
+            $(document).on("click", "#confirmDelete", function () {
+                var indicationId = document.getElementById("d-indicationid").value;
+
+                $.ajax({
+                    type: "DELETE",
+                    url: "/indications/delete/" + indicationId,
+                    success: function (data) {
+                        console.log(data);
+                        $('#modal-delete').modal('hide');
+                        $('table#indicationTable tr#' + indicationId).remove();
+                        toastr.success(data);
+                    },
+                    error: function (err) {
+                        $('#modal-delete').modal('hide');
+                        toastr.error("Failed to delete,  Please delete this generic from indication");
+                        console.log(err);
+                    }
+                });
+            });
+
+            $('.select2bs4').select2({
+                theme: 'bootstrap4'
+            })
 
         });
     </script>
