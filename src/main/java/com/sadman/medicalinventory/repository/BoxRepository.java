@@ -7,4 +7,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Sadman
  */
 public interface BoxRepository extends JpaRepository<Box, Long> {
+    boolean existsByName(String name);
 }

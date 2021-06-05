@@ -2,22 +2,18 @@ package com.sadman.medicalinventory.service;
 
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
 import com.sadman.medicalinventory.model.Box;
-import com.sadman.medicalinventory.model.Indication;
 import com.sadman.medicalinventory.repository.BoxRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class BoxService {
     @Autowired
     BoxRepository repository;
 
-    public List<Box> getAllBoxes()
-    {
+    public List<Box> getAllBoxes() {
         return repository.findAll();
     }
 
@@ -29,8 +25,7 @@ public class BoxService {
         return repository.save(Box);
     }
 
-    public Box updateBox(Box newBox, Long id)
-    {
+    public Box updateBox(Box newBox, Long id) {
         return repository.findById(id)
                 .map(Box -> {
                     Box.setName(newBox.getName());
@@ -45,5 +40,9 @@ public class BoxService {
 
     public void deleteBoxById(Long id){
         repository.deleteById(id);
+    }
+
+    public boolean existsByName(String name) {
+        return repository.existsByName(name);
     }
 }

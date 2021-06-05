@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
+
+<head>
+    <th:block layout:fragment="link">
+        <!-- DataTables -->
+        <link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+        <link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+        <link rel="stylesheet" href="/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+        <!-- Toastr -->
+        <link rel="stylesheet" href="/plugins/toastr/toastr.min.css">
+    </th:block>
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+
+<div class="wrapper">
+
+    <div class="content-wrapper" layout:fragment="content">
+
+        <section class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1>List of Boxes</h1>
+                    </div>
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item"><a href="#">Layout</a></li>
+                            <li class="breadcrumb-item active">Fixed Layout</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="content">
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <div class="col-sm-2 col-md-1">
+                                    <button type="button" class="btn btn-block btn-success btn-sm"
+                                            data-toggle="modal" data-target="#modal-add">Add
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="card-body">
+                                <table id="boxTable" class="table table-bordered table-striped"
+                                       th:switch="${boxes}">
+                                    <thead>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Quantity</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:id="${box.id}" th:each="box : ${boxes}">
+                                        <td th:id="'name'+${box.id}" th:text="${box.name}"></td>
+                                        <td th:id="'quantity'+${box.id}" th:text="${box.quantity}"></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <input type="hidden" id="boxId" th:value="${box.id}">
+                                                <button type="button" id="btnView"
+                                                        class="btn btn-block btn-info btn-sm"
+                                                        style="margin-top: 8px; border-radius: 3px 0 0 3px;"
+                                                        data-toggle="modal" data-target="#modal-view"
+                                                        th:attrappend="data-box-id=${box.id}"
+                                                ><i class="fas fa-eye"></i>
+                                                </button>
+                                                <button type="button" id="btnEdit"
+                                                        class="btn btn-block btn-primary btn-sm"
+                                                        style="margin-top: 8px"
+                                                        data-toggle="modal" data-target="#modal-edit"
+                                                        th:attrappend="data-box-id=${box.id}"
+                                                ><i class="fas fa-edit"></i>
+                                                </button>
+                                                <button type="button" id="btnDelete"
+                                                        class="btn btn-block btn-danger btn-sm"
+                                                        data-toggle="modal" data-target="#modal-delete"
+                                                        th:attrappend="data-box-id=${box.id}"
+                                                ><i class="fas fa-trash"></i>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Quantity</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modal-add">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Add Box</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="addForm" th:action="@{/boxes/add}" th:object="${box}" method="post">
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="a-inputname">Name</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" th:field="*{name}" class="form-control" id="a-inputname" name="name"
+                                               placeholder="Enter Name">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="a-inputquantity">Quantity</label>
+                                    <div class="col-sm-9">
+                                        <input type="number" th:field="*{quantity}" class="form-control" id="a-inputquantity" name="quantity"
+                                               placeholder="Enter Quantity">
+                                    </div>
+                                </div>
+                                <div class="modal-footer justify-content-between">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modal-view">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">View Box</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form id="viewForm">
+                            <div class="modal-body">
+                                <input type="hidden" id="v-inputid"/>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="v-inputname">Name</label>
+                                    <div class="col-sm-9">
+                                        <p id="v-inputname"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="v-inputquantity">quantity</label>
+                                    <div class="col-sm-9">
+                                        <p id="v-inputquantity"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modal-edit">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Edit Box</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form id="editForm" th:object="${box}">
+                            <div class="modal-body">
+                                <input type="hidden" id="e-inputid"/>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="e-inputname">Name</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" th:field="*{name}" class="form-control"
+                                               id="e-inputname" name="name"
+                                               placeholder="Enter Name">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="e-inputquantity">Quantity</label>
+                                    <div class="col-sm-9">
+                                        <input type="number" th:field="*{quantity}" class="form-control" id="e-inputquantity" name="quantity"
+                                               placeholder="Enter Quantity">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button id="confirmEdit" type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modal-delete">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Delete Box</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Delete this box?</p>
+                            <input type="hidden" id="boxId"/>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button id="confirmDelete" type="submit" class="btn btn-primary">Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <aside class="control-sidebar control-sidebar-dark">
+
+    </aside>
+
+</div>
+
+<th:block layout:fragment="script">
+    <!-- jquery-validation -->
+    <script src="/plugins/jquery-validation/jquery.validate.min.js"></script>
+    <script src="/plugins/jquery-validation/additional-methods.min.js"></script>
+    <!-- DataTables  & Plugins -->
+    <script src="/plugins/datatables/jquery.dataTables.min.js"></script>
+    <script src="/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="/plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="/plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="/plugins/jszip/jszip.min.js"></script>
+    <script src="/plugins/pdfmake/pdfmake.min.js"></script>
+    <script src="/plugins/pdfmake/vfs_fonts.js"></script>
+    <script src="/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <!-- Toastr -->
+    <script src="/plugins/toastr/toastr.min.js"></script>
+    <script>
+        $(function () {
+
+            $("#boxTable").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#boxTable_wrapper .col-md-6:eq(0)');
+
+            $(document).on("click", "#btnView", function () {
+                var boxId = $(this).data('box-id');
+
+                $.ajax({
+                    type: 'GET',
+                    url: "/boxes/" + boxId,
+                    dataType: "json",
+                    success: function (data) {
+                        $('#v-inputid').val(data.id);
+                        $("#v-inputname").text(data.name);
+                        $("#v-inputquantity").text(data.quantity)
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
+
+            $('#addForm').validate({
+                rules: {
+                    name: {
+                        required: true,
+                        remote: {
+                            url: "/boxes/checkName", //make sure to return true or false with a 200 status code
+                            type: "post",
+                            data: {
+                                username: function () {
+                                    return $("#a-inputname").val();
+                                }
+                            }
+                        }
+                    },
+                    quantity: {
+                        required: true
+                    }
+                },
+                messages: {
+                    name: {
+                        required: "Please enter name",
+                        remote: "This name is already exist"
+                    },
+                    quantity: {
+                        required: "Please enter quantity"
+                    }
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                },
+                submitHandler: function (form) {
+                    $.ajax({
+                        url: form.action,
+                        type: form.method,
+                        data: $(form).serialize(),
+                        success: function (data) {
+                            $('#modal-add').modal('hide');
+                            toastr.success(data);
+                            setTimeout(function () {
+                                location.reload();  //Refresh page
+                            }, 3000);
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
+                }
+            });
+
+            $(document).on("click", "#btnEdit", function () {
+                var boxId = $(this).data('box-id');
+
+                $.ajax({
+                    type: 'GET',
+                    url: "/boxes/" + boxId,
+                    dataType: "json",
+                    success: function (data) {
+                        $('#e-inputid').val(data.id);
+                        $('#e-inputname').val(data.name);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
+
+            $('#editForm').validate({
+                rules: {
+                    name: {
+                        required: true
+                    },
+                    quantity: {
+                        required: true
+                    }
+                },
+                messages: {
+                    name: {
+                        required: "Please enter name"
+                    },
+                    quantity: {
+                        required: "Please enter quantity"
+                    }
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                },
+                submitHandler: function (form) {
+                    var boxId = document.getElementById("e-inputid").value;
+
+                    var formData = {
+                        name: $("#e-inputname").val(),
+                        quantity: $("#e-inputquantity").val()
+                    };
+
+                    console.log(formData);
+
+                    $.ajax({
+                        type: "PUT",
+                        url: "/boxes/edit/" + boxId,
+                        data: JSON.stringify(formData),
+                        contentType: 'application/json',
+                        success: function (data) {
+                            $('#modal-edit').modal('hide');
+                            toastr.success(data);
+                            setTimeout(function () {
+                                location.reload();  //Refresh page
+                            }, 3000); //3 Second
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
+                }
+            });
+
+            $(document).on("click", "#btnDelete", function () {
+                var boxId = $(this).data('box-id');
+                $('#boxId').val(boxId);
+            });
+
+            $(document).on("click", "#confirmDelete", function () {
+                var boxId = document.getElementById("boxId").value;
+
+                $.ajax({
+                    type: "DELETE",
+                    url: "/boxes/delete/" + boxId,
+                    success: function (data) {
+                        console.log(data);
+                        $('#modal-delete').modal('hide');
+                        $('table#boxTable tr#' + boxId).remove();
+                        toastr.success(data);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
+        });
+    </script>
+</th:block>
+</body>
+
+</html>
