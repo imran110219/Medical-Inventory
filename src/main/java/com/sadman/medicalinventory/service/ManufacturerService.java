@@ -41,4 +41,8 @@ public class ManufacturerService {
     public void deleteManufacturerById(Long id){
         repository.deleteById(id);
     }
+
+    public boolean existsByName(String name) {
+        return repository.existsByName(name);
+    }
 }

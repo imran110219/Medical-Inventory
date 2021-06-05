@@ -14,6 +14,8 @@
         <link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
         <link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
         <link rel="stylesheet" href="/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+        <!-- Toastr -->
+        <link rel="stylesheet" href="/plugins/toastr/toastr.min.css">
     </th:block>
 </head>
 
@@ -52,13 +54,13 @@
                             <div class="card-header">
                                 <div class="col-sm-2 col-md-1">
                                     <button type="button" class="btn btn-block btn-success btn-sm"
-                                            data-toggle="modal" data-target="#modal-default">Add</button>
+                                            data-toggle="modal" data-target="#modal-add">Add</button>
                                 </div>
                             </div>
 
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped" th:switch="${manufacturers}">
+                                <table id="manufacturerTable" class="table table-bordered table-striped" th:switch="${manufacturers}">
                                     <thead>
                                     <tr>
                                         <th>Name</th>
@@ -107,7 +109,7 @@
                 </div>
             </div>
 
-            <div class="modal fade" id="modal-default">
+            <div class="modal fade" id="modal-add">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -117,18 +119,20 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form id="quickForm">
+                            <form id="addForm"  th:action="@{/manufacturers/add}" th:object="${manufacturer}" method="post">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputname">Name</label>
+                                    <label class="col-sm-3 col-form-label" for="a-inputname">Name</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="inputname" name="name"
-                                               placeholder="Enter Indication">
+                                        <input type="text" class="form-control" id="a-inputname" name="name"
+                                               th:field="*{name}"
+                                               placeholder="Enter Manufacturer Name">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputaddress">Address</label>
+                                    <label class="col-sm-3 col-form-label" for="a-inputaddress">Address</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="inputaddress" name="address"
+                                        <input type="text" class="form-control" id="a-inputaddress" name="address"
+                                               th:field="*{address}"
                                                placeholder="Enter Address">
                                     </div>
                                 </div>
@@ -139,11 +143,10 @@
                             </form>
                         </div>
                     </div>
-                    <!-- /.modal-content -->
                 </div>
-                <!-- /.modal-dialog -->
             </div>
-            <!-- /.modal -->
+            
+            
         </section>
         <!-- /.content -->
     </div>
@@ -173,24 +176,29 @@
     <script src="/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <!-- Toastr -->
+    <script src="/plugins/toastr/toastr.min.js"></script>
     <script>
         $(function () {
 
-            $("#example1").DataTable({
+            $("#manufacturerTable").DataTable({
                 "responsive": true, "lengthChange": false, "autoWidth": false,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            }).buttons().container().appendTo('#manufacturerTable_wrapper .col-md-6:eq(0)');
 
-            $.validator.setDefaults({
-                submitHandler: function () {
-                    alert("Form successful submitted!");
-                }
-            });
-
-            $('#quickForm').validate({
+            $('#addForm').validate({
                 rules: {
                     name: {
-                        required: true
+                        required: true,
+                        remote: {
+                            url: "/manufacturers/checkName", //make sure to return true or false with a 200 status code
+                            type: "post",
+                            data: {
+                                username: function () {
+                                    return $("#a-inputname").val();
+                                }
+                            }
+                        }
                     },
                     address: {
                         required: true
@@ -198,7 +206,8 @@
                 },
                 messages: {
                     name: {
-                        required: "Please enter name"
+                        required: "Please enter name",
+                        remote: "This name is already exist"
                     },
                     address: {
                         required: "Please enter description"
@@ -214,8 +223,26 @@
                 },
                 unhighlight: function (element, errorClass, validClass) {
                     $(element).removeClass('is-invalid');
+                },
+                submitHandler: function (form) {
+                    $.ajax({
+                        url: form.action,
+                        type: form.method,
+                        data: $(form).serialize(),
+                        success: function (data) {
+                            $('#modal-add').modal('hide');
+                            toastr.success(data);
+                            setTimeout(function () {
+                                location.reload();  //Refresh page
+                            }, 3000);
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
                 }
             });
+
         });
     </script>
 </th:block>
