@@ -8,8 +8,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
+//@NoArgsConstructor
+//@AllArgsConstructor
 @Entity
 @Table(name="manufacturer")
 public class Manufacturer {
@@ -22,4 +22,12 @@ public class Manufacturer {
 
     @Column(name="address")
     private String address;
+
+    public Manufacturer() {
+    }
+
+    public Manufacturer(String name, String address) {
+        this.name = name;
+        this.address = address;
+    }
 }

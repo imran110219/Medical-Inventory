@@ -10,8 +10,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
+//@NoArgsConstructor
+//@AllArgsConstructor
 @Entity
 @Table(name="dosage_form")
 public class DosageForm {
@@ -21,4 +21,11 @@ public class DosageForm {
 
     @Column(name="name")
     private String name;
+
+    public DosageForm() {
+    }
+
+    public DosageForm(String name) {
+        this.name = name;
+    }
 }

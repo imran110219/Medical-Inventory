@@ -13,8 +13,8 @@ import java.util.Set;
 @Getter
 @Setter
 @ToString
-@NoArgsConstructor
-@AllArgsConstructor
+//@NoArgsConstructor
+//@AllArgsConstructor
 @Entity
 @Table(name="generic")
 public class Generic {
@@ -32,4 +32,18 @@ public class Generic {
     @ManyToMany(mappedBy = "generics", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     @JsonBackReference
     private Set<Indication> indications = new HashSet<>();
+
+    public Generic() {
+    }
+
+    public Generic(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
+
+    public Generic(String name, String description, Set<Indication> indications) {
+        this.name = name;
+        this.description = description;
+        this.indications = indications;
+    }
 }

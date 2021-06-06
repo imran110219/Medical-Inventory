@@ -10,6 +10,8 @@
         <link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
         <link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
         <link rel="stylesheet" href="/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+        <!-- Toastr -->
+        <link rel="stylesheet" href="/plugins/toastr/toastr.min.css">
     </th:block>
 </head>
 
@@ -41,18 +43,17 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-12">
-                        <!-- Default box -->
+                        <!-- Default brand -->
                         <div class="card">
                             <div class="card-header">
                                 <div class="col-sm-2 col-md-1">
                                     <button type="button" class="btn btn-block btn-success btn-sm"
-                                            data-toggle="modal" data-target="#modal-default">Add</button>
+                                            data-toggle="modal" data-target="#modal-add">Add</button>
                                 </div>
                             </div>
 
-                            <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped" th:switch="${brands}">
+                                <table id="brandTable" class="table table-bordered table-striped" th:switch="${brands}">
                                     <thead>
                                     <tr>
                                         <th>Name</th>
@@ -66,29 +67,35 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="brand : ${brands}">
-                                        <td th:text="${brand.name}"></td>
-                                        <td th:text="${brand.strength}"></td>
-                                        <td th:text="${brand.dosageForm.name}"></td>
-                                        <td th:text="${brand.generic.name}"></td>
-                                        <td th:text="${brand.manufacturer.name}"></td>
-                                        <td th:text="${brand.purchasePrice}"></td>
-                                        <td th:text="${brand.salePrice}"></td>
+                                    <tr th:id="${brand.id}" th:each="brand : ${brands}">
+                                        <td th:id="'name'+${brand.id}" th:text="${brand.name}"></td>
+                                        <td th:id="'strength'+${brand.id}" th:text="${brand.strength}"></td>
+                                        <td th:id="'dosageForm'+${brand.id}" th:text="${brand.dosageForm.name}"></td>
+                                        <td th:id="'generic'+${brand.id}" th:text="${brand.generic.name}"></td>
+                                        <td th:id="'manufacturer'+${brand.id}" th:text="${brand.manufacturer.name}"></td>
+                                        <td th:id="'purchasePrice'+${brand.id}" th:text="${brand.purchasePrice}"></td>
+                                        <td th:id="'salePrice'+${brand.id}" th:text="${brand.salePrice}"></td>
                                         <td>
                                             <div class="btn-group">
                                                 <input type="hidden" id="brandId" th:value="${brand.id}">
                                                 <button type="button" id="btnView"
                                                         class="btn btn-block btn-info btn-sm"
                                                         style="margin-top: 8px;border-radius: 3px 0 0 3px;"
+                                                        data-toggle="modal" data-target="#modal-view"
+                                                        th:attrappend="data-brand-id=${brand.id}"
                                                 ><i class="fas fa-eye"></i>
                                                 </button>
                                                 <button type="button" id="btnEdit"
                                                         class="btn btn-block btn-primary btn-sm"
                                                         style="margin-top: 8px"
+                                                        data-toggle="modal" data-target="#modal-edit"
+                                                        th:attrappend="data-brand-id=${brand.id}"
                                                 ><i class="fas fa-edit"></i>
                                                 </button>
                                                 <button type="button" id="btnDelete"
                                                         class="btn btn-block btn-danger btn-sm"
+                                                        data-toggle="modal" data-target="#modal-delete"
+                                                        th:attrappend="data-brand-id=${brand.id}"
                                                 ><i class="fas fa-trash"></i>
                                                 </button>
                                             </div>
@@ -116,7 +123,7 @@
                 </div>
             </div>
 
-            <div class="modal fade" id="modal-default">
+            <div class="modal fade" id="modal-add">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -126,59 +133,63 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form id="quickForm">
+                            <form id="addForm" th:action="@{/brands/add}" th:object="${brand}" method="post">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputname">Name</label>
+                                    <label class="col-sm-3 col-form-label" for="a-inputname">Name</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="inputname" name="name"
+                                        <input type="text" class="form-control" id="a-inputname" name="name"
+                                               th:field="*{name}"
                                                placeholder="Enter Brand">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputstrength">Strength</label>
+                                    <label class="col-sm-3 col-form-label" for="a-inputstrength">Strength</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="inputstrength" name="strength"
+                                        <input type="text" class="form-control" id="a-inputstrength" name="strength"
+                                               th:field="*{strength}"
                                                placeholder="Enter Strength">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputdosageform">Dosage Form</label>
+                                    <label class="col-sm-3 col-form-label" for="a-inputdosageform">Dosage Form</label>
                                     <div class="col-sm-9">
-                                        <select class="form-control select2" id="inputdosageform" name="dosageform" style="width: 100%;">
+                                        <select class="form-control select2" id="a-inputdosageform" th:field="*{dosageForm}" name="dosageform" style="width: 100%;">
                                             <option value="" disabled selected>Select Dosage Form</option>
                                             <option th:each="dosageform : ${dosageforms}" th:value="${dosageform.id}" th:text="${dosageform.name}"></option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputgeneric">Generic</label>
+                                    <label class="col-sm-3 col-form-label" for="a-inputgeneric">Generic</label>
                                     <div class="col-sm-9">
-                                        <select class="form-control select2" id="inputgeneric" name="generic" style="width: 100%;">
+                                        <select class="form-control select2" id="a-inputgeneric" th:field="*{generic}" name="generic" style="width: 100%;">
                                             <option value="" disabled selected>Select Generic</option>
                                             <option th:each="generic : ${generics}" th:value="${generic.id}" th:text="${generic.name}"></option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputmanufacturer">Manufacturer</label>
+                                    <label class="col-sm-3 col-form-label" for="a-inputmanufacturer">Manufacturer</label>
                                     <div class="col-sm-9">
-                                        <select class="form-control select2" id="inputmanufacturer" name="manufacturer" style="width: 100%;">
+                                        <select class="form-control select2" id="a-inputmanufacturer" th:field="*{manufacturer}" name="manufacturer" style="width: 100%;">
                                             <option value="" disabled selected>Select Manufacturer</option>
                                             <option th:each="manufacturer : ${manufacturers}" th:value="${manufacturer.id}" th:text="${manufacturer.name}"></option>
                                         </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputpurchaseprice">Purchase Price</label>
+                                    <label class="col-sm-3 col-form-label" for="a-inputpurchaseprice">Purchase Price</label>
                                     <div class="col-sm-9">
-                                        <input type="number" class="form-control" id="inputpurchaseprice" name="purchaseprice"
+                                        <input type="number" class="form-control" id="a-inputpurchaseprice" name="purchaseprice"
+                                               th:field="*{purchasePrice}"
                                                placeholder="Enter Purchase Price">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputsaleeprice">Sale Price</label>
+                                    <label class="col-sm-3 col-form-label" for="a-inputsaleeprice">Sale Price</label>
                                     <div class="col-sm-9">
-                                        <input type="number" class="form-control" id="inputsaleeprice" name="saleeprice"
+                                        <input type="number" class="form-control" id="a-inputsaleeprice" name="saleeprice"
+                                               th:field="*{salePrice}"
                                                placeholder="Enter Sale Price">
                                     </div>
                                 </div>
@@ -190,15 +201,152 @@
                             </form>
                         </div>
                     </div>
-                    <!-- /.modal-content -->
                 </div>
-                <!-- /.modal-dialog -->
             </div>
-            <!-- /.modal -->
+
+            <div class="modal fade" id="modal-view">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">View Brand</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form id="viewForm">
+                            <div class="modal-body">
+                                <input type="hidden" id="v-inputid"/>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="v-inputname">Name</label>
+                                    <div class="col-sm-9">
+                                        <p id="v-inputname"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="v-inputstrength">Strength</label>
+                                    <div class="col-sm-9">
+                                        <p id="v-inputstrength"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="v-inputdosageform">Dosage Form</label>
+                                    <div class="col-sm-9">
+                                        <p id="v-inputdosageform"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="v-inputgeneric">Generic</label>
+                                    <div class="col-sm-9">
+                                        <p id="v-inputgeneric"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="v-inputmanufacturer">Manufacturer</label>
+                                    <div class="col-sm-9">
+                                        <p id="v-inputmanufacturer"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="v-inputpurchaseprice">Purchase Price</label>
+                                    <div class="col-sm-9">
+                                        <p id="v-inputpurchaseprice"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="v-inputsaleprice">Sale Price</label>
+                                    <div class="col-sm-9">
+                                        <p id="v-inputsaleprice"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modal-edit">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Edit Brand</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form id="editForm" th:object="${brand}">
+                            <div class="modal-body">
+                                <input type="hidden" id="e-inputid"/>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="e-inputname">Name</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" th:field="*{name}" class="form-control"
+                                               id="e-inputname" name="name"
+                                               placeholder="Enter Name">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="e-inputstrength">Strength</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="e-inputstrength" name="strength"
+                                               th:field="*{strength}"
+                                               placeholder="Enter Strength">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="e-inputdosageform">Dosage Form</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control select2" id="e-inputdosageform" th:field="*{dosageForm}" name="dosageform" style="width: 100%;">
+                                            <option value="" disabled selected>Select Dosage Form</option>
+                                            <option th:each="dosageform : ${dosageforms}" th:value="${dosageform.id}" th:text="${dosageform.name}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="e-inputgeneric">Generic</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control select2" id="e-inputgeneric" th:field="*{generic}" name="generic" style="width: 100%;">
+                                            <option value="" disabled selected>Select Generic</option>
+                                            <option th:each="generic : ${generics}" th:value="${generic.id}" th:text="${generic.name}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="e-inputmanufacturer">Manufacturer</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control select2" id="e-inputmanufacturer" th:field="*{manufacturer}" name="manufacturer" style="width: 100%;">
+                                            <option value="" disabled selected>Select Manufacturer</option>
+                                            <option th:each="manufacturer : ${manufacturers}" th:value="${manufacturer.id}" th:text="${manufacturer.name}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="e-inputpurchaseprice">Purchase Price</label>
+                                    <div class="col-sm-9">
+                                        <input type="number" class="form-control" id="e-inputpurchaseprice" name="purchaseprice"
+                                               th:field="*{purchasePrice}"
+                                               placeholder="Enter Purchase Price">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="e-inputsaleprice">Sale Price</label>
+                                    <div class="col-sm-9">
+                                        <input type="number" class="form-control" id="e-inputsaleprice" name="saleeprice"
+                                               th:field="*{salePrice}"
+                                               placeholder="Enter Sale Price">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button id="confirmEdit" type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
         </section>
-        <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
 
     <!-- Control Sidebar -->
     <aside class="control-sidebar control-sidebar-dark">
@@ -224,21 +372,150 @@
     <script src="/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <!-- Toastr -->
+    <script src="/plugins/toastr/toastr.min.js"></script>
     <script>
         $(function () {
 
-            $("#example1").DataTable({
+            $("#brandTable").DataTable({
                 "responsive": true, "lengthChange": false, "autoWidth": false,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            }).buttons().container().appendTo('#brandTable_wrapper .col-md-6:eq(0)');
 
-            $.validator.setDefaults({
-                submitHandler: function () {
-                    alert("Form successful submitted!");
+            $(document).on("click", "#btnView", function () {
+                var brandId = $(this).data('brand-id');
+
+                $.ajax({
+                    type: 'GET',
+                    url: "/brands/" + brandId,
+                    dataType: "json",
+                    success: function (data) {
+                        $('#v-inputid').val(data.id);
+                        $("#v-inputname").text(data.name);
+                        $("#v-inputstrength").text(data.strength);
+                        $("#v-inputdosageform").text(data.dosageForm.name);
+                        $("#v-inputgeneric").text(data.generic.name);
+                        $("#v-inputmanufacturer").text(data.manufacturer.name);
+                        $("#v-inputpurchaseprice").text(data.purchasePrice);
+                        $("#v-inputsaleprice").text(data.salePrice);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
+
+            $('#addForm').validate({
+                rules: {
+                    name: {
+                        required: true,
+                        remote: {
+                            url: "/brands/checkName", //make sure to return true or false with a 200 status code
+                            type: "post",
+                            data: {
+                                name: function () {
+                                    return $("#a-inputname").val();
+                                }
+                            }
+                        }
+                    },
+                    strength: {
+                        required: true
+                    },
+                    dosageform : {
+                        required: true
+                    },
+                    generic : {
+                        required: true
+                    },
+                    manufacturer : {
+                        required: true
+                    },
+                    purchaseprice : {
+                        required: true
+                    },
+                    saleprice : {
+                        required: true
+                    }
+                },
+                messages: {
+                    name: {
+                        required: "Please enter name",
+                        remote: "This name is already exist"
+                    },
+                    strength: {
+                        required: "Please enter strength"
+                    },
+                    dosageform : {
+                        required: "Please select dosage form"
+                    },
+                    generic : {
+                        required: "Please select generic"
+                    },
+                    manufacturer : {
+                        required: "Please select manufacturer"
+                    },
+                    purchaseprice : {
+                        required: "Please enter purchase price"
+                    },
+                    saleprice : {
+                        required: "Please enter sale price"
+                    }
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                },
+                submitHandler: function (form) {
+                    $.ajax({
+                        url: form.action,
+                        type: form.method,
+                        data: $(form).serialize(),
+                        success: function (data) {
+                            $('#modal-add').modal('hide');
+                            toastr.success(data);
+                            setTimeout(function () {
+                                location.reload();  //Refresh page
+                            }, 3000);
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
                 }
             });
 
-            $('#quickForm').validate({
+            $(document).on("click", "#btnEdit", function () {
+                var brandId = $(this).data('brand-id');
+
+                $.ajax({
+                    type: 'GET',
+                    url: "/brands/" + brandId,
+                    dataType: "json",
+                    success: function (data) {
+                        $('#e-inputid').val(data.id);
+                        $('#e-inputname').val(data.name);
+                        $("#e-inputstrength").val(data.strength);
+                        $("#e-inputdosageform").val(data.dosageForm.id);
+                        $("#e-inputgeneric").val(data.generic.id);
+                        $("#e-inputmanufacturer").val(data.manufacturer.id);
+                        $("#e-inputpurchaseprice").val(data.purchasePrice);
+                        $("#e-inputsaleprice").val(data.salePrice);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
+
+            $('#editForm').validate({
                 rules: {
                     name: {
                         required: true
@@ -295,8 +572,64 @@
                 },
                 unhighlight: function (element, errorClass, validClass) {
                     $(element).removeClass('is-invalid');
+                },
+                submitHandler: function (form) {
+                    var brandId = document.getElementById("e-inputid").value;
+
+                    var formData = {
+                        name: $("#e-inputname").val(),
+                        strength: $("#e-inputquantity").val(),
+                        dosageForm: $("#e-inputdosageform").val(),
+                        generic: $("#e-inputgeneric").val(),
+                        manufacturer: $("#e-inputmanufacturer").val(),
+                        purchasePrice: $("#e-inputpurchaseprice").val(),
+                        salePrice: $("#e-inputsalseprice").val()
+                    };
+
+                    console.log(formData);
+
+                    $.ajax({
+                        type: "PUT",
+                        url: "/brands/edit/" + brandId,
+                        data: JSON.stringify(formData),
+                        contentType: 'application/json',
+                        success: function (data) {
+                            $('#modal-edit').modal('hide');
+                            toastr.success(data);
+                            setTimeout(function () {
+                                location.reload();  //Refresh page
+                            }, 3000); //3 Second
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
                 }
             });
+
+            $(document).on("click", "#btnDelete", function () {
+                var brandId = $(this).data('brand-id');
+                $('#brandId').val(brandId);
+            });
+
+            $(document).on("click", "#confirmDelete", function () {
+                var brandId = document.getElementById("brandId").value;
+
+                $.ajax({
+                    type: "DELETE",
+                    url: "/brands/delete/" + brandId,
+                    success: function (data) {
+                        console.log(data);
+                        $('#modal-delete').modal('hide');
+                        $('table#brandTable tr#' + brandId).remove();
+                        toastr.success(data);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
+
         });
     </script>
 </th:block>

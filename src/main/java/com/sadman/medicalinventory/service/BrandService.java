@@ -57,4 +57,8 @@ public class BrandService {
     public void deleteBrandById(Long id){
         repository.deleteById(id);
     }
+
+    public boolean existsByName(String name) {
+        return repository.existsByName(name);
+    }
 }

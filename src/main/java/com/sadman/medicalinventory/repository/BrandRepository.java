@@ -10,4 +10,5 @@ import java.util.List;
 public interface BrandRepository extends JpaRepository<Brand, Long> {
     List<Brand> getBrandsByManufacturerId(Long companyId);
     List<Brand> getBrandsByGenericId(Long genericId);
+    boolean existsByName(String name);
 }

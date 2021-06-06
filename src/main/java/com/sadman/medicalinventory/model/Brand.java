@@ -23,15 +23,15 @@ public class Brand {
     @Column(name="strength")
     private String strength;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "dosage_form_id")
     private DosageForm dosageForm;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "generic_id")
     private Generic generic;
 
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "manufacturer_id")
     private Manufacturer manufacturer;
 
@@ -40,4 +40,14 @@ public class Brand {
 
     @Column(name = "sale_price")
     private double salePrice;
+
+    public Brand(String name, String strength, DosageForm dosageForm, Generic generic, Manufacturer manufacturer, double purchasePrice, double salePrice) {
+        this.name = name;
+        this.strength = strength;
+        this.dosageForm = dosageForm;
+        this.generic = generic;
+        this.manufacturer = manufacturer;
+        this.purchasePrice = purchasePrice;
+        this.salePrice = salePrice;
+    }
 }

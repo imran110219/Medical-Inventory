@@ -291,7 +291,7 @@
                             url: "/boxes/checkName", //make sure to return true or false with a 200 status code
                             type: "post",
                             data: {
-                                username: function () {
+                                name: function () {
                                     return $("#a-inputname").val();
                                 }
                             }
@@ -350,6 +350,7 @@
                     success: function (data) {
                         $('#e-inputid').val(data.id);
                         $('#e-inputname').val(data.name);
+                        $('#e-inputquantity').val(data.quantity);
                     },
                     error: function (err) {
                         console.log(err);
