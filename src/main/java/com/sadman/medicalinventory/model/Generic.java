@@ -1,8 +1,6 @@
 package com.sadman.medicalinventory.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.*;
 
@@ -17,6 +15,7 @@ import java.util.Set;
 //@AllArgsConstructor
 @Entity
 @Table(name="generic")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Generic.class)
 public class Generic {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,7 +29,8 @@ public class Generic {
 
     @ToString.Exclude
     @ManyToMany(mappedBy = "generics", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
-    @JsonBackReference
+//    @JsonBackReference
+    @JsonIdentityReference
     private Set<Indication> indications = new HashSet<>();
 
     public Generic() {
@@ -39,11 +39,5 @@ public class Generic {
     public Generic(String name, String description) {
         this.name = name;
         this.description = description;
-    }
-
-    public Generic(String name, String description, Set<Indication> indications) {
-        this.name = name;
-        this.description = description;
-        this.indications = indications;
     }
 }

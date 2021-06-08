@@ -1,8 +1,6 @@
 package com.sadman.medicalinventory.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 
 import javax.persistence.*;
@@ -16,6 +14,7 @@ import java.util.Set;
 @AllArgsConstructor
 @Entity
 @Table(name="indication")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id", scope = Indication.class)
 public class Indication {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +29,7 @@ public class Indication {
     @ToString.Exclude
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
     @JoinTable(name = "indication_generic", joinColumns = {@JoinColumn(name = "indication_id")}, inverseJoinColumns = {@JoinColumn(name = "generic_id")})
-    @JsonManagedReference
+//    @JsonManagedReference
+    @JsonIdentityReference
     private Set<Generic> generics = new HashSet<>();
 }

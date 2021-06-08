@@ -177,9 +177,9 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="v-inputindications">Indication</label>
+                                    <label class="col-sm-3 col-form-label" for="v-inputgenerics">Generics</label>
                                     <div class="col-sm-9">
-                                        <p id="v-inputindications"></p>
+                                        <p id="v-inputgenerics"></p>
                                     </div>
                                 </div>
                             </div>
@@ -315,7 +315,8 @@
                             text += '<br/>';
                             console.log(data.generics[i].name);
                         }
-                        $("#v-inputindications").html(text);
+                        console.log(data.generics);
+                        $("#v-inputgenerics").html(text);
                     },
                     error: function (err) {
                         console.log(err);
