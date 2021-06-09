@@ -14,6 +14,8 @@
         <link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
         <link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
         <link rel="stylesheet" href="/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+        <!-- Toastr -->
+        <link rel="stylesheet" href="/plugins/toastr/toastr.min.css">
     </th:block>
 </head>
 
@@ -52,13 +54,13 @@
                             <div class="card-header">
                                 <div class="col-sm-2 col-md-1">
                                     <button type="button" class="btn btn-block btn-success btn-sm"
-                                            data-toggle="modal" data-target="#modal-default">Add</button>
+                                            data-toggle="modal" data-target="#modal-add">Add
+                                    </button>
                                 </div>
                             </div>
 
-                            <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped" th:switch="${stocks}">
+                                <table id="stockTable" class="table table-bordered table-striped" th:switch="${stocks}">
                                     <thead>
                                     <tr>
                                         <th>Brand Name</th>
@@ -70,7 +72,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="stock : ${stocks}">
+                                    <tr th:id="${stock.id}" th:each="stock : ${stocks}">
                                         <td th:text="${stock.purchase.brand.name}"></td>
                                         <td th:text="${stock.purchase.batchNo}"></td>
                                         <td th:text="${stock.location.name}"></td>
@@ -82,15 +84,21 @@
                                                 <button type="button" id="btnView"
                                                         class="btn btn-block btn-info btn-sm"
                                                         style="margin-top: 8px;border-radius: 3px 0 0 3px;"
+                                                        data-toggle="modal" data-target="#modal-view"
+                                                        th:attrappend="data-stock-id=${stock.id}"
                                                 ><i class="fas fa-eye"></i>
                                                 </button>
                                                 <button type="button" id="btnEdit"
                                                         class="btn btn-block btn-primary btn-sm"
                                                         style="margin-top: 8px"
+                                                        data-toggle="modal" data-target="#modal-edit"
+                                                        th:attrappend="data-stock-id=${stock.id}"
                                                 ><i class="fas fa-edit"></i>
                                                 </button>
                                                 <button type="button" id="btnDelete"
                                                         class="btn btn-block btn-danger btn-sm"
+                                                        data-toggle="modal" data-target="#modal-delete"
+                                                        th:attrappend="data-stock-id=${stock.id}"
                                                 ><i class="fas fa-trash"></i>
                                                 </button>
                                             </div>
@@ -109,14 +117,12 @@
                                     </tfoot>
                                 </table>
                             </div>
-                            <!-- /.card-body -->
                         </div>
-                        <!-- /.card -->
                     </div>
                 </div>
             </div>
 
-            <div class="modal fade" id="modal-default">
+            <div class="modal fade" id="modal-add">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -126,19 +132,27 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form id="quickForm">
+                            <form id="addForm" th:action="@{/stocks/add}" th:object="${stock}" method="post">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputname">Name</label>
+                                    <label class="col-sm-3 col-form-label" for="a-inputpurchase">Purchase</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="inputname" name="name"
-                                               placeholder="Enter Indication">
+                                        <select class="form-control select2" id="a-inputpurchase" th:field="*{purchase}"
+                                                name="purchase" style="width: 100%;">
+                                            <option value="" disabled selected>Select Purchase</option>
+                                            <option th:each="purchase : ${purchases}" th:value="${purchase.id}"
+                                                    th:text="${purchase.brand.name}"></option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputdescription">Description</label>
+                                    <label class="col-sm-3 col-form-label" for="a-inputlocation">Location</label>
                                     <div class="col-sm-9">
-                                            <textarea id="inputdescription" name="description" class="form-control" rows="4"
-                                                      cols="50" placeholder="Enter Indication Description"></textarea>
+                                        <select class="form-control select2" id="a-inputlocation" th:field="*{location}"
+                                                name="location" style="width: 100%;">
+                                            <option value="" disabled selected>Select Purchase</option>
+                                            <option th:each="location : ${locations}" th:value="${location.id}"
+                                                    th:text="${location.name}"></option>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="modal-footer justify-content-between">
@@ -148,17 +162,107 @@
                             </form>
                         </div>
                     </div>
-                    <!-- /.modal-content -->
                 </div>
-                <!-- /.modal-dialog -->
             </div>
-            <!-- /.modal -->
-        </section>
-        <!-- /.content -->
-    </div>
-    <!-- /.content-wrapper -->
 
-    <!-- Control Sidebar -->
+            <div class="modal fade" id="modal-view">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">View Stock</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form id="viewForm">
+                            <div class="modal-body">
+                                <input type="hidden" id="v-inputid"/>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="v-inputpurchase">Purchase</label>
+                                    <div class="col-sm-9">
+                                        <p id="v-inputpurchase"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="v-inputlocation">Location</label>
+                                    <div class="col-sm-9">
+                                        <p id="v-inputlocation"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modal-edit">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Edit Stock</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form id="editForm" th:object="${stock}">
+                            <div class="modal-body">
+                                <input type="hidden" id="e-inputid"/>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="e-inputpurchase">Purchase</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control select2" id="e-inputpurchase" th:field="*{purchase}"
+                                                name="purchase" style="width: 100%;">
+                                            <option value="" disabled selected>Select Purchase</option>
+                                            <option th:each="purchase : ${purchases}" th:value="${purchase.id}"
+                                                    th:text="${purchase.brand.name}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="e-inputlocation">Location</label>
+                                    <div class="col-sm-9">
+                                        <select class="form-control select2" id="e-inputlocation" th:field="*{location}"
+                                                name="location" style="width: 100%;">
+                                            <option value="" disabled selected>Select Purchase</option>
+                                            <option th:each="location : ${locations}" th:value="${location.id}"
+                                                    th:text="${location.name}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button id="confirmEdit" type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modal-delete">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Delete Stock</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Delete this stock?</p>
+                            <input type="hidden" id="stockId"/>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button id="confirmDelete" type="submit" class="btn btn-primary">Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+    </div>
+
     <aside class="control-sidebar control-sidebar-dark">
         <!-- Control sidebar content goes here -->
     </aside>
@@ -182,35 +286,49 @@
     <script src="/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <!-- Toastr -->
+    <script src="/plugins/toastr/toastr.min.js"></script>
     <script>
         $(function () {
 
-            $("#example1").DataTable({
+            $("#stockTable").DataTable({
                 "responsive": true, "lengthChange": false, "autoWidth": false,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            }).buttons().container().appendTo('#stockTable_wrapper .col-md-6:eq(0)');
 
-            $.validator.setDefaults({
-                submitHandler: function () {
-                    alert("Form successful submitted!");
-                }
+            $(document).on("click", "#btnView", function () {
+                var stockId = $(this).data('stock-id');
+
+                $.ajax({
+                    type: 'GET',
+                    url: "/stocks/" + stockId,
+                    dataType: "json",
+                    success: function (data) {
+                        $('#v-inputid').val(data.id);
+                        $("#v-inputpurchase").text(data.purchase.brand.name);
+                        $("#v-inputlocation").text(data.location.name);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
             });
 
-            $('#quickForm').validate({
+            $('#addForm').validate({
                 rules: {
-                    name: {
+                    purchase: {
                         required: true
                     },
-                    description: {
+                    location: {
                         required: true
                     }
                 },
                 messages: {
-                    name: {
-                        required: "Please enter name"
+                    purchase: {
+                        required: "Please select purchase"
                     },
-                    description: {
-                        required: "Please enter description"
+                    location: {
+                        required: "Please select location"
                     }
                 },
                 errorElement: 'span',
@@ -223,8 +341,124 @@
                 },
                 unhighlight: function (element, errorClass, validClass) {
                     $(element).removeClass('is-invalid');
+                },
+                submitHandler: function (form) {
+                    $.ajax({
+                        url: form.action,
+                        type: form.method,
+                        data: $(form).serialize(),
+                        success: function (data) {
+                            $('#modal-add').modal('hide');
+                            toastr.success(data);
+                            setTimeout(function () {
+                                location.reload();  //Refresh page
+                            }, 3000);
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
                 }
             });
+
+            $(document).on("click", "#btnEdit", function () {
+                var stockId = $(this).data('stock-id');
+
+                $.ajax({
+                    type: 'GET',
+                    url: "/stocks/" + stockId,
+                    dataType: "json",
+                    success: function (data) {
+                        $('#e-inputid').val(data.id);
+                        $('#e-inputpurchase').val(data.purchase.id);
+                        $("#e-inputlocation").val(data.location.id);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
+
+            $('#editForm').validate({
+                rules: {
+                    purchase: {
+                        required: true
+                    },
+                    location: {
+                        required: true
+                    }
+                },
+                messages: {
+                    purchase: {
+                        required: "Please select purchase"
+                    },
+                    location: {
+                        required: "Please select location"
+                    }
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                },
+                submitHandler: function (form) {
+                    var stockId = document.getElementById("e-inputid").value;
+
+                    var formData = {
+                        purchase: $("#e-inputpurchase").val(),
+                        location: $("#e-inputlocation").val()
+                    };
+
+                    console.log(formData);
+
+                    $.ajax({
+                        type: "PUT",
+                        url: "/stocks/edit/" + stockId,
+                        data: JSON.stringify(formData),
+                        contentType: 'application/json',
+                        success: function (data) {
+                            $('#modal-edit').modal('hide');
+                            toastr.success(data);
+                            setTimeout(function () {
+                                location.reload();  //Refresh page
+                            }, 3000); //3 Second
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
+                }
+            });
+
+            $(document).on("click", "#btnDelete", function () {
+                var stockId = $(this).data('stock-id');
+                $('#stockId').val(stockId);
+            });
+
+            $(document).on("click", "#confirmDelete", function () {
+                var stockId = document.getElementById("stockId").value;
+
+                $.ajax({
+                    type: "DELETE",
+                    url: "/stocks/delete/" + stockId,
+                    success: function (data) {
+                        console.log(data);
+                        $('#modal-delete').modal('hide');
+                        $('table#stockTable tr#' + stockId).remove();
+                        toastr.success(data);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
+
         });
     </script>
 </th:block>

@@ -64,9 +64,8 @@ public class BrandController {
 
     @DeleteMapping("/brands/delete/{id}")
     @ResponseBody
-    public ResponseEntity<String> deleteBrandById(@PathVariable(value = "id") Long brandId){
-        service.deleteBrandById(brandId);
-        return new ResponseEntity<>("Brand is Deleted Successfully", HttpStatus.OK);
+    public ResponseEntity<Object> deleteBrandById(@PathVariable(value = "id") Long brandId){
+        return service.deleteBrandById(brandId);
     }
 
     @PostMapping(value="/brands/checkName")

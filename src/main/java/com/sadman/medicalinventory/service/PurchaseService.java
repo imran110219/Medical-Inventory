@@ -6,6 +6,7 @@ import com.sadman.medicalinventory.model.Purchase;
 import com.sadman.medicalinventory.model.Indication;
 import com.sadman.medicalinventory.model.Sale;
 import com.sadman.medicalinventory.repository.PurchaseRepository;
+import com.sadman.medicalinventory.repository.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,8 +19,16 @@ public class PurchaseService {
     @Autowired
     PurchaseRepository repository;
 
+    @Autowired
+    StockRepository stockRepository;
+
     public List<Purchase> getAllPurchases() {
         return repository.findAll();
+    }
+
+    public List<Purchase> getPurchasesByNotInStock() {
+        List<Long> purchaseIds = stockRepository.findPurchaseIdsInStock();
+        return repository.findAllByIdNotContains(purchaseIds);
     }
 
     public List<Purchase> getPurchasesByBrandId(Long brandId) {
