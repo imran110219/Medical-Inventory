@@ -1,7 +1,9 @@
 package com.sadman.medicalinventory.controller;
 
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
+import com.sadman.medicalinventory.model.Role;
 import com.sadman.medicalinventory.model.User;
+import com.sadman.medicalinventory.service.RoleService;
 import com.sadman.medicalinventory.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,8 +17,12 @@ import java.util.List;
 
 @Controller
 public class UserController {
+
     @Autowired
     private UserService service;
+
+    @Autowired
+    private RoleService roleService;
 
     @GetMapping(value={"/login"})
     public ModelAndView login(){
@@ -28,7 +34,9 @@ public class UserController {
     @RequestMapping(value = "/users")
     public String getAllUsers(Model model) {
         List<User> list = service.getAllUsers();
+        List<Role> roleList = roleService.getAllRoles();
         model.addAttribute("user", new User());
+        model.addAttribute("roles", roleList);
         model.addAttribute("users", list);
         return "user-list";
     }

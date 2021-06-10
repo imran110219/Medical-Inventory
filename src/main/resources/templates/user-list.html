@@ -80,7 +80,7 @@
                                         </td>
                                         <td>
                                             <div class="btn-group">
-                                                <input type="hidden" id="userId1" th:value="${user.id}">
+                                                <input type="hidden" id="userId" th:value="${user.id}">
                                                 <button type="button" id="btnView"
                                                         class="btn btn-block btn-info btn-sm"
                                                         style="margin-top: 8px;border-radius: 3px 0 0 3px;"
@@ -136,57 +136,68 @@
                         <form id="addForm" th:action="@{/users/add}" th:object="${user}" method="post">
                             <div class="modal-body">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputfirstname">First Name</label>
+                                    <label class="col-sm-3 col-form-label" for="a-inputfirstname">First Name</label>
                                     <div class="col-sm-9">
                                         <input type="text" th:field="*{firstName}" class="form-control"
-                                               id="inputfirstname" name="firstname"
+                                               id="a-inputfirstname" name="firstname"
                                                placeholder="Enter First Name">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputlastname">Last Name</label>
+                                    <label class="col-sm-3 col-form-label" for="a-inputlastname">Last Name</label>
                                     <div class="col-sm-9">
                                         <input type="text" th:field="*{lastName}" class="form-control"
-                                               id="inputlastname" name="lastname"
+                                               id="a-inputlastname" name="lastname"
                                                placeholder="Enter Last Name">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputusername">Username</label>
+                                    <label class="col-sm-3 col-form-label" for="a-inputusername">Username</label>
                                     <div class="col-sm-9">
                                         <input type="text" th:field="*{userName}" class="form-control"
-                                               id="inputusername" name="username"
+                                               id="a-inputusername" name="username"
                                                placeholder="Enter Username">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputemail">Email</label>
+                                    <label class="col-sm-3 col-form-label" for="a-inputrole">Role</label>
                                     <div class="col-sm-9">
-                                        <input type="email" th:field="*{email}" class="form-control" id="inputemail"
+                                        <select class="form-control select2" id="a-inputrole" th:field="*{roles}"
+                                                name="location" style="width: 100%;">
+                                            <option value="" disabled selected>Select Role</option>
+                                            <option th:each="role : ${roles}" th:value="${role.id}"
+                                                    th:text="${role.name}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="a-inputemail">Email</label>
+                                    <div class="col-sm-9">
+                                        <input type="email" th:field="*{email}" class="form-control" id="a-inputemail"
                                                name="email"
                                                placeholder="Enter Email">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputpassword">Password</label>
+                                    <label class="col-sm-3 col-form-label" for="a-inputpassword">Password</label>
                                     <div class="col-sm-9">
                                         <input type="password" th:field="*{password}" class="form-control"
-                                               id="inputpassword"
+                                               id="a-inputpassword"
                                                name="password" placeholder="Enter Password">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputphone">Phone</label>
+                                    <label class="col-sm-3 col-form-label" for="a-inputphone">Phone</label>
                                     <div class="col-sm-9">
-                                        <input type="text" th:field="*{phone}" class="form-control" id="inputphone"
+                                        <input type="text" th:field="*{phone}" class="form-control" id="a-inputphone"
                                                name="phone"
                                                placeholder="Enter Phone">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputaddress">Address</label>
+                                    <label class="col-sm-3 col-form-label" for="a-inputaddress">Address</label>
                                     <div class="col-sm-9">
-                                        <input type="text" th:field="*{address}" class="form-control" id="inputaddress"
+                                        <input type="text" th:field="*{address}" class="form-control" id="a-inputaddress"
                                                name="address"
                                                placeholder="Enter Address">
                                     </div>
@@ -214,33 +225,44 @@
                             <div class="modal-body">
                                 <input type="hidden" id="inputid1"/>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputfirstname1">First Name</label>
+                                    <label class="col-sm-3 col-form-label" for="e-inputfirstname">First Name</label>
                                     <div class="col-sm-9">
                                         <input type="text" th:field="*{firstName}" class="form-control"
-                                               id="inputfirstname1" name="firstName"
+                                               id="e-inputfirstname" name="firstName"
                                                placeholder="Enter First Name">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputlastname1">Last Name</label>
+                                    <label class="col-sm-3 col-form-label" for="e-inputlastname">Last Name</label>
                                     <div class="col-sm-9">
                                         <input type="text" th:field="*{lastName}" class="form-control"
-                                               id="inputlastname1" name="lastName"
+                                               id="e-inputlastname" name="lastName"
                                                placeholder="Enter Last Name">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputusername1">Username</label>
+                                    <label class="col-sm-3 col-form-label" for="e-inputusername">Username</label>
                                     <div class="col-sm-9">
                                         <input type="text" th:field="*{userName}" class="form-control"
-                                               id="inputusername1" name="userName"
+                                               id="e-inputusername" name="userName"
                                                placeholder="Enter Username">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputemail1">Email</label>
+                                    <label class="col-sm-3 col-form-label" for="e-inputrole">Role</label>
                                     <div class="col-sm-9">
-                                        <input type="email" th:field="*{email}" class="form-control" id="inputemail1"
+                                        <select class="form-control select2" id="e-inputrole" th:field="*{roles}"
+                                                name="location" style="width: 100%;">
+                                            <option value="" disabled selected>Select Role</option>
+                                            <option th:each="role : ${roles}" th:value="${role.id}"
+                                                    th:text="${role.name}"></option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="e-inputemail">Email</label>
+                                    <div class="col-sm-9">
+                                        <input type="email" th:field="*{email}" class="form-control" id="e-inputemail"
                                                name="email"
                                                placeholder="Enter Email">
                                     </div>
@@ -254,26 +276,26 @@
                                 <!--                                    </div>-->
                                 <!--                                </div>-->
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputphone1">Phone</label>
+                                    <label class="col-sm-3 col-form-label" for="e-inputphone">Phone</label>
                                     <div class="col-sm-9">
-                                        <input type="text" th:field="*{phone}" class="form-control" id="inputphone1"
+                                        <input type="text" th:field="*{phone}" class="form-control" id="e-inputphone"
                                                name="phone"
                                                placeholder="Enter Phone">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputaddress1">Address</label>
+                                    <label class="col-sm-3 col-form-label" for="e-inputaddress">Address</label>
                                     <div class="col-sm-9">
-                                        <input type="text" th:field="*{address}" class="form-control" id="inputaddress1"
+                                        <input type="text" th:field="*{address}" class="form-control" id="e-inputaddress"
                                                name="address"
                                                placeholder="Enter Address">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputactive1">Active</label>
+                                    <label class="col-sm-3 col-form-label" for="e-inputactive">Active</label>
                                     <div class="col-sm-9">
-                                        <input type="checkbox" id="inputactive1" name="active"/>
-                                        <input type="hidden" id="isActive">
+                                        <input type="checkbox" id="e-inputactive" name="active"/>
+                                        <input type="hidden" id="e-isActive">
                                     </div>
                                 </div>
                             </div>
@@ -314,6 +336,12 @@
                                     <label class="col-sm-3 col-form-label" for="v-inputusername">Username</label>
                                     <div class="col-sm-9">
                                         <p id="v-inputusername"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="v-inputrole">Role</label>
+                                    <div class="col-sm-9">
+                                        <p id="v-inputrole"></p>
                                     </div>
                                 </div>
                                 <div class="form-group row">
@@ -396,29 +424,10 @@
     <script th:inline="javascript">
         $(function () {
 
-            $(document).on("click", "#btnEdit", function () {
-                var userId = $(this).data('user-id');
-
-                $.ajax({
-                    type: 'GET',
-                    url: "/users/" + userId,
-                    dataType: "json",
-                    success: function (data) {
-                        $('#inputid1').val(data.id);
-                        $('#inputfirstname1').val(data.firstName);
-                        $('#inputlastname1').val(data.lastName);
-                        $('#inputusername1').val(data.userName);
-                        $('#inputemail1').val(data.email);
-                        $('#inputphone1').val(data.phone);
-                        $('#inputaddress1').val(data.address);
-                        $('#isActive').val(data.active);
-                        document.getElementById("inputactive1").checked = data.active;
-                    },
-                    error: function (err) {
-                        console.log(err);
-                    }
-                });
-            });
+            $("#userTable").DataTable({
+                "responsive": true, "lengthChange": false, "autoWidth": false,
+                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
+            }).buttons().container().appendTo('#userTable_wrapper .col-md-6:eq(0)');
 
             $(document).on("click", "#btnView", function () {
                 var userId = $(this).data('user-id');
@@ -432,6 +441,7 @@
                         $("#v-inputfirstname").text(data.firstName)
                         $('#v-inputlastname').text(data.lastName);
                         $('#v-inputusername').text(data.userName);
+                        $('#v-inputrole').text(data.roles[0].name);
                         $('#v-inputemail').text(data.email);
                         $('#v-inputphone').text(data.phone);
                         $('#v-inputaddress').text(data.address);
@@ -443,34 +453,6 @@
                     }
                 });
             });
-
-            $(document).on("click", "#btnDelete", function () {
-                var userId = $(this).data('user-id');
-                $('#userId').val(userId);
-            });
-
-            $(document).on("click", "#confirmDelete", function () {
-                var userId = document.getElementById("userId").value;
-
-                $.ajax({
-                    type: "DELETE",
-                    url: "/users/delete/" + userId,
-                    success: function (data) {
-                        console.log(data);
-                        $('#modal-delete').modal('hide');
-                        $('table#userTable tr#' + userId).remove();
-                        toastr.success(data);
-                    },
-                    error: function (err) {
-                        console.log(err);
-                    }
-                });
-            });
-
-            $("#userTable").DataTable({
-                "responsive": true, "lengthChange": false, "autoWidth": false,
-                "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#userTable_wrapper .col-md-6:eq(0)');
 
             $('#addForm').validate({
                 rules: {
@@ -575,11 +557,36 @@
                 }
             });
 
-            $('#inputactive1').click(function () {
+            $(document).on("click", "#btnEdit", function () {
+                var userId = $(this).data('user-id');
+
+                $.ajax({
+                    type: 'GET',
+                    url: "/users/" + userId,
+                    dataType: "json",
+                    success: function (data) {
+                        $('#inputid1').val(data.id);
+                        $('#e-inputfirstname').val(data.firstName);
+                        $('#e-inputlastname').val(data.lastName);
+                        $('#e-inputusername').val(data.userName);
+                        $('#e-inputrole').val(data.roles[0].id);
+                        $('#e-inputemail').val(data.email);
+                        $('#e-inputphone').val(data.phone);
+                        $('#e-inputaddress').val(data.address);
+                        $('#e-isActive').val(data.active);
+                        document.getElementById("e-inputactive").checked = data.active;
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
+
+            $('#e-inputactive').click(function () {
                 if (this.checked) {
-                    $('#isActive').val(true);
+                    $('#e-isActive').val(true);
                 } else {
-                    $('#isActive').val(false);
+                    $('#e-isActive').val(false);
                 }
             });
 
@@ -643,12 +650,13 @@
                     var userId = document.getElementById("inputid1").value;
 
                     var formData = {
-                        firstName: $("#inputfirstname1").val(),
-                        lastName: $("#inputlastname1").val(),
-                        userName: $("#inputusername1").val(),
-                        email: $("#inputemail1").val(),
-                        phone: $("#inputphone1").val(),
-                        address: $("#inputaddress1").val(),
+                        firstName: $("#e-inputfirstname").val(),
+                        lastName: $("#e-inputlastname").val(),
+                        userName: $("#e-inputusername").val(),
+                        roles: $("#e-inputrole").val(),
+                        email: $("#e-inputemail").val(),
+                        phone: $("#e-inputphone").val(),
+                        address: $("#e-inputaddress").val(),
                         active: $("#isActive").val()
                     };
 
@@ -672,6 +680,30 @@
                     });
                 }
             });
+
+            $(document).on("click", "#btnDelete", function () {
+                var userId = $(this).data('user-id');
+                $('#userId').val(userId);
+            });
+
+            $(document).on("click", "#confirmDelete", function () {
+                var userId = document.getElementById("userId").value;
+
+                $.ajax({
+                    type: "DELETE",
+                    url: "/users/delete/" + userId,
+                    success: function (data) {
+                        console.log(data);
+                        $('#modal-delete').modal('hide');
+                        $('table#userTable tr#' + userId).remove();
+                        toastr.success(data);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
+
         });
     </script>
 </th:block>

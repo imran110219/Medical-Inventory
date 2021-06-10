@@ -51,8 +51,8 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="col-sm-2 col-md-1">
-                                    <button type="button" class="btn btn-block btn-success btn-sm"
-                                            data-toggle="modal" data-target="#modal-default">Add
+                                    <button type="button" class="btn btn-block btn-success btn-sm" onclick="addPurchaseInvoice();">
+                                    Add
                                     </button>
                                 </div>
                             </div>
@@ -250,6 +250,10 @@
         //     console.log(parameter);
         //     window.location.href = '/pos/purchaseinvoice/'+parameter;
         // }
+
+        function addPurchaseInvoice() {
+            window.location.href = '/pop';
+        }
     </script>
 </th:block>
 </body>
