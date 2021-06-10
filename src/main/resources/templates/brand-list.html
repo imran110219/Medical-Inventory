@@ -644,6 +644,8 @@
                         toastr.success(data);
                     },
                     error: function (err) {
+                        $('#modal-delete').modal('hide');
+                        toastr.error("Failed to delete");
                         console.log(err);
                     }
                 });

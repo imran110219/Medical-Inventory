@@ -61,9 +61,8 @@ public class StockController {
 
     @DeleteMapping("/stocks/delete/{id}")
     @ResponseBody
-    public ResponseEntity<String> deleteStockById(@PathVariable(value = "id") Long stockId){
-        service.deleteStockById(stockId);
-        return new ResponseEntity<>("Stock is Deleted Successfully", HttpStatus.OK);
+    public ResponseEntity<Object> deleteStockById(@PathVariable(value = "id") Long stockId){
+        return service.deleteStockById(stockId);
     }
 
 }

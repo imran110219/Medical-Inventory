@@ -14,6 +14,8 @@
         <link rel="stylesheet" href="/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
         <link rel="stylesheet" href="/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
         <link rel="stylesheet" href="/plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+        <!-- Toastr -->
+        <link rel="stylesheet" href="/plugins/toastr/toastr.min.css">
     </th:block>
 </head>
 
@@ -52,13 +54,12 @@
                             <div class="card-header">
                                 <div class="col-sm-2 col-md-1">
                                     <button type="button" class="btn btn-block btn-success btn-sm"
-                                            data-toggle="modal" data-target="#modal-default">Add</button>
+                                            data-toggle="modal" data-target="#modal-add">Add</button>
                                 </div>
                             </div>
 
-                            <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped" th:switch="${suppliers}">
+                                <table id="supplierTable" class="table table-bordered table-striped" th:switch="${suppliers}">
                                     <thead>
                                     <tr>
                                         <th>Name</th>
@@ -68,7 +69,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    <tr th:each="supplier : ${suppliers}">
+                                    <tr th:id="${supplier.id}" th:each="supplier : ${suppliers}">
                                         <td th:text="${supplier.name}"></td>
                                         <td th:text="${supplier.phone}"></td>
                                         <td th:text="${supplier.address}"></td>
@@ -78,15 +79,21 @@
                                                 <button type="button" id="btnView"
                                                         class="btn btn-block btn-info btn-sm"
                                                         style="margin-top: 8px;border-radius: 3px 0 0 3px;"
+                                                        data-toggle="modal" data-target="#modal-view"
+                                                        th:attrappend="data-supplier-id=${supplier.id}"
                                                 ><i class="fas fa-eye"></i>
                                                 </button>
                                                 <button type="button" id="btnEdit"
                                                         class="btn btn-block btn-primary btn-sm"
                                                         style="margin-top: 8px"
+                                                        data-toggle="modal" data-target="#modal-edit"
+                                                        th:attrappend="data-supplier-id=${supplier.id}"
                                                 ><i class="fas fa-edit"></i>
                                                 </button>
                                                 <button type="button" id="btnDelete"
                                                         class="btn btn-block btn-danger btn-sm"
+                                                        data-toggle="modal" data-target="#modal-delete"
+                                                        th:attrappend="data-supplier-id=${supplier.id}"
                                                 ><i class="fas fa-trash"></i>
                                                 </button>
                                             </div>
@@ -103,14 +110,12 @@
                                     </tfoot>
                                 </table>
                             </div>
-                            <!-- /.card-body -->
                         </div>
-                        <!-- /.card -->
                     </div>
                 </div>
             </div>
 
-            <div class="modal fade" id="modal-default">
+            <div class="modal fade" id="modal-add">
                 <div class="modal-dialog">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -120,25 +125,28 @@
                             </button>
                         </div>
                         <div class="modal-body">
-                            <form id="quickForm">
+                            <form id="addForm" th:action="@{/suppliers/add}" th:object="${supplier}" method="post">
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputname">Name</label>
+                                    <label class="col-sm-3 col-form-label" for="a-inputname">Name</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="inputname" name="name"
+                                        <input type="text" class="form-control" id="a-inputname" name="name"
+                                               th:field="*{name}"
                                                placeholder="Enter Name">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputphone">Phone No</label>
+                                    <label class="col-sm-3 col-form-label" for="a-inputphone">Phone No</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="inputphone" name="phone"
+                                        <input type="text" class="form-control" id="a-inputphone" name="phone"
+                                               th:field="*{phone}"
                                                placeholder="Enter Phone No">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputaddress">Address</label>
+                                    <label class="col-sm-3 col-form-label" for="a-inputaddress">Address</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="inputaddress" name="address"
+                                        <input type="text" class="form-control" id="a-inputaddress" name="address"
+                                               th:field="*{address}"
                                                placeholder="Enter Address">
                                     </div>
                                 </div>
@@ -149,13 +157,113 @@
                             </form>
                         </div>
                     </div>
-                    <!-- /.modal-content -->
                 </div>
-                <!-- /.modal-dialog -->
             </div>
-            <!-- /.modal -->
+
+            <div class="modal fade" id="modal-view">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">View Supplier</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form id="viewForm">
+                            <div class="modal-body">
+                                <input type="hidden" id="v-inputid"/>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="v-inputname">Name</label>
+                                    <div class="col-sm-9">
+                                        <p id="v-inputname"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="v-inputphone">Phone No</label>
+                                    <div class="col-sm-9">
+                                        <p id="v-inputphone"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="v-inputaddress">Address</label>
+                                    <div class="col-sm-9">
+                                        <p id="v-inputaddress"></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modal-edit">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Edit Supplier</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <form id="editForm" th:object="${supplier}">
+                            <div class="modal-body">
+                                <input type="hidden" id="e-inputid"/>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="e-inputname">Name</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" th:field="*{name}" class="form-control"
+                                               id="e-inputname" name="name"
+                                               placeholder="Enter Name">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="e-inputphone">Phone No</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" th:field="*{phone}" class="form-control"
+                                               id="e-inputphone" name="phone"
+                                               placeholder="Enter Phone No">
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <label class="col-sm-3 col-form-label" for="e-inputaddress">Address</label>
+                                    <div class="col-sm-9">
+                                        <input type="text" class="form-control" id="e-inputaddress" name="address"
+                                               th:field="*{address}"
+                                               placeholder="Enter Address">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                <button id="confirmEdit" type="submit" class="btn btn-primary">Save</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="modal-delete">
+                <div class="modal-dialog modal-sm">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Delete Supplier</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Delete this supplier?</p>
+                            <input type="hidden" id="supplierId"/>
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button id="confirmDelete" type="submit" class="btn btn-primary">Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </section>
-        <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
 
@@ -183,35 +291,66 @@
     <script src="/plugins/datatables-buttons/js/buttons.html5.min.js"></script>
     <script src="/plugins/datatables-buttons/js/buttons.print.min.js"></script>
     <script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+    <!-- Toastr -->
+    <script src="/plugins/toastr/toastr.min.js"></script>
     <script>
         $(function () {
 
-            $("#example1").DataTable({
+            $("#supplierTable").DataTable({
                 "responsive": true, "lengthChange": false, "autoWidth": false,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            }).buttons().container().appendTo('#supplierTable_wrapper .col-md-6:eq(0)');
 
-            $.validator.setDefaults({
-                submitHandler: function () {
-                    alert("Form successful submitted!");
-                }
+            $(document).on("click", "#btnView", function () {
+                var supplierId = $(this).data('supplier-id');
+
+                $.ajax({
+                    type: 'GET',
+                    url: "/suppliers/" + supplierId,
+                    dataType: "json",
+                    success: function (data) {
+                        $('#v-inputid').val(data.id);
+                        $("#v-inputname").text(data.name);
+                        $("#v-inputphone").text(data.phone);
+                        $("#v-inputaddress").text(data.address);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
             });
 
-            $('#quickForm').validate({
+            $('#addForm').validate({
                 rules: {
                     name: {
+                        required: true,
+                        remote: {
+                            url: "/suppliers/checkName", //make sure to return true or false with a 200 status code
+                            type: "post",
+                            data: {
+                                name: function () {
+                                    return $("#a-inputname").val();
+                                }
+                            }
+                        }
+                    },
+                    phone: {
                         required: true
                     },
-                    description: {
+                    address: {
                         required: true
                     }
                 },
                 messages: {
                     name: {
-                        required: "Please enter name"
+                        required: "Please enter name",
+                        remote: "This name is already exist"
                     },
-                    description: {
-                        required: "Please enter description"
+                    phone: {
+                        required: "Please enter phone no"
+                    },
+                    address: {
+                        required: "Please enter address"
                     }
                 },
                 errorElement: 'span',
@@ -224,8 +363,134 @@
                 },
                 unhighlight: function (element, errorClass, validClass) {
                     $(element).removeClass('is-invalid');
+                },
+                submitHandler: function (form) {
+                    $.ajax({
+                        url: form.action,
+                        type: form.method,
+                        data: $(form).serialize(),
+                        success: function (data) {
+                            $('#modal-add').modal('hide');
+                            toastr.success(data);
+                            setTimeout(function () {
+                                location.reload();  //Refresh page
+                            }, 3000);
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
                 }
             });
+
+            $(document).on("click", "#btnEdit", function () {
+                var supplierId = $(this).data('supplier-id');
+
+                $.ajax({
+                    type: 'GET',
+                    url: "/suppliers/" + supplierId,
+                    dataType: "json",
+                    success: function (data) {
+                        $('#e-inputid').val(data.id);
+                        $('#e-inputname').val(data.name);
+                        $("#e-inputphone").val(data.phone);
+                        $("#e-inputaddress").val(data.address);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
+
+            $('#editForm').validate({
+                rules: {
+                    name: {
+                        required: true
+                    },
+                    phone: {
+                        required: "Please enter phone no"
+                    },
+                    address: {
+                        required: "Please enter address"
+                    }
+                },
+                messages: {
+                    name: {
+                        required: "Please enter name"
+                    },
+                    phone: {
+                        required: "Please enter phone no"
+                    },
+                    address: {
+                        required: "Please enter address"
+                    }
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                },
+                submitHandler: function (form) {
+                    var supplierId = document.getElementById("e-inputid").value;
+
+                    var formData = {
+                        name: $("#e-inputname").val(),
+                        phone: $("#e-inputphone").val(),
+                        address: $("#e-inputaddress").val()
+                    };
+
+                    console.log(formData);
+
+                    $.ajax({
+                        type: "PUT",
+                        url: "/suppliers/edit/" + supplierId,
+                        data: JSON.stringify(formData),
+                        contentType: 'application/json',
+                        success: function (data) {
+                            $('#modal-edit').modal('hide');
+                            toastr.success(data);
+                            setTimeout(function () {
+                                location.reload();  //Refresh page
+                            }, 3000); //3 Second
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
+                }
+            });
+
+            $(document).on("click", "#btnDelete", function () {
+                var supplierId = $(this).data('supplier-id');
+                $('#supplierId').val(supplierId);
+            });
+
+            $(document).on("click", "#confirmDelete", function () {
+                var supplierId = document.getElementById("supplierId").value;
+
+                $.ajax({
+                    type: "DELETE",
+                    url: "/suppliers/delete/" + supplierId,
+                    success: function (data) {
+                        console.log(data);
+                        $('#modal-delete').modal('hide');
+                        $('table#supplierTable tr#' + supplierId).remove();
+                        toastr.success(data);
+                    },
+                    error: function (err) {
+                        $('#modal-delete').modal('hide');
+                        toastr.error("Failed to delete");
+                        console.log(err);
+                    }
+                });
+            });
+            
         });
     </script>
 </th:block>

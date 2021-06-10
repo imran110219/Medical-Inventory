@@ -4,6 +4,7 @@ import com.sadman.medicalinventory.exception.RecordNotFoundException;
 import com.sadman.medicalinventory.model.Stock;
 import com.sadman.medicalinventory.repository.StockRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -48,7 +49,10 @@ public class StockService {
                 });
     }
 
-    public void deleteStockById(Long id){
+    public ResponseEntity<Object> deleteStockById(Long id){
         repository.deleteById(id);
+        if (repository.findById(id).isPresent()) {
+            return ResponseEntity.unprocessableEntity().body("Failed to delete the specified record");
+        } else return ResponseEntity.ok().body("Stock is Deleted Successfully");
     }
 }

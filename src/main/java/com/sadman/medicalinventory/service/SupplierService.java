@@ -4,6 +4,7 @@ import com.sadman.medicalinventory.exception.RecordNotFoundException;
 import com.sadman.medicalinventory.model.Supplier;
 import com.sadman.medicalinventory.repository.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,7 +42,14 @@ public class SupplierService {
                 });
     }
 
-    public void deleteSupplierById(Long id){
+    public ResponseEntity<Object> deleteSupplierById(Long id){
         repository.deleteById(id);
+        if (repository.findById(id).isPresent()) {
+            return ResponseEntity.unprocessableEntity().body("Failed to delete the specified record");
+        } else return ResponseEntity.ok().body("Supplier is Deleted Successfully");
+    }
+
+    public boolean existsByName(String name) {
+        return repository.existsByName(name);
     }
 }
