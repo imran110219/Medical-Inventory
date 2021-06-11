@@ -15,4 +15,7 @@ public interface StockRepository extends JpaRepository<Stock, Long> {
 
     @Query("SELECT purchase.id FROM Stock")
     List<Long> findPurchaseIdsInStock();
+
+    @Query()
+    Long countExpiredStock();
 }

@@ -1,6 +1,7 @@
 package com.sadman.medicalinventory;
 
 import com.sadman.medicalinventory.model.Purchase;
+import com.sadman.medicalinventory.repository.BrandRepository;
 import com.sadman.medicalinventory.repository.PurchaseRepository;
 import com.sadman.medicalinventory.repository.StockRepository;
 import com.sadman.medicalinventory.service.PurchaseService;
@@ -25,17 +26,15 @@ public class TestApplication implements CommandLineRunner {
     @Autowired
     private PurchaseRepository purchaseRepository;
 
+    @Autowired
+    private BrandRepository brandRepository;
+
     public static void main(String[] args) {
         SpringApplication.run(TestApplication.class, args);
     }
 
     @Override
     public void run(String... strings) throws Exception {
-//        List<Purchase> purchaseList = purchaseService.getPurchasesByPurchaseInvoiceId("PI1618989514455");
-        List<Long> purchaseIdList = stockRepository.findPurchaseIdsInStock();
-        List<Purchase> purchaseList = purchaseRepository.findAllByIdNotContains(purchaseIdList);
-        for (Purchase purchase : purchaseList) {
-            System.out.println(purchase.getId());
-        }
+        System.out.println(brandRepository.count());
     }
 }

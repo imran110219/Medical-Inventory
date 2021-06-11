@@ -65,4 +65,8 @@ public class BrandService {
     public boolean existsByName(String name) {
         return repository.existsByName(name);
     }
+
+    public long countAllBrand(){
+        return repository.count();
+    }
 }

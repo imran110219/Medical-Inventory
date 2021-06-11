@@ -3,6 +3,7 @@ package com.sadman.medicalinventory.controller;
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
 import com.sadman.medicalinventory.model.Role;
 import com.sadman.medicalinventory.model.User;
+import com.sadman.medicalinventory.service.BrandService;
 import com.sadman.medicalinventory.service.RoleService;
 import com.sadman.medicalinventory.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,9 @@ public class UserController {
 
     @Autowired
     private RoleService roleService;
+
+    @Autowired
+    private BrandService brandService;
 
     @GetMapping(value={"/login"})
     public ModelAndView login(){
@@ -83,6 +87,7 @@ public class UserController {
     public ModelAndView home(){
         ModelAndView modelAndView = new ModelAndView();
 //        modelAndView.setViewName("dashboard");
+        modelAndView.addObject("countBrand", brandService.countAllBrand());
         modelAndView.setViewName("index");
         return modelAndView;
     }
