@@ -5,6 +5,7 @@ import com.sadman.medicalinventory.model.Role;
 import com.sadman.medicalinventory.model.User;
 import com.sadman.medicalinventory.service.BrandService;
 import com.sadman.medicalinventory.service.RoleService;
+import com.sadman.medicalinventory.service.StockService;
 import com.sadman.medicalinventory.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,6 +28,9 @@ public class UserController {
 
     @Autowired
     private BrandService brandService;
+
+    @Autowired
+    private StockService stockService;
 
     @GetMapping(value={"/login"})
     public ModelAndView login(){
@@ -88,6 +92,8 @@ public class UserController {
         ModelAndView modelAndView = new ModelAndView();
 //        modelAndView.setViewName("dashboard");
         modelAndView.addObject("countBrand", brandService.countAllBrand());
+        modelAndView.addObject("countExpired", stockService.countExpiredStock());
+        modelAndView.addObject("countOutOfStock", stockService.getOutOfStock().size());
         modelAndView.setViewName("index");
         return modelAndView;
     }

@@ -1,6 +1,7 @@
 package com.sadman.medicalinventory;
 
 import com.sadman.medicalinventory.model.Purchase;
+import com.sadman.medicalinventory.model.Stock;
 import com.sadman.medicalinventory.repository.BrandRepository;
 import com.sadman.medicalinventory.repository.PurchaseRepository;
 import com.sadman.medicalinventory.repository.StockRepository;
@@ -35,6 +36,9 @@ public class TestApplication implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        System.out.println(brandRepository.count());
+        List<Stock> stockList = stockRepository.getOutOfStock();
+        for (Stock stock : stockList) {
+            System.out.println(stock.getPurchase().getBrand().getId() + "   " + stock.getQuantity());
+        }
     }
 }

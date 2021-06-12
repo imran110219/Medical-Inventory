@@ -1,5 +1,6 @@
 package com.sadman.medicalinventory.repository;
 
+import com.sadman.medicalinventory.model.Brand;
 import com.sadman.medicalinventory.model.Stock;
 import com.sadman.medicalinventory.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,6 +17,10 @@ public interface StockRepository extends JpaRepository<Stock, Long> {
     @Query("SELECT purchase.id FROM Stock")
     List<Long> findPurchaseIdsInStock();
 
-    @Query()
+    @Query("SELECT COUNT(s) FROM Stock s WHERE s.purchase.expiryDate < CURRENT_DATE AND s.quantity > 0")
     Long countExpiredStock();
+
+    @Query("SELECT distinct s FROM Stock s group by s.purchase.brand.id having sum(s.quantity) <= 0")
+    List<Stock> getOutOfStock();
+
 }

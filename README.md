@@ -1,6 +1,13 @@
 # Medical Inventory Application
 
-This application is designed for Pharmacy POS System.
+This web application is designed for Pharmacy POS System.
+
+**feature:**
+* Purchase medicine 
+* automatically add stock
+* Sale medicine
+* Invoice generation
+* Return system 
 
 ## Getting Started
 
@@ -15,59 +22,34 @@ These instructions will get you a copy of the project up and running on your loc
 
 A step by step series of examples that tell you have to get a development environment running
 
-Download the python and install python.
+Download the jdk 8 and install it.
 
 ```
-https://www.python.org/downloads/
+https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html
 ```
 
-Download the Postgres and install it.
+Download the MySQL and install it.
 
 ```
-https://www.postgresql.org/download/
-```
-
-Install pip
-
-```
-$ easy_install pip
-```
-
-Create Virtual Environment
-
-```
-$ pip install virtualenv
-$ cd Book_Review_App
-$ virtualenv venv
-$ venv\Scripts\activate
-```
-
-Install all package from requirements.txt
-
-```
-$ pip install -r requirements.txt
+https://dev.mysql.com/downloads/
 ```
 
 ### Setup Database
 
-Access postgres user
+Run this scripts serially:
 
 ```
-$ psql -U postgres
-$ CREATE DATABASE bookreview;
-```
-
-Run migration
-
-```
-python manage.py makemigrations
-python manage.py migrate
+1. schema.sql
+2. demo.sql
+3. relation.sql
 ```
 
 ## Running the application
 
+There are several ways to run a Spring Boot application on your local machine. One way is to execute the main method in the com.sadman.medicalinventory.MedicalInventoryApplication class from your IDE.
+
 ```
-$ python manage.py runserver
+mvn spring-boot:run
 ```
 
 ### Break down into end to end tests
@@ -107,7 +89,6 @@ We use [Git](https://gitforwindows.org/) for versioning. For the versions availa
 ## Authors
 
 * **Sadman Sobhan** - *Backend Developer* - [imran110219](https://github.com/imran110219)
-* **Md Shahjahan** - *Fullstack Developer* - [shahed48](https://github.com/shahed48)
 
 See also the list of [contributors](https://github.com/imran110219/Book_Review_App/settings/collaboration) who participated in this project.
 

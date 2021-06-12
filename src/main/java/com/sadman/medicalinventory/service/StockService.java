@@ -55,4 +55,12 @@ public class StockService {
             return ResponseEntity.unprocessableEntity().body("Failed to delete the specified record");
         } else return ResponseEntity.ok().body("Stock is Deleted Successfully");
     }
+
+    public Long countExpiredStock(){
+        return repository.countExpiredStock();
+    }
+
+    public List<Stock> getOutOfStock(){
+        return repository.getOutOfStock();
+    }
 }
