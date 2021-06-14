@@ -28,9 +28,9 @@ public class Generic {
     private String description;
 
     @ToString.Exclude
-    @ManyToMany(mappedBy = "generics", cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @ManyToMany(mappedBy = "generics", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
 //    @JsonBackReference
-    @JsonIdentityReference
+//    @JsonIdentityReference
     private Set<Indication> indications = new HashSet<>();
 
     public Generic() {

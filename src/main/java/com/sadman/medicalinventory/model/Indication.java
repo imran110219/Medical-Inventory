@@ -27,9 +27,9 @@ public class Indication {
     private String description;
 
     @ToString.Exclude
-    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(name = "indication_generic", joinColumns = {@JoinColumn(name = "indication_id")}, inverseJoinColumns = {@JoinColumn(name = "generic_id")})
 //    @JsonManagedReference
-    @JsonIdentityReference
+//    @JsonIdentityReference
     private Set<Generic> generics = new HashSet<>();
 }

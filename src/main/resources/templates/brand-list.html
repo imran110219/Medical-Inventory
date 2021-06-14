@@ -273,7 +273,7 @@
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <form id="editForm" th:object="${brand}">
+                        <form id="editForm" th:object="${branddto}">
                             <div class="modal-body">
                                 <input type="hidden" id="e-inputid"/>
                                 <div class="form-group row">
@@ -295,7 +295,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label" for="e-inputdosageform">Dosage Form</label>
                                     <div class="col-sm-9">
-                                        <select class="form-control select2" id="e-inputdosageform" th:field="*{dosageForm}" name="dosageform" style="width: 100%;">
+                                        <select class="form-control select2" id="e-inputdosageform" th:field="*{dosageFormId}" name="dosageform" style="width: 100%;">
                                             <option value="" disabled selected>Select Dosage Form</option>
                                             <option th:each="dosageform : ${dosageforms}" th:value="${dosageform.id}" th:text="${dosageform.name}"></option>
                                         </select>
@@ -304,7 +304,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label" for="e-inputgeneric">Generic</label>
                                     <div class="col-sm-9">
-                                        <select class="form-control select2" id="e-inputgeneric" th:field="*{generic}" name="generic" style="width: 100%;">
+                                        <select class="form-control select2" id="e-inputgeneric" th:field="*{genericId}" name="generic" style="width: 100%;">
                                             <option value="" disabled selected>Select Generic</option>
                                             <option th:each="generic : ${generics}" th:value="${generic.id}" th:text="${generic.name}"></option>
                                         </select>
@@ -313,7 +313,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-3 col-form-label" for="e-inputmanufacturer">Manufacturer</label>
                                     <div class="col-sm-9">
-                                        <select class="form-control select2" id="e-inputmanufacturer" th:field="*{manufacturer}" name="manufacturer" style="width: 100%;">
+                                        <select class="form-control select2" id="e-inputmanufacturer" th:field="*{manufacturerId}" name="manufacturer" style="width: 100%;">
                                             <option value="" disabled selected>Select Manufacturer</option>
                                             <option th:each="manufacturer : ${manufacturers}" th:value="${manufacturer.id}" th:text="${manufacturer.name}"></option>
                                         </select>
@@ -548,13 +548,13 @@
                     strength: {
                         required: true
                     },
-                    dosageform : {
+                    dosageformId : {
                         required: true
                     },
-                    generic : {
+                    genericId : {
                         required: true
                     },
-                    manufacturer : {
+                    manufacturerId : {
                         required: true
                     },
                     purchaseprice : {
@@ -571,13 +571,13 @@
                     strength: {
                         required: "Please enter strength"
                     },
-                    dosageform : {
+                    dosageformId : {
                         required: "Please select dosage form"
                     },
-                    generic : {
+                    genericId : {
                         required: "Please select generic"
                     },
-                    manufacturer : {
+                    manufacturerId : {
                         required: "Please select manufacturer"
                     },
                     purchaseprice : {
@@ -603,12 +603,12 @@
 
                     var formData = {
                         name: $("#e-inputname").val(),
-                        strength: $("#e-inputquantity").val(),
-                        dosageForm: $("#e-inputdosageform").val(),
-                        generic: $("#e-inputgeneric").val(),
-                        manufacturer: $("#e-inputmanufacturer").val(),
+                        strength: $("#e-inputstrength").val(),
+                        dosageFormId: $("#e-inputdosageform").val(),
+                        genericId: $("#e-inputgeneric").val(),
+                        manufacturerId: $("#e-inputmanufacturer").val(),
                         purchasePrice: $("#e-inputpurchaseprice").val(),
-                        salePrice: $("#e-inputsalseprice").val()
+                        salePrice: $("#e-inputsaleprice").val()
                     };
 
                     console.log(formData);

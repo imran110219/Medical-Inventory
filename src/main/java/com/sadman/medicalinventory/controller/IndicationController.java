@@ -57,6 +57,12 @@ public class IndicationController {
         return new ResponseEntity<>("Indication is Edited Successfully", HttpStatus.OK);
     }
 
+//    @PutMapping("/indications/edit/{id}")
+//    public ResponseEntity<String> editGenericById(@RequestBody Indication newIndication, @PathVariable(value = "id") Long indicationId) {
+//        service.updateIndication(newIndication, indicationId);
+//        return new ResponseEntity<>("Indication is Edited Successfully", HttpStatus.OK);
+//    }
+
     @DeleteMapping("/indications/delete/{id}")
     @ResponseBody
     public ResponseEntity<Object> deleteIndicationById(@PathVariable(value = "id") Long indicationId){

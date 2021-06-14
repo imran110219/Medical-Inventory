@@ -1,5 +1,7 @@
 package com.sadman.medicalinventory.controller;
 
+import com.sadman.medicalinventory.dto.BrandDTO;
+import com.sadman.medicalinventory.dto.IndicationDTO;
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
 import com.sadman.medicalinventory.model.*;
 import com.sadman.medicalinventory.service.BrandService;
@@ -36,6 +38,7 @@ public class BrandController {
         List<Generic> genericList = genericService.getAllGenerics();
         List<Manufacturer> manufacturerList = manufacturerService.getAllManufacturers();
         model.addAttribute("brand", new Brand());
+        model.addAttribute("branddto", new BrandDTO());
         model.addAttribute("dosageforms", dosageFormList);
         model.addAttribute("generics", genericList);
         model.addAttribute("manufacturers", manufacturerList);
@@ -56,9 +59,17 @@ public class BrandController {
         return new ResponseEntity<>("Brand is added successfully", HttpStatus.OK);
     }
 
+//    @PutMapping("/brands/edit/{id}")
+//    public ResponseEntity<String> editBrandById(@RequestBody Brand newBrand, @PathVariable(value = "id") Long brandId) {
+//        service.updateBrand(newBrand, brandId);
+//        return new ResponseEntity<>("Brand is Edited Successfully", HttpStatus.OK);
+//    }
+
     @PutMapping("/brands/edit/{id}")
-    public ResponseEntity<String> editBrandById(@RequestBody Brand newBrand, @PathVariable(value = "id") Long brandId) {
-        service.updateBrand(newBrand, brandId);
+    public ResponseEntity<String> editBrandById(@RequestBody BrandDTO newBrandDTO, @PathVariable(value = "id") Long brandId) {
+//        service.updateBrand(newBrand, brandId);
+        System.out.println(newBrandDTO);
+        service.updateBrandDTO(newBrandDTO, brandId);
         return new ResponseEntity<>("Brand is Edited Successfully", HttpStatus.OK);
     }
 
