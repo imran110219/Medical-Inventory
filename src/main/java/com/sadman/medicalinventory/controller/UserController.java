@@ -97,4 +97,9 @@ public class UserController {
         modelAndView.setViewName("index");
         return modelAndView;
     }
+
+    @GetMapping(value="/dashboard1")
+    public String home1(){
+        return "dashboard";
+    }
 }

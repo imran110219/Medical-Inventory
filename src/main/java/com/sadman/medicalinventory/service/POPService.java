@@ -78,7 +78,8 @@ public class POPService {
             purchaseRepository.flush();
             Stock stock = new Stock();
             stock.setLocation(locationRepository.getOne(purchaseMedicineDTO.getLocationId()));
-            stock.setQuantity(purchaseMedicineDTO.getQuantity());
+            double netQuantity = purchase.getQuantity() * purchase.getBox().getQuantity();
+            stock.setQuantity(netQuantity);
             stock.setPurchase(purchaseRepository.getOne(purchase.getId()));
             stockRepository.save(stock);
         }
