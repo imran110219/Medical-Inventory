@@ -74,9 +74,8 @@ Add additional notes about how to deploy this on a live system
 
 ## Built With
 
-* [Django](https://www.djangoproject.com/) - The web framework used
-* [PostgreSQL](https://www.postgresql.org/) - Open Source Database
-<!-- * [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds -->
+* [Spring Boot](https://spring.io/projects/spring-boot) - The web framework used
+* [MySQL](https://www.mysql.com/) - Open Source Database
 
 ## Contributing
 
@@ -90,7 +89,7 @@ We use [Git](https://gitforwindows.org/) for versioning. For the versions availa
 
 * **Sadman Sobhan** - *Backend Developer* - [imran110219](https://github.com/imran110219)
 
-See also the list of [contributors](https://github.com/imran110219/Book_Review_App/settings/collaboration) who participated in this project.
+See also the list of [contributors](https://github.com/imran110219/Medical-Inventory/settings/collaboration) who participated in this project.
 
 ## License
 
