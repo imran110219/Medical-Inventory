@@ -16,4 +16,7 @@ public interface PurchaseRepository extends JpaRepository<Purchase, Long> {
 
     @Query("SELECT p FROM Purchase p WHERE p.id NOT IN :idList")
     List<Purchase> findAllByIdNotContains(@Param("idList") List<Long> ids);
+
+    @Query("SELECT sum(total) FROM Purchase")
+    double getTotalPurchaseAmount();
 }

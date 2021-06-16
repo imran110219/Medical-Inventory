@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class SaleService {
@@ -47,5 +48,13 @@ public class SaleService {
 
     public void deleteSaleById(Long id){
         repository.deleteById(id);
+    }
+
+    public double getTotalSaleAmount(){
+        return repository.getTotalSaleAmount();
+    }
+
+    public List<Map<String, Long>> getHighestSale(){
+        return repository.getHighestSale();
     }
 }

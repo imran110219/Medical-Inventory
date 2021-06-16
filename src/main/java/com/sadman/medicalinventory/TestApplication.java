@@ -1,9 +1,11 @@
 package com.sadman.medicalinventory;
 
+import com.sadman.medicalinventory.model.Brand;
 import com.sadman.medicalinventory.model.Purchase;
 import com.sadman.medicalinventory.model.Stock;
 import com.sadman.medicalinventory.repository.BrandRepository;
 import com.sadman.medicalinventory.repository.PurchaseRepository;
+import com.sadman.medicalinventory.repository.SaleRepository;
 import com.sadman.medicalinventory.repository.StockRepository;
 import com.sadman.medicalinventory.service.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -30,15 +33,16 @@ public class TestApplication implements CommandLineRunner {
     @Autowired
     private BrandRepository brandRepository;
 
+    @Autowired
+    private SaleRepository saleRepository;
+
     public static void main(String[] args) {
         SpringApplication.run(TestApplication.class, args);
     }
 
     @Override
     public void run(String... strings) throws Exception {
-        List<Stock> stockList = stockRepository.getOutOfStock();
-        for (Stock stock : stockList) {
-            System.out.println(stock.getPurchase().getBrand().getId() + "   " + stock.getQuantity());
-        }
+        List<Map<String, Long>> highestMap = saleRepository.getHighestSale();
+
     }
 }

@@ -70,4 +70,8 @@ public class PurchaseService {
     public void deletePurchaseById(Long id){
         repository.deleteById(id);
     }
+
+    public double getTotalPurchaseAmount(){
+        return repository.getTotalPurchaseAmount();
+    }
 }

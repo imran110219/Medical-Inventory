@@ -3,10 +3,7 @@ package com.sadman.medicalinventory.controller;
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
 import com.sadman.medicalinventory.model.Role;
 import com.sadman.medicalinventory.model.User;
-import com.sadman.medicalinventory.service.BrandService;
-import com.sadman.medicalinventory.service.RoleService;
-import com.sadman.medicalinventory.service.StockService;
-import com.sadman.medicalinventory.service.UserService;
+import com.sadman.medicalinventory.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -31,6 +28,12 @@ public class UserController {
 
     @Autowired
     private StockService stockService;
+
+    @Autowired
+    private PurchaseService purchaseService;
+
+    @Autowired
+    private SaleService saleService;
 
     @GetMapping(value={"/login"})
     public ModelAndView login(){
@@ -90,10 +93,12 @@ public class UserController {
     @GetMapping(value="/dashboard")
     public ModelAndView home(){
         ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.setViewName("dashboard");
         modelAndView.addObject("countBrand", brandService.countAllBrand());
         modelAndView.addObject("countExpired", stockService.countExpiredStock());
         modelAndView.addObject("countOutOfStock", stockService.getOutOfStock().size());
+        modelAndView.addObject("totalPurchaseAmount", purchaseService.getTotalPurchaseAmount());
+        modelAndView.addObject("totalSaleAmount", saleService.getTotalSaleAmount());
+        modelAndView.addObject("highestSales", saleService.getHighestSale());
         modelAndView.setViewName("index");
         return modelAndView;
     }
