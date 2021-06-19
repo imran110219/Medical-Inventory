@@ -3,11 +3,11 @@ package com.sadman.medicalinventory.service;
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
 import com.sadman.medicalinventory.model.Sale;
 import com.sadman.medicalinventory.repository.SaleRepository;
+import com.sadman.medicalinventory.util.DataUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class SaleService {
@@ -54,7 +54,8 @@ public class SaleService {
         return repository.getTotalSaleAmount();
     }
 
-    public List<Map<String, Long>> getHighestSale(){
-        return repository.getHighestSale();
+    public List<List<String>> getHighestSale(){
+//        return DataUtil.convertMapToList(repository.getHighestSale());
+        return DataUtil.convertMapToList(repository.getHighestSale());
     }
 }

@@ -128,7 +128,7 @@
                 <!-- Main row -->
                 <div class="row">
                     <!-- Left col -->
-                    <section class="col-lg-5 connectedSortable">
+                    <section class="col-lg-6 connectedSortable">
                         <!-- Custom tabs (Charts with tabs)-->
                         <div class="card">
                             <div class="card-header">
@@ -501,10 +501,10 @@
                     </section>
                     <!-- /.Left col -->
                     <!-- right col (We are only adding the ID to make the widgets sortable)-->
-                    <section class="col-lg-7 connectedSortable">
+                    <section class="col-lg-6 connectedSortable">
 
                         <!-- BAR CHART -->
-                        <div class="card card-success">
+                        <div class="card">
                             <div class="card-header">
                                 <h3 class="card-title">Bar Chart</h3>
 
@@ -519,7 +519,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="chart">
-                                    <canvas id="barChart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%;"></canvas>
+                                    <canvas id="barChart" style="min-height: 300px; height: 300px; max-height: 300px; max-width: 100%;"></canvas>
                                 </div>
                             </div>
                             <!-- /.card-body -->
@@ -620,6 +620,47 @@
                             </div>
                             <!-- /.card-body -->
                         </div>
+
+                        <!-- Calendar -->
+                        <div class="card bg-gradient-success">
+                            <div class="card-header border-0">
+
+                                <h3 class="card-title">
+                                    <i class="far fa-calendar-alt"></i>
+                                    Calendar
+                                </h3>
+                                <!-- tools card -->
+                                <div class="card-tools">
+                                    <!-- button with a dropdown -->
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-success btn-sm dropdown-toggle"
+                                                data-toggle="dropdown" data-offset="-52">
+                                            <i class="fas fa-bars"></i>
+                                        </button>
+                                        <div class="dropdown-menu" role="menu">
+                                            <a href="#" class="dropdown-item">Add new event</a>
+                                            <a href="#" class="dropdown-item">Clear events</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="#" class="dropdown-item">View calendar</a>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn btn-success btn-sm" data-card-widget="collapse">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-success btn-sm" data-card-widget="remove">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </div>
+                                <!-- /. tools -->
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body pt-0">
+                                <!--The calendar -->
+                                <div id="calendar" style="width: 100%"></div>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+
                         <!-- /.card -->
                     </section>
                     <!-- right col -->
@@ -638,9 +679,9 @@
     <!-- jQuery UI 1.11.4 -->
     <script src="/plugins/jquery-ui/jquery-ui.min.js"></script>
     <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-<!--    <script>-->
-<!--        $.widget.bridge('uibutton', $.ui.button)-->
-<!--    </script>-->
+    <script>
+        $.widget.bridge('uibutton', $.ui.button)
+    </script>
     <!-- Bootstrap 4 -->
     <script src="/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
     <!-- ChartJS -->
@@ -670,11 +711,13 @@
     <script>
         $(function () {
 
+
+
             var areaChartData = {
-                labels  : ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                labels  : ['January', 'February', 'March', 'April', 'May', 'June'],
                 datasets: [
                     {
-                        label               : 'Digital Goods',
+                        label               : 'Most Sale Medicine',
                         backgroundColor     : 'rgba(60,141,188,0.9)',
                         borderColor         : 'rgba(60,141,188,0.8)',
                         pointRadius          : false,
@@ -682,19 +725,19 @@
                         pointStrokeColor    : 'rgba(60,141,188,1)',
                         pointHighlightFill  : '#fff',
                         pointHighlightStroke: 'rgba(60,141,188,1)',
-                        data                : [28, 48, 40, 19, 86, 27, 90]
-                    },
-                    {
-                        label               : 'Electronics',
-                        backgroundColor     : 'rgba(210, 214, 222, 1)',
-                        borderColor         : 'rgba(210, 214, 222, 1)',
-                        pointRadius         : false,
-                        pointColor          : 'rgba(210, 214, 222, 1)',
-                        pointStrokeColor    : '#c1c7d1',
-                        pointHighlightFill  : '#fff',
-                        pointHighlightStroke: 'rgba(220,220,220,1)',
-                        data                : [65, 59, 80, 81, 56, 55, 40]
-                    },
+                        data                : [28, 48, 40, 19, 86, 27]
+                    }
+                    // {
+                    //     label               : 'Electronics',
+                    //     backgroundColor     : 'rgba(210, 214, 222, 1)',
+                    //     borderColor         : 'rgba(210, 214, 222, 1)',
+                    //     pointRadius         : false,
+                    //     pointColor          : 'rgba(210, 214, 222, 1)',
+                    //     pointStrokeColor    : '#c1c7d1',
+                    //     pointHighlightFill  : '#fff',
+                    //     pointHighlightStroke: 'rgba(220,220,220,1)',
+                    //     data                : [65, 59, 80, 81, 56, 55, 40]
+                    // },
                 ]
             }
 
@@ -704,9 +747,9 @@
             var barChartCanvas = $('#barChart').get(0).getContext('2d')
             var barChartData = $.extend(true, {}, areaChartData)
             var temp0 = areaChartData.datasets[0]
-            var temp1 = areaChartData.datasets[1]
-            barChartData.datasets[0] = temp1
-            barChartData.datasets[1] = temp0
+            // var temp1 = areaChartData.datasets[1]
+            // barChartData.datasets[0] = temp1
+            barChartData.datasets[0] = temp0
 
             var barChartOptions = {
                 responsive              : true,
@@ -721,13 +764,19 @@
             })
 
 
-
             //-------------
             //- DONUT CHART -
             //-------------
             // Get context with jQuery - using jQuery's .get() method.
             var totalPurchase = Math.floor([[${totalPurchaseAmount}]]);
             var totalSale = Math.floor([[${totalSaleAmount}]]);
+            let highest = [[${highestSales}]];
+            // const myMap = new Object([[${highestSales}]]);
+            // const myMap = new Map([[${highestSales}]]);
+            // myMap.forEach((value, key) => {
+            //     console.log(value, key);
+            // });
+            console.log(highest);
             var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
             var donutData        = {
                 labels: [

@@ -8,14 +8,13 @@ import com.sadman.medicalinventory.repository.PurchaseRepository;
 import com.sadman.medicalinventory.repository.SaleRepository;
 import com.sadman.medicalinventory.repository.StockRepository;
 import com.sadman.medicalinventory.service.PurchaseService;
+import com.sadman.medicalinventory.util.DataUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @SpringBootApplication
@@ -43,6 +42,7 @@ public class TestApplication implements CommandLineRunner {
     @Override
     public void run(String... strings) throws Exception {
         List<Map<String, Long>> highestMap = saleRepository.getHighestSale();
-
+//        Map<String, Double> map = DataUtil.convertMapToList(highestMap);
+//        System.out.println(map.size());
     }
 }
