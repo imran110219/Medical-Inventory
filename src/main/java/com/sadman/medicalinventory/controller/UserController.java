@@ -98,9 +98,10 @@ public class UserController {
         modelAndView.addObject("countBrand", brandService.countAllBrand());
         modelAndView.addObject("countExpired", stockService.countExpiredStock());
         modelAndView.addObject("countOutOfStock", stockService.getOutOfStock().size());
-        modelAndView.addObject("totalPurchaseAmount", purchaseService.getTotalPurchaseAmount());
+         modelAndView.addObject("totalPurchaseAmount", purchaseService.getTotalPurchaseAmount());
         modelAndView.addObject("totalSaleAmount", saleService.getTotalSaleAmount());
         modelAndView.addObject("highestSales", saleService.getHighestSale());
+        modelAndView.addObject("lowestSales", saleService.getLowestSale());
         modelAndView.setViewName("index");
         return modelAndView;
     }

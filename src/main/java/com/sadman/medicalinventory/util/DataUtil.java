@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.annotation.PostConstruct;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Sadman
@@ -37,24 +38,5 @@ public class DataUtil {
             map.put(medicine, number);
         }
         return map;
-    }
-
-    public static List<List<String>> convertMapToList(List<Map<String, Long>> mapList){
-        List<List<String>> list = new ArrayList<>();
-        for (int i = 0; i < mapList.size(); i++) {
-            Collection<Long> mapValue = mapList.get(i).values();
-            String medicine = null;
-            Double number = null;
-            Iterator itr=mapValue.iterator();
-            List<String> l = new ArrayList<>();
-            while(itr.hasNext()){
-                medicine = itr.next().toString();
-                number = (Double) itr.next();
-                l.add(medicine);
-                l.add(number.toString());
-            }
-            list.add(l);
-        }
-        return list;
     }
 }

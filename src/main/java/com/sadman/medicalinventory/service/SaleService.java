@@ -7,7 +7,11 @@ import com.sadman.medicalinventory.util.DataUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Comparator;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class SaleService {
@@ -54,8 +58,23 @@ public class SaleService {
         return repository.getTotalSaleAmount();
     }
 
-    public List<List<String>> getHighestSale(){
-//        return DataUtil.convertMapToList(repository.getHighestSale());
-        return DataUtil.convertMapToList(repository.getHighestSale());
+    public Map<String, Double> getHighestSale(){
+        Map<String,Double> map = DataUtil.convertMapToMap(repository.getHighestSale());
+        Map<String,Double>  sortedMapReverseOrder =  map.entrySet().
+                stream().
+                sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).
+                collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+        System.out.println(sortedMapReverseOrder);
+        return sortedMapReverseOrder;
+    }
+
+    public Map<String, Double> getLowestSale(){
+        Map<String,Double> map = DataUtil.convertMapToMap(repository.getHighestSale());
+        Map<String,Double>  sortedMap =  map.entrySet().
+                stream().
+                sorted(Map.Entry.comparingByValue()).
+                collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));
+        System.out.println(sortedMap);
+        return sortedMap;
     }
 }
