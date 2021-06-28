@@ -5,6 +5,8 @@ import com.sadman.medicalinventory.dto.MedicineDTO;
 import com.sadman.medicalinventory.dto.PurchaseInvoiceDTO;
 import com.sadman.medicalinventory.dto.PurchaseMedicineDTO;
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
+import com.sadman.medicalinventory.iservice.BoxService;
+import com.sadman.medicalinventory.iservice.SupplierService;
 import com.sadman.medicalinventory.model.*;
 import com.sadman.medicalinventory.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,13 +47,13 @@ public class POPController {
     private SaleService saleService;
 
     @Autowired
-    private SupplierService supplierService;
+    SupplierService supplierService;
 
     @Autowired
     private ManufacturerService manufacturerService;
 
     @Autowired
-    private BoxService boxService;
+    BoxService boxService;
 
     @Autowired
     private LocationService locationService;

@@ -1,9 +1,8 @@
 package com.sadman.medicalinventory.controller;
 
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
+import com.sadman.medicalinventory.iservice.SupplierService;
 import com.sadman.medicalinventory.model.Supplier;
-import com.sadman.medicalinventory.model.Supplier;
-import com.sadman.medicalinventory.service.SupplierService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +15,7 @@ import java.util.List;
 @Controller
 public class SupplierController {
     @Autowired
-    private SupplierService service;
+    SupplierService service;
     
     @RequestMapping(value = "/suppliers")
     public String getAllUsers(Model model) {

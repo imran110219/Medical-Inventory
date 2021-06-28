@@ -2,6 +2,7 @@ package com.sadman.medicalinventory.service;
 
 import com.sadman.medicalinventory.dto.BrandDTO;
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
+import com.sadman.medicalinventory.iservice.BrandService;
 import com.sadman.medicalinventory.model.*;
 import com.sadman.medicalinventory.repository.BrandRepository;
 import com.sadman.medicalinventory.repository.DosageFormRepository;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class BrandService {
+public class BrandServiceImpl implements BrandService {
     @Autowired
     BrandRepository repository;
 
@@ -33,13 +34,11 @@ public class BrandService {
         return repository.findAll();
     }
 
-    public List<Brand> getBrandsByManufacturerId(Long manufacturerId)
-    {
+    public List<Brand> getBrandsByManufacturerId(Long manufacturerId) {
         return repository.getBrandsByManufacturerId(manufacturerId);
     }
 
-    public List<Brand> getBrandsByGenericId(Long manufacturerId)
-    {
+    public List<Brand> getBrandsByGenericId(Long manufacturerId) {
         return repository.getBrandsByGenericId(manufacturerId);
     }
 
@@ -51,8 +50,7 @@ public class BrandService {
         return repository.save(brand);
     }
 
-    public Brand updateBrand(Brand newBrand, Long id)
-    {
+    public Brand updateBrand(Brand newBrand, Long id) {
         return repository.findById(id)
                 .map(brand -> {
                     brand.setName(newBrand.getName());
