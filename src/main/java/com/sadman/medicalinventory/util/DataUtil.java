@@ -2,19 +2,37 @@ package com.sadman.medicalinventory.util;
 
 import com.sadman.medicalinventory.model.User;
 import com.sadman.medicalinventory.repository.UserRepository;
-import com.sadman.medicalinventory.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-
-import javax.annotation.PostConstruct;
+import org.springframework.stereotype.Component;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author Sadman
  */
 public class DataUtil {
+
+    @Autowired
+    UserRepository userRepository;
+
+//    public DataUtil() {
+//        loadFullName();
+//    }
+
+    private static String NAME_STATIC;
+
+    // https://www.baeldung.com/spring-inject-static-field
+
+//    @EventListener(ApplicationReadyEvent.class)
+//    public void loadFullName() {
+//        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//        String userName = authentication.getName();
+//        User user = userRepository.findByUserName(userName);
+//        NAME_STATIC = user.getFirstName() + " " + user.getLastName();
+//    }
 
     public static String getFullName() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -22,6 +40,7 @@ public class DataUtil {
         String role = authentication.getAuthorities().toString();
         role = role.substring(1, role.length() - 1);
         return role + " : " + userName;
+//        return NAME_STATIC;
     }
 
     public static Map<String, Double> convertMapToMap(List<Map<String, Long>> mapList){
