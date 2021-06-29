@@ -1,6 +1,7 @@
 package com.sadman.medicalinventory.service;
 
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
+import com.sadman.medicalinventory.iservice.RoleService;
 import com.sadman.medicalinventory.model.Role;
 import com.sadman.medicalinventory.model.User;
 import com.sadman.medicalinventory.repository.RoleRepository;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class RoleService {
+public class RoleServiceImpl implements RoleService {
     @Autowired
     RoleRepository repository;
 
@@ -26,8 +27,7 @@ public class RoleService {
         return repository.save(role);
     }
 
-    public Role updateRole(Role newRole, Long id)
-    {
+    public Role updateRole(Role newRole, Long id) {
         return repository.findById(id)
                 .map(role -> {
                     role.setName(newRole.getName());

@@ -1,6 +1,7 @@
 package com.sadman.medicalinventory.service;
 
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
+import com.sadman.medicalinventory.iservice.PurchaseInvoiceService;
 import com.sadman.medicalinventory.model.PurchaseInvoice;
 import com.sadman.medicalinventory.repository.PurchaseInvoiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class PurchaseInvoiceService {
+public class PurchaseInvoiceServiceImpl implements PurchaseInvoiceService {
 
     @Autowired
     PurchaseInvoiceRepository repository;

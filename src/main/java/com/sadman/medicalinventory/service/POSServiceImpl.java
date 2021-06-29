@@ -2,6 +2,7 @@ package com.sadman.medicalinventory.service;
 
 import com.sadman.medicalinventory.dto.InvoiceDTO;
 import com.sadman.medicalinventory.dto.MedicineDTO;
+import com.sadman.medicalinventory.iservice.POSService;
 import com.sadman.medicalinventory.model.SaleInvoice;
 import com.sadman.medicalinventory.model.Sale;
 import com.sadman.medicalinventory.model.Stock;
@@ -23,19 +24,19 @@ import java.util.List;
  * @author Sadman
  */
 @Service
-public class POSService {
+public class POSServiceImpl implements POSService {
 
     @Autowired
-    private UserRepository userRepository;
+    UserRepository userRepository;
 
     @Autowired
-    private SaleInvoiceRepository saleInvoiceRepository;
+    SaleInvoiceRepository saleInvoiceRepository;
 
     @Autowired
-    private StockRepository stockRepository;
+    StockRepository stockRepository;
 
     @Autowired
-    private SaleRepository saleRepository;
+    SaleRepository saleRepository;
 
     public SaleInvoice makePayment(InvoiceDTO invoiceDTO) {
         String invoiceId = String.valueOf(new Timestamp(System.currentTimeMillis()).getTime());

@@ -1,6 +1,7 @@
 package com.sadman.medicalinventory.service;
 
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
+import com.sadman.medicalinventory.iservice.SaleService;
 import com.sadman.medicalinventory.model.Sale;
 import com.sadman.medicalinventory.repository.SaleRepository;
 import com.sadman.medicalinventory.util.DataUtil;
@@ -14,7 +15,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
-public class SaleService {
+public class SaleServiceImpl implements SaleService {
     @Autowired
     SaleRepository repository;
 

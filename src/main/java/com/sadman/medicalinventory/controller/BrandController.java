@@ -3,11 +3,11 @@ package com.sadman.medicalinventory.controller;
 import com.sadman.medicalinventory.dto.BrandDTO;
 import com.sadman.medicalinventory.dto.IndicationDTO;
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
+import com.sadman.medicalinventory.iservice.BrandService;
+import com.sadman.medicalinventory.iservice.DosageFormService;
+import com.sadman.medicalinventory.iservice.GenericService;
+import com.sadman.medicalinventory.iservice.ManufacturerService;
 import com.sadman.medicalinventory.model.*;
-import com.sadman.medicalinventory.service.BrandService;
-import com.sadman.medicalinventory.service.DosageFormService;
-import com.sadman.medicalinventory.service.GenericService;
-import com.sadman.medicalinventory.service.ManufacturerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,16 +20,16 @@ import java.util.List;
 @Controller
 public class BrandController {
     @Autowired
-    private BrandService service;
+    BrandService service;
 
     @Autowired
-    private DosageFormService dosageFormService;
+    DosageFormService dosageFormService;
 
     @Autowired
-    private GenericService genericService;
+    GenericService genericService;
 
     @Autowired
-    private ManufacturerService manufacturerService;
+    ManufacturerService manufacturerService;
 
     @RequestMapping(value = "/brands")
     public String getAllUsers(Model model) {
