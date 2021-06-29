@@ -1,10 +1,10 @@
 package com.sadman.medicalinventory.controller;
 
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
+import com.sadman.medicalinventory.iservice.PurchaseInvoiceService;
+import com.sadman.medicalinventory.iservice.PurchaseService;
 import com.sadman.medicalinventory.model.Purchase;
 import com.sadman.medicalinventory.model.PurchaseInvoice;
-import com.sadman.medicalinventory.service.PurchaseInvoiceService;
-import com.sadman.medicalinventory.service.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,10 +17,10 @@ import java.util.List;
 @Controller
 public class PurchaseInvoiceController {
     @Autowired
-    private PurchaseInvoiceService service;
+    PurchaseInvoiceService service;
 
     @Autowired
-    private PurchaseService purchaseService;
+    PurchaseService purchaseService;
     
     @RequestMapping(value = "/purchaseinvoices")
     public String getAllUsers(Model model) {

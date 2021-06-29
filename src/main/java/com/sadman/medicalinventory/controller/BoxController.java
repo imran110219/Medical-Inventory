@@ -1,8 +1,8 @@
 package com.sadman.medicalinventory.controller;
 
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
+import com.sadman.medicalinventory.iservice.BoxService;
 import com.sadman.medicalinventory.model.Box;
-import com.sadman.medicalinventory.service.BoxService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ import java.util.List;
 public class BoxController {
 
     @Autowired
-    private BoxService service;
+    BoxService service;
 
     @RequestMapping(value = "/boxes")
     public String getAllBoxs(Model model) {

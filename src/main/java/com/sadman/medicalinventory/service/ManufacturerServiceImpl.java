@@ -1,6 +1,7 @@
 package com.sadman.medicalinventory.service;
 
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
+import com.sadman.medicalinventory.iservice.ManufacturerService;
 import com.sadman.medicalinventory.model.Manufacturer;
 import com.sadman.medicalinventory.repository.ManufacturerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class ManufacturerService {
+public class ManufacturerServiceImpl implements ManufacturerService {
     @Autowired
     ManufacturerRepository repository;
 

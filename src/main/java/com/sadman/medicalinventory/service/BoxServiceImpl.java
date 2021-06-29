@@ -1,6 +1,7 @@
 package com.sadman.medicalinventory.service;
 
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
+import com.sadman.medicalinventory.iservice.BoxService;
 import com.sadman.medicalinventory.model.Box;
 import com.sadman.medicalinventory.repository.BoxRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class BoxService {
+public class BoxServiceImpl implements BoxService {
     @Autowired
     BoxRepository repository;
 

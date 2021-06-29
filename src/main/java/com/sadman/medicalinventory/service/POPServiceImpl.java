@@ -4,6 +4,7 @@ import com.sadman.medicalinventory.dto.InvoiceDTO;
 import com.sadman.medicalinventory.dto.MedicineDTO;
 import com.sadman.medicalinventory.dto.PurchaseInvoiceDTO;
 import com.sadman.medicalinventory.dto.PurchaseMedicineDTO;
+import com.sadman.medicalinventory.iservice.POPService;
 import com.sadman.medicalinventory.model.*;
 import com.sadman.medicalinventory.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +18,7 @@ import java.util.List;
  * @author Sadman
  */
 @Service
-public class POPService {
+public class POPServiceImpl implements POPService {
 
     @Autowired
     private SupplierRepository supplierRepository;

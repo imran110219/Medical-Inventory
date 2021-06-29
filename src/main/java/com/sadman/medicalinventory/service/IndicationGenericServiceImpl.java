@@ -1,6 +1,7 @@
 package com.sadman.medicalinventory.service;
 
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
+import com.sadman.medicalinventory.iservice.IndicationGenericService;
 import com.sadman.medicalinventory.model.Brand;
 import com.sadman.medicalinventory.model.Generic;
 import com.sadman.medicalinventory.model.Indication;
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class IndicationGenericService {
+public class IndicationGenericServiceImpl implements IndicationGenericService {
     @Autowired
     IndicationGenericRepository repository;
 

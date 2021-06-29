@@ -2,6 +2,7 @@ package com.sadman.medicalinventory.service;
 
 import com.sadman.medicalinventory.dto.ReturnListDTO;
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
+import com.sadman.medicalinventory.iservice.ReturnService;
 import com.sadman.medicalinventory.model.Purchase;
 import com.sadman.medicalinventory.model.Return;
 import com.sadman.medicalinventory.model.Sale;
@@ -15,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class ReturnService {
+public class ReturnServiceImpl implements ReturnService {
     @Autowired
     ReturnRepository repository;
 

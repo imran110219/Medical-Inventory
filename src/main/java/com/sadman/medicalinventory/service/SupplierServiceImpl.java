@@ -1,6 +1,7 @@
 package com.sadman.medicalinventory.service;
 
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
+import com.sadman.medicalinventory.iservice.SupplierService;
 import com.sadman.medicalinventory.model.Supplier;
 import com.sadman.medicalinventory.repository.SupplierRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class SupplierService {
+public class SupplierServiceImpl implements SupplierService {
     @Autowired
     SupplierRepository repository;
 
@@ -27,8 +28,7 @@ public class SupplierService {
         return repository.save(supplier);
     }
 
-    public Supplier updateSupplier(Supplier newSupplier, Long id)
-    {
+    public Supplier updateSupplier(Supplier newSupplier, Long id) {
         return repository.findById(id)
                 .map(supplier -> {
                     supplier.setName(newSupplier.getName());

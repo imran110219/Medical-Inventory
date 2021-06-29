@@ -1,5 +1,6 @@
 package com.sadman.medicalinventory.service;
 
+import com.sadman.medicalinventory.iservice.UserService;
 import com.sadman.medicalinventory.model.Role;
 import com.sadman.medicalinventory.model.User;
 import org.springframework.beans.factory.annotation.Autowired;

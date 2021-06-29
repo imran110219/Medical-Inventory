@@ -3,6 +3,7 @@ package com.sadman.medicalinventory.service;
 import com.sadman.medicalinventory.dto.GenericDTO;
 import com.sadman.medicalinventory.dto.IndicationDTO;
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
+import com.sadman.medicalinventory.iservice.IndicationService;
 import com.sadman.medicalinventory.model.Generic;
 import com.sadman.medicalinventory.model.Indication;
 import com.sadman.medicalinventory.model.IndicationGeneric;
@@ -19,7 +20,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class IndicationService {
+public class IndicationServiceImpl implements IndicationService {
 
     @Autowired
     IndicationRepository repository;

@@ -1,6 +1,7 @@
 package com.sadman.medicalinventory.service;
 
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
+import com.sadman.medicalinventory.iservice.UserService;
 import com.sadman.medicalinventory.model.Role;
 import com.sadman.medicalinventory.model.User;
 import com.sadman.medicalinventory.repository.RoleRepository;
@@ -15,7 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 
 @Service
-public class UserService {
+public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;

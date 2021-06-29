@@ -1,10 +1,9 @@
 package com.sadman.medicalinventory.controller.api;
 
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
+import com.sadman.medicalinventory.iservice.IndicationService;
 import com.sadman.medicalinventory.model.Generic;
 import com.sadman.medicalinventory.model.Indication;
-import com.sadman.medicalinventory.service.GenericService;
-import com.sadman.medicalinventory.service.IndicationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;

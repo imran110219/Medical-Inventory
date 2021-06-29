@@ -1,11 +1,11 @@
 package com.sadman.medicalinventory.controller;
 
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
+import com.sadman.medicalinventory.iservice.LocationService;
+import com.sadman.medicalinventory.iservice.PurchaseService;
+import com.sadman.medicalinventory.iservice.StockService;
 import com.sadman.medicalinventory.model.*;
 import com.sadman.medicalinventory.model.Stock;
-import com.sadman.medicalinventory.service.LocationService;
-import com.sadman.medicalinventory.service.PurchaseService;
-import com.sadman.medicalinventory.service.StockService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ import java.util.Locale;
 public class StockController {
 
     @Autowired
-    private StockService service;
+    StockService service;
 
     @Autowired
     PurchaseService purchaseService;

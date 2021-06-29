@@ -1,14 +1,11 @@
 package com.sadman.medicalinventory.controller;
 
-import com.sadman.medicalinventory.dto.GenericDTO;
 import com.sadman.medicalinventory.dto.IndicationDTO;
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
+import com.sadman.medicalinventory.iservice.GenericService;
+import com.sadman.medicalinventory.iservice.IndicationService;
 import com.sadman.medicalinventory.model.Generic;
 import com.sadman.medicalinventory.model.Indication;
-import com.sadman.medicalinventory.model.User;
-import com.sadman.medicalinventory.service.GenericService;
-import com.sadman.medicalinventory.service.IndicationService;
-import com.sadman.medicalinventory.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,10 +19,10 @@ import java.util.List;
 public class IndicationController {
 
     @Autowired
-    private IndicationService service;
+    IndicationService service;
 
     @Autowired
-    private GenericService genericService;
+    GenericService genericService;
 
     @RequestMapping(value = "/indications")
     public String getAllIndications(Model model) {
