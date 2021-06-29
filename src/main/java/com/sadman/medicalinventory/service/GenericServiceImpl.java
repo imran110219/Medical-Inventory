@@ -2,6 +2,7 @@ package com.sadman.medicalinventory.service;
 
 import com.sadman.medicalinventory.dto.GenericDTO;
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
+import com.sadman.medicalinventory.iservice.GenericService;
 import com.sadman.medicalinventory.model.Generic;
 import com.sadman.medicalinventory.model.Indication;
 import com.sadman.medicalinventory.model.IndicationGeneric;
@@ -18,7 +19,7 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class GenericService {
+public class GenericServiceImpl implements GenericService {
     @Autowired
     GenericRepository repository;
 
