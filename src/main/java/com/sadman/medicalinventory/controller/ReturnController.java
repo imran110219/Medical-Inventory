@@ -1,11 +1,8 @@
 package com.sadman.medicalinventory.controller;
 
-import com.sadman.medicalinventory.dto.InvoiceDTO;
-import com.sadman.medicalinventory.dto.MedicineDTO;
-import com.sadman.medicalinventory.dto.ReturnDTO;
 import com.sadman.medicalinventory.dto.ReturnListDTO;
+import com.sadman.medicalinventory.iservice.*;
 import com.sadman.medicalinventory.model.*;
-import com.sadman.medicalinventory.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,22 +21,22 @@ import java.util.stream.Collectors;
 @Controller
 public class ReturnController {
     @Autowired
-    private ReturnService service;
+    ReturnService service;
 
     @Autowired
-    private PurchaseInvoiceService purchaseInvoiceService;
+    PurchaseInvoiceService purchaseInvoiceService;
 
     @Autowired
-    private SaleInvoiceService saleInvoiceService;
+    SaleInvoiceService saleInvoiceService;
 
     @Autowired
-    private PurchaseService purchaseService;
+    PurchaseService purchaseService;
 
     @Autowired
-    private SaleService saleService;
+    SaleService saleService;
 
     @Autowired
-    private StockService stockService;
+    StockService stockService;
 
     @RequestMapping(value = "/returns")
     public String getAllReturns(Model model) {

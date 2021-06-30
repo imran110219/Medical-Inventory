@@ -1,11 +1,10 @@
 package com.sadman.medicalinventory.controller;
 
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
+import com.sadman.medicalinventory.iservice.*;
 import com.sadman.medicalinventory.model.Role;
 import com.sadman.medicalinventory.model.User;
 import com.sadman.medicalinventory.service.*;
-import com.sadman.medicalinventory.util.DataUtil;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,22 +19,22 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserService service;
+    UserService service;
 
     @Autowired
-    private RoleService roleService;
+    RoleService roleService;
 
     @Autowired
-    private BrandService brandService;
+    BrandService brandService;
 
     @Autowired
-    private StockService stockService;
+    StockService stockService;
 
     @Autowired
-    private PurchaseService purchaseService;
+    PurchaseService purchaseService;
 
     @Autowired
-    private SaleService saleService;
+    SaleService saleService;
 
     @GetMapping(value={"/login"})
     public ModelAndView login(){

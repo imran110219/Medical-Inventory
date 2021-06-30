@@ -1,7 +1,7 @@
 package com.sadman.medicalinventory.controller;
 
+import com.sadman.medicalinventory.iservice.SaleService;
 import com.sadman.medicalinventory.model.Sale;
-import com.sadman.medicalinventory.service.SaleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +12,7 @@ import java.util.List;
 @Controller
 public class SaleController {
     @Autowired
-    private SaleService service;
+    SaleService service;
 
     @RequestMapping(value = "/sales")
     public String getAllSales(Model model) {
