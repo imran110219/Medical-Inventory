@@ -40,6 +40,30 @@ public class StockController {
         return "stock-list";
     }
 
+    @RequestMapping(value = "/stocks/expired")
+    public String getExpiredStocks(Model model) {
+        List<Stock> list = service.getExpiredStock();
+        List<Purchase> purchaseList = purchaseService.getPurchasesByNotInStock();
+        List<Location> locationList = locationService.getAllLocations();
+        model.addAttribute("stock", new Stock());
+        model.addAttribute("purchases", purchaseList);
+        model.addAttribute("locations", locationList);
+        model.addAttribute("stocks", list);
+        return "stock-list";
+    }
+
+    @RequestMapping(value = "/stocks/out")
+    public String getOutofStocks(Model model) {
+        List<Stock> list = service.getOutOfStock();
+        List<Purchase> purchaseList = purchaseService.getPurchasesByNotInStock();
+        List<Location> locationList = locationService.getAllLocations();
+        model.addAttribute("stock", new Stock());
+        model.addAttribute("purchases", purchaseList);
+        model.addAttribute("locations", locationList);
+        model.addAttribute("stocks", list);
+        return "stock-list";
+    }
+
     @GetMapping("/stocks/{id}")
     public ResponseEntity<Stock> getStockById(@PathVariable(value = "id") Long stockId)
             throws RecordNotFoundException {

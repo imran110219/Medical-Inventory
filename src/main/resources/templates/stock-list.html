@@ -52,11 +52,30 @@
                         <!-- Default box -->
                         <div class="card">
                             <div class="card-header">
-                                <div class="col-sm-2 col-md-1">
-                                    <button type="button" class="btn btn-block btn-success btn-sm"
-                                            data-toggle="modal" data-target="#modal-add">Add
-                                    </button>
+                                <div class="row justify-content-between">
+                                    <div class="col-sm-2 col-md-1">
+                                        <button type="button" class="btn btn-block btn-success btn-sm"
+                                                data-toggle="modal" data-target="#modal-add">Add
+                                        </button>
+                                    </div>
+                                    <div class="col-sm-8 col-md-4">
+                                        <div class="btn-group btn-group-toggle" data-toggle="buttons" style="float: right;">
+                                            <label class="btn bg-green active">
+                                                <input type="radio" name="options" id="stockId" onclick="handleStockList(this);"
+                                                       value="stock" autocomplete="off" checked> In Stock
+                                            </label>
+                                            <label class="btn bg-warning">
+                                                <input type="radio" name="options" id="expiredId" onclick="handleStockList(this);"
+                                                       value="expired" autocomplete="off" checked> Expired
+                                            </label>
+                                            <label class="btn bg-danger">
+                                                <input type="radio" name="options" id="outId" onclick="handleStockList(this);"
+                                                       value="stockout" autocomplete="off"> Out of Stock
+                                            </label>
+                                        </div>
+                                    </div>
                                 </div>
+
                             </div>
 
                             <div class="card-body">
@@ -288,8 +307,35 @@
     <script src="/plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
     <!-- Toastr -->
     <script src="/plugins/toastr/toastr.min.js"></script>
-    <script>
+    <script type="text/javascript" th:inline="javascript">
+
+        $(document).ready(function () {
+
+            function handleStockList(myRadio) {
+                if (myRadio.value === "stockout") {
+                    window.location.href = "/stocks/out";
+                } else if (myRadio.value === "expired") {
+                    window.location.href = "/stocks/expired";
+                } else {
+                    window.location.href = "/stocks";
+                }
+            }
+
+        });
+
         $(function () {
+
+            $(document).on("click", "#stockId", function () {
+                window.location.href = "/stocks";
+            });
+
+            $(document).on("click", "#outId", function () {
+                window.location.href = "/stocks/out";
+            });
+
+            $(document).on("click", "#expiredId", function () {
+                window.location.href = "/stocks/expired";
+            });
 
             $("#stockTable").DataTable({
                 "responsive": true, "lengthChange": false, "autoWidth": false,

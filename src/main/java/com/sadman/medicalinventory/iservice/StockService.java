@@ -24,7 +24,7 @@ public interface StockService {
 
     ResponseEntity<Object> deleteStockById(Long id);
 
-    Long countExpiredStock();
+    List<Stock> getExpiredStock();
 
     List<Stock> getOutOfStock();
 }
