@@ -56,8 +56,8 @@ public class StockServiceImpl implements StockService {
         } else return ResponseEntity.ok().body("Stock is Deleted Successfully");
     }
 
-    public Long countExpiredStock(){
-        return repository.countExpiredStock();
+    public List<Stock> getExpiredStock(){
+        return repository.getExpiredStock();
     }
 
     public List<Stock> getOutOfStock(){

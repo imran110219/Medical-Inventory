@@ -95,7 +95,7 @@ public class UserController {
     public ModelAndView home(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("countBrand", brandService.countAllBrand());
-        modelAndView.addObject("countExpired", stockService.countExpiredStock());
+        modelAndView.addObject("countExpired", stockService.getExpiredStock().size());
         modelAndView.addObject("countOutOfStock", stockService.getOutOfStock().size());
          modelAndView.addObject("totalPurchaseAmount", purchaseService.getTotalPurchaseAmount());
         modelAndView.addObject("totalSaleAmount", saleService.getTotalSaleAmount());
