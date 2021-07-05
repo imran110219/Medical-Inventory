@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AdminLTE 3 | Fixed Sidebar</title>
+
+    <th:block layout:fragment="link">
+        <!-- Ionicons -->
+<!--        <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">-->
+    </th:block>
+
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+<!-- Site wrapper -->
+<div class="wrapper">
+    <div class="content-wrapper" layout:fragment="content">
+
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Profile</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">User Profile</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+                <div class="row">
+                    <div class="col-md-12">
+
+                        <!-- Profile Image -->
+                        <div class="card card-primary card-outline">
+                            <div class="card-body box-profile">
+                                <div class="text-center">
+                                    <img class="profile-user-img img-fluid img-circle"
+                                         src="/dist/img/user4-128x128.jpg"
+                                         alt="User profile picture">
+                                </div>
+
+                                <h3 class="profile-username text-center">Nina Mcintire</h3>
+
+                                <p class="text-muted text-center">Software Engineer</p>
+
+
+                                <strong><i class="fas fa-book mr-1"></i> Education</strong>
+
+                                <p class="text-muted">
+                                    B.S. in Computer Science from the University of Tennessee at Knoxville
+                                </p>
+
+                                <hr>
+
+                                <strong><i class="fas fa-map-marker-alt mr-1"></i> Location</strong>
+
+                                <p class="text-muted">Malibu, California</p>
+
+                                <hr>
+
+                                <strong><i class="fas fa-pencil-alt mr-1"></i> Skills</strong>
+
+                                <p class="text-muted">
+                                    <span class="tag tag-danger">UI Design</span>
+                                    <span class="tag tag-success">Coding</span>
+                                    <span class="tag tag-info">Javascript</span>
+                                    <span class="tag tag-warning">PHP</span>
+                                    <span class="tag tag-primary">Node.js</span>
+                                </p>
+
+                                <hr>
+
+                                <strong><i class="far fa-file-alt mr-1"></i> Notes</strong>
+
+                                <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam fermentum enim neque.</p>
+
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                </div>
+                <!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+<th:block layout:fragment="script">
+    <!-- ChartJS -->
+    <script src="/plugins/chart.js/Chart.min.js"></script>
+    <!-- Sparkline -->
+    <script src="/plugins/sparklines/sparkline.js"></script>
+    <!-- jQuery Knob Chart -->
+    <script src="/plugins/jquery-knob/jquery.knob.min.js"></script>
+    <!-- overlayScrollbars -->
+    <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+    <!--    <script src="/dist/js/pages/dashboard.js"></script>-->
+    <script type="text/javascript" th:inline="javascript">
+
+        /*<![CDATA[*/
+        $(function () {
+
+            var highest = [[${highestSales}]];
+            var maxLabels = [];
+            var maxData = [];
+            $.each(highest, function( index, value ) {
+                maxLabels.push(index);
+                maxData.push(value);
+            });
+
+            var lowest = [[${lowestSales}]];
+            var minLabels = [];
+            var minData = [];
+            $.each(lowest, function( index, value ) {
+                minLabels.push(index);
+                minData.push(value);
+            });
+
+            var maxAreaChartData = {
+                labels  : maxLabels,
+                datasets: [
+                    {
+                        label               : 'Most Sale Medicine',
+                        backgroundColor     : 'rgba(60,141,188,0.9)',
+                        borderColor         : 'rgba(60,141,188,0.8)',
+                        pointRadius         :  false,
+                        pointColor          : '#3b8bba',
+                        pointStrokeColor    : 'rgba(60,141,188,1)',
+                        pointHighlightFill  : '#fff',
+                        pointHighlightStroke: 'rgba(60,141,188,1)',
+                        data                :  maxData
+                    }
+                ]
+            }
+
+            var minAreaChartData = {
+                labels  : minLabels,
+                datasets: [
+                    {
+                        label               : 'Least Sale Medicine',
+                        backgroundColor     : 'rgba(60,141,188,0.9)',
+                        borderColor         : 'rgba(60,141,188,0.8)',
+                        pointRadius         :  false,
+                        pointColor          : '#3b8bba',
+                        pointStrokeColor    : 'rgba(60,141,188,1)',
+                        pointHighlightFill  : '#fff',
+                        pointHighlightStroke: 'rgba(60,141,188,1)',
+                        data                :  minData
+                    }
+                ]
+            }
+
+            //-------------
+            //- Max BAR CHART -
+            //-------------
+            var maxBarChartCanvas = $('#maxBarChart').get(0).getContext('2d')
+            var maxBarChartData = $.extend(true, {}, maxAreaChartData)
+            var maxTemp0 = maxAreaChartData.datasets[0]
+            // var temp1 = areaChartData.datasets[1]
+            // maxBarChartData.datasets[0] = temp1
+            maxBarChartData.datasets[0] = maxTemp0
+
+            var maxBarChartOptions = {
+                responsive              : true,
+                maintainAspectRatio     : false,
+                datasetFill             : false
+            }
+
+            var maxSaleChart = new Chart(maxBarChartCanvas, {
+                type: 'bar',
+                data: maxBarChartData,
+                options: maxBarChartOptions
+            })
+
+            //-------------
+            //- Max BAR CHART -
+            //-------------
+            var minBarChartCanvas = $('#minBarChart').get(0).getContext('2d')
+            var minBarChartData = $.extend(true, {}, minAreaChartData)
+            var minTemp0 = minAreaChartData.datasets[0]
+            // var temp1 = areaChartData.datasets[1]
+            // maxBarChartData.datasets[0] = temp1
+            minBarChartData.datasets[0] = minTemp0
+
+            var minBarChartOptions = {
+                responsive              : true,
+                maintainAspectRatio     : false,
+                datasetFill             : false
+            }
+
+            var minSaleChart = new Chart(minBarChartCanvas, {
+                type: 'bar',
+                data: minBarChartData,
+                options: minBarChartOptions
+            })
+
+            //-------------
+            //- DONUT CHART -
+            //-------------
+            // Get context with jQuery - using jQuery's .get() method.
+            var totalPurchase = Math.floor([[${totalPurchaseAmount}]]);
+            var totalSale = Math.floor([[${totalSaleAmount}]]);
+            var donutChartCanvas = $('#donutChart').get(0).getContext('2d')
+            var donutData        = {
+                labels: [
+                    'Purchase',
+                    'Sale',
+                ],
+                datasets: [
+                    {
+                        data: [totalPurchase,totalSale],
+                        backgroundColor : ['#f56954', '#00a65a'],
+                    }
+                ]
+            }
+            var donutOptions     = {
+                maintainAspectRatio : false,
+                responsive : true,
+            }
+            //Create pie or douhnut chart
+            // You can switch between pie and douhnut using the method below.
+            var financeChart = new Chart(donutChartCanvas, {
+                type: 'doughnut',
+                data: donutData,
+                options: donutOptions
+            })
+        });
+        /*]]>*/
+    </script>
+</th:block>
+</body>
+</html>

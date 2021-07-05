@@ -8,6 +8,8 @@ import com.sadman.medicalinventory.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -102,6 +104,17 @@ public class UserController {
         modelAndView.addObject("highestSales", saleService.getHighestSale());
         modelAndView.addObject("lowestSales", saleService.getLowestSale());
         modelAndView.setViewName("index");
+        return modelAndView;
+    }
+
+    @GetMapping(value="/profile")
+    public ModelAndView profile(){
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userName = authentication.getName();
+        User user = service.findUserByUserName(userName);
+        modelAndView.addObject("user", user);
+        modelAndView.setViewName("profile");
         return modelAndView;
     }
 
