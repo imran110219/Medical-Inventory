@@ -1,5 +1,6 @@
 package com.sadman.medicalinventory.iservice;
 
+import com.sadman.medicalinventory.dto.ChangePasswordDTO;
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
 import com.sadman.medicalinventory.model.User;
 
@@ -18,5 +19,7 @@ public interface UserService {
     User getUserById(Long id) throws RecordNotFoundException;
     User createUser(User user);
     User updateUser(User newUser, Long id);
+    User updateProfile(User newUser);
+    void changePassword(ChangePasswordDTO changePasswordDTO);
     void deleteUserById(Long id);
 }

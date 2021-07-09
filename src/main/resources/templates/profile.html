@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{fragments/layout}">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AdminLTE 3 | Fixed Sidebar</title>
+
+    <th:block layout:fragment="link">
+        <!-- Ionicons -->
+        <!--        <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">-->
+        <!-- Toastr -->
+        <link rel="stylesheet" href="/plugins/toastr/toastr.min.css">
+    </th:block>
+
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+<!-- Site wrapper -->
+<div class="wrapper">
+    <div class="content-wrapper" layout:fragment="content">
+
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0">Profile</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">User Profile</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <!-- Main content -->
+        <section class="content">
+            <div class="container-fluid">
+                <!-- Small boxes (Stat box) -->
+                <div class="row">
+                    <div class="col-md-3">
+
+                        <!-- Profile Image -->
+                        <div class="card card-primary card-outline">
+                            <div class="card-body box-profile">
+                                <div class="text-center">
+                                    <img class="profile-user-img img-fluid img-circle"
+                                         src="/dist/img/user4-128x128.jpg"
+                                         alt="User profile picture">
+                                </div>
+
+                                <h3 class="profile-username text-center">[[${user.firstName}]] [[${user.lastName}]]</h3>
+
+                                <p class="text-muted text-center" th:if="${user.roles[0].name == 'USER'}">Staff</p>
+                                <p class="text-muted text-center" th:if="${user.roles[0].name == 'ADMIN'}">Owner</p>
+                                <p class="text-muted text-center" th:if="${user.roles[0].name == 'SUPER_ADMIN'}">
+                                    Developer</p>
+
+                                <strong><i class="fas fa-user"></i> User Name</strong>
+
+                                <p class="text-muted">
+                                    [[${user.userName}]]
+                                </p>
+
+                                <hr>
+
+                                <strong><i class="fas fa-bank"></i> User Name</strong>
+
+                                <p class="text-muted">
+                                    [[${user.email}]]
+                                </p>
+
+                                <hr>
+
+                                <strong><i class="fas fa-map-marker-alt mr-1"></i> Address</strong>
+
+                                <p class="text-muted">[[${user.address}]]</p>
+
+                                <hr>
+
+                                <strong><i class="fas fa-mobile-alt"></i> Contact</strong>
+
+                                <p class="text-muted">[[${user.phone}]]</p>
+
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+
+                    <div class="col-md-5">
+                        <!-- general form elements -->
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Edit Profile</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <!-- form start -->
+                            <form id="editForm" th:action="@{/users/add}" th:object="${user}" method="post">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="e-inputemail">Email address</label>
+                                        <input type="email" class="form-control" id="e-inputemail"
+                                               th:field="*{email}" placeholder="Enter email">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="e-inputusername">User Name</label>
+                                        <input type="text" class="form-control" id="e-inputusername"
+                                               th:field="*{userName}" placeholder="Enter User name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="e-inputfirstname">First Name</label>
+                                        <input type="text" class="form-control" id="e-inputfirstname"
+                                               th:field="*{firstName}" placeholder="Enter First name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="e-inputlastname">Last Name</label>
+                                        <input type="text" class="form-control" id="e-inputlastname"
+                                               th:field="*{lastName}" placeholder="Enter Last name">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="e-inputphone">Mobile No</label>
+                                        <input type="text" class="form-control" id="e-inputphone"
+                                               th:field="*{phone}" placeholder="Enter Mobile No">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="e-inputaddress">Address</label>
+                                        <input type="text" class="form-control" id="e-inputaddress"
+                                               th:field="*{address}" placeholder="Enter Address">
+                                    </div>
+                                </div>
+                                <!-- /.card-body -->
+
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary">Save</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <div class="col-md-4">
+                        <!-- general form elements -->
+                        <div class="card card-primary">
+                            <div class="card-header">
+                                <h3 class="card-title">Change Password</h3>
+                            </div>
+                            <form id="changePasswordForm" method="post">
+                                <div class="card-body">
+                                    <div class="form-group">
+                                        <label for="inputcurrentpassword">Current Password</label>
+                                        <input type="password" class="form-control" id="inputcurrentpassword"
+                                               placeholder="Password">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputpassword1">New Password</label>
+                                        <input type="password" class="form-control" id="inputpassword1"
+                                               placeholder="Password">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="inputpassword2">Retype Password</label>
+                                        <input type="password" class="form-control" id="inputpassword2"
+                                               placeholder="Password">
+                                    </div>
+                                </div>
+
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <!-- /.row -->
+                </div><!-- /.container-fluid -->
+        </section>
+        <!-- /.content -->
+    </div>
+    <!-- /.content-wrapper -->
+</div>
+<!-- ./wrapper -->
+<th:block layout:fragment="script">
+
+    <!-- jquery-validation -->
+    <script src="/plugins/jquery-validation/jquery.validate.min.js"></script>
+    <script src="/plugins/jquery-validation/additional-methods.min.js"></script>
+    <!-- Toastr -->
+    <script src="/plugins/toastr/toastr.min.js"></script>
+    <script type="text/javascript" th:inline="javascript">
+
+        /*<![CDATA[*/
+        $(function () {
+
+            $('#editForm').validate({
+                rules: {
+                    firstName: {
+                        required: true
+                    },
+                    lastName: {
+                        required: true
+                    },
+                    userName: {
+                        required: true
+                    },
+                    email: {
+                        required: true,
+                        email: true,
+                    },
+                    phone: {
+                        required: true
+                        // phone: true
+                    },
+                    address: {
+                        required: true
+                    }
+                },
+                messages: {
+                    firstName: {
+                        required: "Please enter a first name"
+                    },
+                    lastName: {
+                        required: "Please enter a last name"
+                    },
+                    userName: {
+                        required: "Please enter a username"
+                    },
+                    email: {
+                        required: "Please enter a email address",
+                        email: "Please enter a vaild email address"
+                    },
+                    phone: {
+                        required: "Please enter a phone number"
+                        // phone: "Please enter a vaild phone number"
+                    },
+                    address: {
+                        required: "Please enter a address"
+                    }
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                },
+                submitHandler: function (form) {
+
+                    var formData = {
+                        firstName: $("#e-inputfirstname").val(),
+                        lastName: $("#e-inputlastname").val(),
+                        userName: $("#e-inputusername").val(),
+                        email: $("#e-inputemail").val(),
+                        phone: $("#e-inputphone").val(),
+                        address: $("#e-inputaddress").val()
+                    };
+
+                    console.log(formData);
+
+                    $.ajax({
+                        type: "PUT",
+                        url: "/users/profile/edit",
+                        data: JSON.stringify(formData),
+                        contentType: 'application/json',
+                        success: function (data) {
+                            toastr.success(data);
+                            setTimeout(function () {
+                                location.reload();  //Refresh page
+                            }, 3000); //3 Second
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
+                }
+            });
+
+            $('#changePasswordForm').validate({
+                rules: {
+                    currentPassword: {
+                        required: true
+                        // minlength : 8
+                    },
+                    newPassword: {
+                        required: true
+                        // minlength : 8
+                    },
+                    confirmPassword: {
+                        required: true
+                        // minlength : 8
+                        // equalTo : "#newPassword"
+
+                    }
+                },
+                messages: {
+                    currentPassword: {
+                        required: "Please enter password"
+                        // minlength : "Password is minimum * character"
+                    },
+                    newPassword: {
+                        required: "Please enter password"
+                        // minlength : "Password is minimum * character"
+                    },
+                    confirmPassword: {
+                        required: "Please enter password"
+                        // minlength : "Password is minimum * character",
+                        // equalTo : "Password doesn't match"
+                    }
+                },
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').append(error);
+                },
+                highlight: function (element, errorClass, validClass) {
+                    $(element).addClass('is-invalid');
+                },
+                unhighlight: function (element, errorClass, validClass) {
+                    $(element).removeClass('is-invalid');
+                },
+                submitHandler: function (form) {
+
+                    var formData = {
+                        currentPassword: $("#inputcurrentpassword").val(),
+                        newPassword: $("#inputpassword1").val(),
+                        confirmPassword: $("#inputpassword2").val()
+                    };
+
+                    console.log(formData);
+
+                    $.ajax({
+                        type: "PUT",
+                        url: "/users/profile/changepassword",
+                        data: JSON.stringify(formData),
+                        contentType: 'application/json',
+                        success: function (data) {
+                            toastr.success(data);
+                            setTimeout(function () {
+                                location.reload();  //Refresh page
+                            }, 3000); //3 Second
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
+                }
+            });
+
+        });
+        /*]]>*/
+    </script>
+</th:block>
+</body>
+</html>
