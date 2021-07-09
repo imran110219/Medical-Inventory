@@ -1,10 +1,10 @@
 package com.sadman.medicalinventory.controller;
 
+import com.sadman.medicalinventory.dto.ChangePasswordDTO;
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
 import com.sadman.medicalinventory.iservice.*;
 import com.sadman.medicalinventory.model.Role;
 import com.sadman.medicalinventory.model.User;
-import com.sadman.medicalinventory.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -116,6 +116,18 @@ public class UserController {
         modelAndView.addObject("user", user);
         modelAndView.setViewName("profile");
         return modelAndView;
+    }
+
+    @PutMapping("/users/profile/edit")
+    public ResponseEntity<String> editProfile(@RequestBody User newUser) {
+        service.updateProfile(newUser);
+        return new ResponseEntity<>("User is Edited Successfully", HttpStatus.OK);
+    }
+
+    @PutMapping("/users/profile/changepassword")
+    public ResponseEntity<String> changePassword(@RequestBody ChangePasswordDTO changePasswordDTO) {
+        service.changePassword(changePasswordDTO);
+        return new ResponseEntity<>("Password is Changed Successfully", HttpStatus.OK);
     }
 
     @GetMapping(value="/dashboard1")

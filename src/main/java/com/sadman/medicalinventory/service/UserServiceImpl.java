@@ -1,5 +1,6 @@
 package com.sadman.medicalinventory.service;
 
+import com.sadman.medicalinventory.dto.ChangePasswordDTO;
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
 import com.sadman.medicalinventory.iservice.UserService;
 import com.sadman.medicalinventory.model.Role;
@@ -7,6 +8,8 @@ import com.sadman.medicalinventory.model.User;
 import com.sadman.medicalinventory.repository.RoleRepository;
 import com.sadman.medicalinventory.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -82,6 +85,22 @@ public class UserServiceImpl implements UserService {
                     newUser.setId(id);
                     return saveUser(newUser);
                 });
+    }
+
+    public User updateProfile(User newUser) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userName = authentication.getName();
+        User user = userRepository.findByUserName(userName);
+        newUser.setRoles(user.getRoles());
+        newUser.setActive(user.getActive());
+        return updateUser(newUser, user.getId());
+    }
+
+    public void changePassword(ChangePasswordDTO changePasswordDTO) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userName = authentication.getName();
+        User user = userRepository.findByUserName(userName);
+        user.setPassword(passwordEncoder.encode(changePasswordDTO.getNewPassword()));
     }
 
     public void deleteUserById(Long id){
