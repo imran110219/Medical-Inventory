@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -128,10 +129,5 @@ public class UserController {
     public ResponseEntity<String> changePassword(@RequestBody ChangePasswordDTO changePasswordDTO) {
         service.changePassword(changePasswordDTO);
         return new ResponseEntity<>("Password is Changed Successfully", HttpStatus.OK);
-    }
-
-    @GetMapping(value="/dashboard1")
-    public String home1(){
-        return "dashboard";
     }
 }

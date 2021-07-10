@@ -193,12 +193,23 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a th:href="@{/pos}" class="nav-link">
-                            <i class="nav-icon fas fa-laptop-medical"></i>
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-bars"></i>
                             <p>
-                                Point of Sale
+                                User Menu
+                                <i class="fas fa-angle-left right"></i>
                             </p>
                         </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a th:href="@{/pos}" class="nav-link">
+                                    <i class="nav-icon fas fa-laptop-medical"></i>
+                                    <p>
+                                        Point of Sale
+                                    </p>
+                                </a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </nav>
@@ -244,30 +255,6 @@
                                     <i class="nav-icon fas fa-box"></i>
                                     <p>
                                         Box
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a th:href="@{/dosageforms}" class="nav-link">
-                                    <i class="nav-icon fas fa-pills"></i>
-                                    <p>
-                                        Dosage Form
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a th:href="@{/generics}" class="nav-link">
-                                    <i class="nav-icon fas fa-atom"></i>
-                                    <p>
-                                        Generic
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a th:href="@{/indications}" class="nav-link">
-                                    <i class="nav-icon fas fa-disease"></i>
-                                    <p>
-                                        Indication
                                     </p>
                                 </a>
                             </li>
@@ -364,14 +351,6 @@
                             </p>
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a th:href="@{/pos}" class="nav-link">
-                            <i class="nav-icon fas fa-laptop-medical"></i>
-                            <p>
-                                Point of Sale
-                            </p>
-                        </a>
-                    </li>
                 </ul>
             </nav>
         </div>
@@ -395,77 +374,10 @@
                     <!-- Add icons to the links using the .nav-icon class
            with font-awesome or any other icon font library -->
                     <li class="nav-item">
-                        <a th:href="@{/dashboard}" class="nav-link">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>
-                                Dashboard
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a th:href="@{/stocks}" class="nav-link">
                             <i class="nav-icon fas fa-store-alt"></i>
                             <p>
                                 Stock
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a th:href="@{/suppliers}" class="nav-link">
-                            <i class="nav-icon fas fa-truck"></i>
-                            <p>
-                                Supplier
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="#" class="nav-link">
-                            <i class="nav-icon fas fa-file-invoice"></i>
-                            <p>
-                                Invoice
-                                <i class="fas fa-angle-left right"></i>
-                            </p>
-                        </a>
-                        <ul class="nav nav-treeview">
-                            <li class="nav-item">
-                                <a th:href="@{/saleinvoices}" class="nav-link">
-                                    <i class="nav-icon fas fa-file-invoice-dollar"></i>
-                                    <p>
-                                        Sale
-                                    </p>
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a th:href="@{/purchaseinvoices}" class="nav-link">
-                                    <i class="nav-icon fas fa-receipt"></i>
-                                    <p>
-                                        Purchase
-                                    </p>
-                                </a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item">
-                        <a th:href="@{/purchases}" class="nav-link">
-                            <i class="nav-icon fas fa-shopping-cart"></i>
-                            <p>
-                                Purchase
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a th:href="@{/sales}" class="nav-link">
-                            <i class="nav-icon fas fa-coins"></i>
-                            <p>
-                                Sale
-                            </p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a th:href="@{/returns}" class="nav-link">
-                            <i class="nav-icon fas fa-exchange-alt"></i>
-                            <p>
-                                Return
                             </p>
                         </a>
                     </li>
