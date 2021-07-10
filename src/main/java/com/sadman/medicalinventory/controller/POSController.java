@@ -95,6 +95,6 @@ public class POSController {
         List<Sale> saleList = saleService.getAllSalesBySaleInvoiceId(saleInvoiceId);
         model.addAttribute("invoice", saleInvoice);
         model.addAttribute("saleList", saleList);
-        return "invoice/invoice-print";
+        return "invoice/sale-invoice-print";
     }
 }

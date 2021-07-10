@@ -55,23 +55,11 @@ public class POPController {
     @Autowired
     LocationService locationService;
 
-//    @PostMapping(value="/pos/brand/{id}")
-//    public ResponseEntity<Brand> getBrandById(@PathVariable(value = "id") Long brandId) throws RecordNotFoundException {
-//        Brand brand = brandService.getBrandById(brandId);
-//        return new ResponseEntity<>(brand, HttpStatus.OK);
-//    }
-
     @PostMapping(value="/pop/manufacturer/{id}")
     public ResponseEntity<List<Brand>> getPurchasesByBrandId(@PathVariable(value = "id") Long manufacturerId){
         List<Brand> brandList = brandService.getBrandsByManufacturerId(manufacturerId);
         return new ResponseEntity<>(brandList, HttpStatus.OK);
     }
-
-//    @PostMapping(value="/pos/stock/{id}")
-//    public ResponseEntity<Stock> getStockByPurchaseId(@PathVariable(value = "id") Long purchaseId){
-//        Stock stock = stockService.getStockByPurchaseId(purchaseId);
-//        return new ResponseEntity<>(stock, HttpStatus.OK);
-//    }
 
     @RequestMapping(value = "/pop")
     public String getPOP(Model model) {

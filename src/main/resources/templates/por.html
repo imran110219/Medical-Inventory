@@ -47,22 +47,22 @@
     <!-- Content Wrapper. Contains page content -->
     <div class="content-wrapper" layout:fragment="content">
 
-        <section class="content-header">
-            <div class="container-fluid">
-                <div class="row mb-2">
-                    <div class="col-sm-6">
-                        <h1>Point of Sale</h1>
-                    </div>
-                    <div class="col-sm-6">
-                        <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item"><a href="#">Layout</a></li>
-                            <li class="breadcrumb-item active">Fixed Layout</li>
-                        </ol>
-                    </div>
-                </div>
-            </div><!-- /.container-fluid -->
-        </section>
+<!--        <section class="content-header">-->
+<!--            <div class="container-fluid">-->
+<!--                <div class="row mb-2">-->
+<!--                    <div class="col-sm-6">-->
+<!--                        <h1>Point of Return</h1>-->
+<!--                    </div>-->
+<!--                    <div class="col-sm-6">-->
+<!--                        <ol class="breadcrumb float-sm-right">-->
+<!--                            <li class="breadcrumb-item"><a href="#">Home</a></li>-->
+<!--                            <li class="breadcrumb-item"><a href="#">Layout</a></li>-->
+<!--                            <li class="breadcrumb-item active">Fixed Layout</li>-->
+<!--                        </ol>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </div>&lt;!&ndash; /.container-fluid &ndash;&gt;-->
+<!--        </section>-->
 
         <!-- Main content -->
         <section class="content">
@@ -78,7 +78,7 @@
                             </div>
                             <!-- /.card-header -->
                             <!-- form start -->
-                            <form id="returnForm" th:action="@{/returns/process}" th:object="${returns}" method="post">
+                            <form id="returnForm" th:action="@{/por/process}" th:object="${returns}" method="post">
                                 <div class="card-body">
                                     <div class="form-group row">
                                         <label class="col-sm-2 col-form-label">Select Type</label>
@@ -237,7 +237,7 @@
                     processData: false,
                     contentType: false,
                     type: 'post',
-                    url: "/returns/process",
+                    url: "/por/process",
                     data: formData,
                     success: function (data) {
                         toastr.success(data);
@@ -291,7 +291,7 @@
 
             if (radioValue === "purchase") {
                 $.ajax({
-                    url: '/returns/purchases/' + invoiceId,
+                    url: '/por/purchases/' + invoiceId,
                     type: 'POST',
                     dataType: 'json',
                     contentType: "application/json",
@@ -312,7 +312,7 @@
                 });
             } else {
                 $.ajax({
-                    url: '/returns/sales/' + invoiceId,
+                    url: '/por/sales/' + invoiceId,
                     type: 'POST',
                     dataType: 'json',
                     contentType: "application/json",

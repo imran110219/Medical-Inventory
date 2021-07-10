@@ -15,7 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -26,18 +25,6 @@ public class UserController {
 
     @Autowired
     RoleService roleService;
-
-    @Autowired
-    BrandService brandService;
-
-    @Autowired
-    StockService stockService;
-
-    @Autowired
-    PurchaseService purchaseService;
-
-    @Autowired
-    SaleService saleService;
 
     @GetMapping(value={"/login"})
     public ModelAndView login(){
@@ -92,42 +79,5 @@ public class UserController {
     public ResponseEntity<String> deleteUserById(@PathVariable(value = "id") Long userId){
         service.deleteUserById(userId);
         return new ResponseEntity<>("User is Deleted Successfully", HttpStatus.OK);
-    }
-
-    @GetMapping(value="/dashboard")
-    public ModelAndView home(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("countBrand", brandService.countAllBrand());
-        modelAndView.addObject("countExpired", stockService.getExpiredStock().size());
-        modelAndView.addObject("countOutOfStock", stockService.getOutOfStock().size());
-         modelAndView.addObject("totalPurchaseAmount", purchaseService.getTotalPurchaseAmount());
-        modelAndView.addObject("totalSaleAmount", saleService.getTotalSaleAmount());
-        modelAndView.addObject("highestSales", saleService.getHighestSale());
-        modelAndView.addObject("lowestSales", saleService.getLowestSale());
-        modelAndView.setViewName("index");
-        return modelAndView;
-    }
-
-    @GetMapping(value="/profile")
-    public ModelAndView profile(){
-        ModelAndView modelAndView = new ModelAndView();
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userName = authentication.getName();
-        User user = service.findUserByUserName(userName);
-        modelAndView.addObject("user", user);
-        modelAndView.setViewName("profile");
-        return modelAndView;
-    }
-
-    @PutMapping("/users/profile/edit")
-    public ResponseEntity<String> editProfile(@RequestBody User newUser) {
-        service.updateProfile(newUser);
-        return new ResponseEntity<>("User is Edited Successfully", HttpStatus.OK);
-    }
-
-    @PutMapping("/users/profile/changepassword")
-    public ResponseEntity<String> changePassword(@RequestBody ChangePasswordDTO changePasswordDTO) {
-        service.changePassword(changePasswordDTO);
-        return new ResponseEntity<>("Password is Changed Successfully", HttpStatus.OK);
     }
 }

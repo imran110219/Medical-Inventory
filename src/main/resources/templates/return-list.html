@@ -50,8 +50,8 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="col-sm-2 col-md-1">
-                                    <button type="button" class="btn btn-block btn-success btn-sm"
-                                            onclick='window.location.href = "/returns/add"'>Add</button>
+                                    <button type="button" class="btn btn-block btn-success btn-sm" onclick="addReturn();">
+                                        Add</button>
                                 </div>
                             </div>
 
@@ -241,6 +241,10 @@
                 }
             });
         });
+
+        function addReturn() {
+            window.location.href = '/por';
+        }
     </script>
 </th:block>
 </body>
