@@ -5,6 +5,7 @@ import com.sadman.medicalinventory.exception.RecordNotFoundException;
 import com.sadman.medicalinventory.iservice.*;
 import com.sadman.medicalinventory.model.Role;
 import com.sadman.medicalinventory.model.User;
+import com.sadman.medicalinventory.util.DataUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,6 +38,10 @@ public class UserController {
     public String getAllUsers(Model model) {
         List<User> list = service.getAllUsers();
         List<Role> roleList = roleService.getAllRoles();
+        if(DataUtil.getUserRole().equals("ADMIN")){
+            list.remove(0);
+            roleList.remove(0);
+        }
         model.addAttribute("user", new User());
         model.addAttribute("roles", roleList);
         model.addAttribute("users", list);

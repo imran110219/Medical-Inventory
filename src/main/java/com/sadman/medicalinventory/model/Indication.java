@@ -9,7 +9,6 @@ import java.util.Set;
 
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -29,7 +28,7 @@ public class Indication {
     @ToString.Exclude
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinTable(name = "indication_generic", joinColumns = {@JoinColumn(name = "indication_id")}, inverseJoinColumns = {@JoinColumn(name = "generic_id")})
-//    @JsonManagedReference
+    @JsonManagedReference
 //    @JsonIdentityReference
     private Set<Generic> generics = new HashSet<>();
 }

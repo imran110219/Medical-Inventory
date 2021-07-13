@@ -73,6 +73,14 @@ public class PurchaseServiceImpl implements PurchaseService {
     }
 
     public double getTotalPurchaseAmount(){
-        return repository.getTotalPurchaseAmount();
+        double tempData = 0;
+        try {
+            tempData = repository.getTotalPurchaseAmount();
+            return tempData;
+        }
+        catch (Exception e){
+            System.out.println(e);
+            return tempData;
+        }
     }
 }

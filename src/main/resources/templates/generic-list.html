@@ -306,6 +306,7 @@
                     url: "/generics/" + genericId,
                     dataType: "json",
                     success: function (data) {
+                        console.log(data);
                         $('#v-inputid').val(data.id);
                         $("#v-inputname").text(data.name);
                         $("#v-inputdescription").text(data.description);
