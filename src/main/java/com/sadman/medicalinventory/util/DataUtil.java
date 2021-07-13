@@ -22,11 +22,10 @@ public class DataUtil {
     public static String getFullName() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
-        String role = authentication.getAuthorities().toString();
+        String role = getUserRole();
         role = role.substring(1, role.length() - 1);
 
         switch (role) {
-            //Case statements
             case "SUPER_ADMIN":
                 role = "Developer";
                 break;
@@ -40,6 +39,19 @@ public class DataUtil {
                 role = "Unknown";
         }
         return role + " : " + userName;
+    }
+
+    public static String getUserName(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userName = authentication.getName();
+        return userName;
+    }
+
+    public static String getUserRole(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String role = authentication.getAuthorities().toString();
+        role = role.substring(1, role.length() - 1);
+        return role;
     }
 
     public static Map<String, Double> convertMapToMap(List<Map<String, Long>> mapList) {

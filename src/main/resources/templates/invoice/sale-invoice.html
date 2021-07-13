@@ -4,9 +4,6 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{fragments/layout}">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Fixed Sidebar</title>
     <th:block layout:fragment="link">
 
     </th:block>
@@ -26,8 +23,8 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item active">Invoice</li>
+                            <li class="breadcrumb-item"><a th:href="@{/dashboard}">Home</a></li>
+                            <li class="breadcrumb-item active">Sale Invoice</li>
                         </ol>
                     </div>
                 </div>
