@@ -1,12 +1,12 @@
 package com.sadman.medicalinventory.controller;
 
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
+import com.sadman.medicalinventory.iservice.SaleInvoiceService;
+import com.sadman.medicalinventory.iservice.SaleService;
 import com.sadman.medicalinventory.model.Purchase;
 import com.sadman.medicalinventory.model.PurchaseInvoice;
 import com.sadman.medicalinventory.model.Sale;
 import com.sadman.medicalinventory.model.SaleInvoice;
-import com.sadman.medicalinventory.service.SaleInvoiceService;
-import com.sadman.medicalinventory.service.SaleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,10 +19,10 @@ import java.util.List;
 @Controller
 public class SaleInvoiceController {
     @Autowired
-    private SaleInvoiceService service;
+    SaleInvoiceService service;
 
     @Autowired
-    private SaleService saleService;
+    SaleService saleService;
     
     @RequestMapping(value = "/saleinvoices")
     public String getAllUsers(Model model) {
@@ -37,7 +37,7 @@ public class SaleInvoiceController {
         List<Sale> saleList = saleService.getAllSalesBySaleInvoiceId(saleInvoiceId);
         model.addAttribute("invoice", saleInvoice);
         model.addAttribute("saleList", saleList);
-        return "invoice/invoice";
+        return "invoice/sale-invoice";
     }
 
 }

@@ -1,8 +1,8 @@
 package com.sadman.medicalinventory.controller.api;
 
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
+import com.sadman.medicalinventory.iservice.BrandService;
 import com.sadman.medicalinventory.model.Brand;
-import com.sadman.medicalinventory.service.BrandService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;

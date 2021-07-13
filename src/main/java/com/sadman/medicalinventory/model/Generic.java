@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Getter
 @Setter
-@ToString
+//@ToString
 //@NoArgsConstructor
 //@AllArgsConstructor
 @Entity
@@ -29,7 +29,7 @@ public class Generic {
 
     @ToString.Exclude
     @ManyToMany(mappedBy = "generics", cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
-//    @JsonBackReference
+    @JsonBackReference
 //    @JsonIdentityReference
     private Set<Indication> indications = new HashSet<>();
 

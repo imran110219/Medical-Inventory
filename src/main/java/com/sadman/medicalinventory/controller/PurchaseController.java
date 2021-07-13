@@ -1,7 +1,7 @@
 package com.sadman.medicalinventory.controller;
 
+import com.sadman.medicalinventory.iservice.PurchaseService;
 import com.sadman.medicalinventory.model.Purchase;
-import com.sadman.medicalinventory.service.PurchaseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +12,7 @@ import java.util.List;
 @Controller
 public class PurchaseController {
     @Autowired
-    private PurchaseService service;
+    PurchaseService service;
     
     @RequestMapping(value = "/purchases")
     public String getAllUsers(Model model) {

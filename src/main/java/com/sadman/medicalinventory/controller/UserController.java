@@ -1,14 +1,16 @@
 package com.sadman.medicalinventory.controller;
 
+import com.sadman.medicalinventory.dto.ChangePasswordDTO;
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
+import com.sadman.medicalinventory.iservice.*;
 import com.sadman.medicalinventory.model.Role;
 import com.sadman.medicalinventory.model.User;
-import com.sadman.medicalinventory.service.*;
 import com.sadman.medicalinventory.util.DataUtil;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,22 +22,10 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserService service;
+    UserService service;
 
     @Autowired
-    private RoleService roleService;
-
-    @Autowired
-    private BrandService brandService;
-
-    @Autowired
-    private StockService stockService;
-
-    @Autowired
-    private PurchaseService purchaseService;
-
-    @Autowired
-    private SaleService saleService;
+    RoleService roleService;
 
     @GetMapping(value={"/login"})
     public ModelAndView login(){
@@ -48,6 +38,10 @@ public class UserController {
     public String getAllUsers(Model model) {
         List<User> list = service.getAllUsers();
         List<Role> roleList = roleService.getAllRoles();
+        if(DataUtil.getUserRole().equals("ADMIN")){
+            list.remove(0);
+            roleList.remove(0);
+        }
         model.addAttribute("user", new User());
         model.addAttribute("roles", roleList);
         model.addAttribute("users", list);
@@ -90,24 +84,5 @@ public class UserController {
     public ResponseEntity<String> deleteUserById(@PathVariable(value = "id") Long userId){
         service.deleteUserById(userId);
         return new ResponseEntity<>("User is Deleted Successfully", HttpStatus.OK);
-    }
-
-    @GetMapping(value="/dashboard")
-    public ModelAndView home(){
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("countBrand", brandService.countAllBrand());
-        modelAndView.addObject("countExpired", stockService.countExpiredStock());
-        modelAndView.addObject("countOutOfStock", stockService.getOutOfStock().size());
-         modelAndView.addObject("totalPurchaseAmount", purchaseService.getTotalPurchaseAmount());
-        modelAndView.addObject("totalSaleAmount", saleService.getTotalSaleAmount());
-        modelAndView.addObject("highestSales", saleService.getHighestSale());
-        modelAndView.addObject("lowestSales", saleService.getLowestSale());
-        modelAndView.setViewName("index");
-        return modelAndView;
-    }
-
-    @GetMapping(value="/dashboard1")
-    public String home1(){
-        return "dashboard";
     }
 }

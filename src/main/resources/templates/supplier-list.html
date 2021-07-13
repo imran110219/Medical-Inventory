@@ -5,9 +5,6 @@
       layout:decorate="~{fragments/layout}">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Fixed Sidebar</title>
 
     <th:block layout:fragment="link">
         <!-- DataTables -->
@@ -35,9 +32,8 @@
                     </div>
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-right">
-                            <li class="breadcrumb-item"><a href="#">Home</a></li>
-                            <li class="breadcrumb-item"><a href="#">Layout</a></li>
-                            <li class="breadcrumb-item active">Fixed Layout</li>
+                            <li class="breadcrumb-item"><a th:href="@{/dashboard}">Home</a></li>
+                            <li class="breadcrumb-item active">Supplier List</li>
                         </ol>
                     </div>
                 </div>

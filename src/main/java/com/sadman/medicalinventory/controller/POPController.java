@@ -1,12 +1,11 @@
 package com.sadman.medicalinventory.controller;
 
-import com.sadman.medicalinventory.dto.InvoiceDTO;
 import com.sadman.medicalinventory.dto.MedicineDTO;
 import com.sadman.medicalinventory.dto.PurchaseInvoiceDTO;
 import com.sadman.medicalinventory.dto.PurchaseMedicineDTO;
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
+import com.sadman.medicalinventory.iservice.*;
 import com.sadman.medicalinventory.model.*;
-import com.sadman.medicalinventory.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,52 +26,40 @@ import java.util.List;
 public class POPController {
 
     @Autowired
-    private BrandService brandService;
+    BrandService brandService;
 
     @Autowired
-    private PurchaseService purchaseService;
+    PurchaseService purchaseService;
 
     @Autowired
-    private StockService stockService;
+    StockService stockService;
 
     @Autowired
-    private POPService popService;
+    POPService popService;
 
     @Autowired
-    private PurchaseInvoiceService purchaseInvoiceService;
+    PurchaseInvoiceService purchaseInvoiceService;
 
     @Autowired
-    private SaleService saleService;
+    SaleService saleService;
 
     @Autowired
-    private SupplierService supplierService;
+    SupplierService supplierService;
 
     @Autowired
-    private ManufacturerService manufacturerService;
+    ManufacturerService manufacturerService;
 
     @Autowired
-    private BoxService boxService;
+    BoxService boxService;
 
     @Autowired
-    private LocationService locationService;
-
-//    @PostMapping(value="/pos/brand/{id}")
-//    public ResponseEntity<Brand> getBrandById(@PathVariable(value = "id") Long brandId) throws RecordNotFoundException {
-//        Brand brand = brandService.getBrandById(brandId);
-//        return new ResponseEntity<>(brand, HttpStatus.OK);
-//    }
+    LocationService locationService;
 
     @PostMapping(value="/pop/manufacturer/{id}")
     public ResponseEntity<List<Brand>> getPurchasesByBrandId(@PathVariable(value = "id") Long manufacturerId){
         List<Brand> brandList = brandService.getBrandsByManufacturerId(manufacturerId);
         return new ResponseEntity<>(brandList, HttpStatus.OK);
     }
-
-//    @PostMapping(value="/pos/stock/{id}")
-//    public ResponseEntity<Stock> getStockByPurchaseId(@PathVariable(value = "id") Long purchaseId){
-//        Stock stock = stockService.getStockByPurchaseId(purchaseId);
-//        return new ResponseEntity<>(stock, HttpStatus.OK);
-//    }
 
     @RequestMapping(value = "/pop")
     public String getPOP(Model model) {

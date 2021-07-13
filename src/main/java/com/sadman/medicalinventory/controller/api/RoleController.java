@@ -1,10 +1,8 @@
 package com.sadman.medicalinventory.controller.api;
 
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
+import com.sadman.medicalinventory.iservice.RoleService;
 import com.sadman.medicalinventory.model.Role;
-import com.sadman.medicalinventory.model.User;
-import com.sadman.medicalinventory.service.RoleService;
-import com.sadman.medicalinventory.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -17,7 +15,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class RoleController {
     @Autowired
-    private RoleService service;
+    RoleService service;
 
     @GetMapping("/roles")
     public List<Role> getAllRoles(Model model) {

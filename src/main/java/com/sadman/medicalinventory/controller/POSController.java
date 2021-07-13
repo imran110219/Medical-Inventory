@@ -3,6 +3,8 @@ package com.sadman.medicalinventory.controller;
 import com.sadman.medicalinventory.dto.InvoiceDTO;
 import com.sadman.medicalinventory.dto.MedicineDTO;
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
+import com.sadman.medicalinventory.iservice.*;
+import com.sadman.medicalinventory.iservice.POSService;
 import com.sadman.medicalinventory.model.*;
 import com.sadman.medicalinventory.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,22 +27,22 @@ import java.util.List;
 public class POSController {
 
     @Autowired
-    private BrandService brandService;
+    BrandService brandService;
 
     @Autowired
-    private PurchaseService purchaseService;
+    PurchaseService purchaseService;
 
     @Autowired
-    private StockService stockService;
+    StockService stockService;
 
     @Autowired
-    private POSService posService;
+    POSService posService;
 
     @Autowired
-    private SaleInvoiceService saleInvoiceService;
+    SaleInvoiceService saleInvoiceService;
 
     @Autowired
-    private SaleService saleService;
+    SaleService saleService;
 
     @PostMapping(value="/pos/brand/{id}")
     public ResponseEntity<Brand> getBrandById(@PathVariable(value = "id") Long brandId) throws RecordNotFoundException {
@@ -93,6 +95,6 @@ public class POSController {
         List<Sale> saleList = saleService.getAllSalesBySaleInvoiceId(saleInvoiceId);
         model.addAttribute("invoice", saleInvoice);
         model.addAttribute("saleList", saleList);
-        return "invoice/invoice-print";
+        return "invoice/sale-invoice-print";
     }
 }

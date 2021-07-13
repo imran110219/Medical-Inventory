@@ -1,8 +1,8 @@
 package com.sadman.medicalinventory.controller.api;
 
 import com.sadman.medicalinventory.exception.RecordNotFoundException;
+import com.sadman.medicalinventory.iservice.DosageFormService;
 import com.sadman.medicalinventory.model.DosageForm;
-import com.sadman.medicalinventory.service.DosageFormService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;

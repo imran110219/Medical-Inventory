@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
@@ -20,6 +21,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private CustomUserDetailsService userDetailsService;
+
+    @Autowired
+    private AuthenticationSuccessHandler authenticationSuccessHandler;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -43,10 +47,12 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                 .and().authorizeRequests()
-                .antMatchers("/").permitAll()
                 .antMatchers(loginPage).permitAll()
-//                .antMatchers("/registration").permitAll()
-//                .antMatchers("/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/dashboard","/boxes/**","/manufacturers/**","/brands/**",
+                        "/stocks/**","/suppliers/**","/saleinvoices/**", "/purchaseinvoices/**",
+                        "/purchases/**","/sales/**","/returns/**","/users/**").hasAnyAuthority("ADMIN","SUPER_ADMIN")
+                .antMatchers("/stocks/**","/pos/**","/pop/**","/por/**").hasAnyAuthority("USER","SUPER_ADMIN")
+                .antMatchers("/dosageforms/**","/generics/**","/indications/**").hasAuthority("SUPER_ADMIN")
 
                 .anyRequest()
                 .authenticated()
@@ -55,7 +61,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .loginPage(loginPage).permitAll()
                 .loginPage("/")
                 .failureUrl("/login?error=true")
-                .defaultSuccessUrl("/dashboard")
+                .successHandler(authenticationSuccessHandler)
                 .usernameParameter("username")
                 .passwordParameter("password")
                 .and().logout()
