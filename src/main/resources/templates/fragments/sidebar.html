@@ -27,9 +27,9 @@
         <a href="#" class="brand-link">
             <!--            <img th:src="@{/static/dist/img/AdminLTELogo.png}" alt="AdminLTE Logo"-->
             <!--                 class="brand-image img-circle elevation-3" style="opacity: .8">-->
-            <img src="/dist/img/AdminLTELogo.png" alt="AdminLTE Logo"
+            <img src="/images/Logo.png" alt="CipherText Logo"
                  class="brand-image img-circle elevation-3" style="opacity: .8">
-            <span class="brand-text font-weight-light">AdminLTE 3</span>
+            <span class="brand-text font-weight-light">Cipher Text</span>
         </a>
 
         <!-- Sidebar Super Admin -->
@@ -37,10 +37,10 @@
             <!-- Sidebar user (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
-                    <img src="/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                    <img src="/dist/img/avatar4.png" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block">[(${T(com.sadman.medicalinventory.util.DataUtil).getFullName})]</a>
+                    <a th:href="@{/profile}" class="d-block">[(${T(com.sadman.medicalinventory.util.DataUtil).getFullName})]</a>
                 </div>
             </div>
 
@@ -209,6 +209,22 @@
                                     </p>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a th:href="@{/pop}" class="nav-link">
+                                    <i class="nav-icon fas fa-laptop-medical"></i>
+                                    <p>
+                                        Point of Purchase
+                                    </p>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a th:href="@{/pop}" class="nav-link">
+                                    <i class="nav-icon fas fa-laptop-medical"></i>
+                                    <p>
+                                        Point of Return
+                                    </p>
+                                </a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -220,10 +236,10 @@
             <!-- Sidebar user (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
-                    <img src="/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                    <img src="/dist/img/avatar.png" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block">[(${T(com.sadman.medicalinventory.util.DataUtil).getFullName})]</a>
+                    <a th:href="@{/profile}" class="d-block">[(${T(com.sadman.medicalinventory.util.DataUtil).getFullName})]</a>
                 </div>
             </div>
 
@@ -360,10 +376,10 @@
             <!-- Sidebar user (optional) -->
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
                 <div class="image">
-                    <img src="/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+                    <img src="/dist/img/avatar5.png" class="img-circle elevation-2" alt="User Image">
                 </div>
                 <div class="info">
-                    <a href="#" class="d-block">[(${T(com.sadman.medicalinventory.util.DataUtil).getFullName})]</a>
+                    <a th:href="@{/profile}" class="d-block">[(${T(com.sadman.medicalinventory.util.DataUtil).getFullName})]</a>
                 </div>
             </div>
 
@@ -383,9 +399,25 @@
                     </li>
                     <li class="nav-item">
                         <a th:href="@{/pos}" class="nav-link">
-                            <i class="nav-icon fas fa-laptop-medical"></i>
+                            <i class="nav-icon fas fa-money-bill-alt"></i>
                             <p>
                                 Point of Sale
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/pop}" class="nav-link">
+                            <i class="nav-icon fas fa-shopping-cart"></i>
+                            <p>
+                                Point of Purchase
+                            </p>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a th:href="@{/por}" class="nav-link">
+                            <i class="nav-icon fas fa-undo-alt"></i>
+                            <p>
+                                Point of Return
                             </p>
                         </a>
                     </li>

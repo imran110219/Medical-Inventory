@@ -56,7 +56,15 @@ public class SaleServiceImpl implements SaleService {
     }
 
     public double getTotalSaleAmount(){
-        return repository.getTotalSaleAmount();
+        double tempData = 0;
+        try {
+            tempData = repository.getTotalSaleAmount();
+            return tempData;
+        }
+        catch (Exception e){
+            System.out.println(e);
+            return tempData;
+        }
     }
 
     public Map<String, Double> getHighestSale(){

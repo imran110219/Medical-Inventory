@@ -51,7 +51,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/dashboard","/boxes/**","/manufacturers/**","/brands/**",
                         "/stocks/**","/suppliers/**","/saleinvoices/**", "/purchaseinvoices/**",
                         "/purchases/**","/sales/**","/returns/**","/users/**").hasAnyAuthority("ADMIN","SUPER_ADMIN")
-                .antMatchers("/stocks/**","/pos/**").hasAnyAuthority("USER","SUPER_ADMIN")
+                .antMatchers("/stocks/**","/pos/**","/pop/**","/por/**").hasAnyAuthority("USER","SUPER_ADMIN")
                 .antMatchers("/dosageforms/**","/generics/**","/indications/**").hasAuthority("SUPER_ADMIN")
 
                 .anyRequest()

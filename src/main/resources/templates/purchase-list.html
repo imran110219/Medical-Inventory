@@ -5,9 +5,6 @@
       layout:decorate="~{fragments/layout}">
 
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AdminLTE 3 | Fixed Sidebar</title>
 
     <th:block layout:fragment="link">
         <!-- DataTables -->
@@ -49,16 +46,16 @@
                     <div class="col-12">
                         <!-- Default box -->
                         <div class="card">
-                            <div class="card-header">
-                                <div class="col-sm-2 col-md-1">
-                                    <button type="button" class="btn btn-block btn-success btn-sm"
-                                            data-toggle="modal" data-target="#modal-default">Add</button>
-                                </div>
-                            </div>
+<!--                            <div class="card-header">-->
+<!--                                <div class="col-sm-2 col-md-1">-->
+<!--                                    <button type="button" class="btn btn-block btn-success btn-sm"-->
+<!--                                            data-toggle="modal" data-target="#modal-default">Add</button>-->
+<!--                                </div>-->
+<!--                            </div>-->
 
                             <!-- /.card-header -->
                             <div class="card-body">
-                                <table id="example1" class="table table-bordered table-striped" th:switch="${purchases}">
+                                <table id="purchaseTable" class="table table-bordered table-striped" th:switch="${purchases}">
                                     <thead>
                                     <tr>
                                         <th>Brand Name</th>
@@ -69,7 +66,7 @@
                                         <th>Unit Price</th>
                                         <th>Total</th>
                                         <th>Expiry Date</th>
-                                        <th>Action</th>
+<!--                                        <th>Action</th>-->
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -82,25 +79,25 @@
                                         <td th:text="${purchase.unitPrice}"></td>
                                         <td th:text="${purchase.total}"></td>
                                         <td th:text="${#dates.format(purchase.getExpiryDate(), 'dd.MM.yyyy')}"></td>
-                                        <td>
-                                            <div class="btn-group">
-                                                <input type="hidden" id="purchaseId" th:value="${purchase.id}">
-                                                <button type="button" id="btnView"
-                                                        class="btn btn-block btn-info btn-sm"
-                                                        style="margin-top: 8px;border-radius: 3px 0 0 3px;"
-                                                ><i class="fas fa-eye"></i>
-                                                </button>
-                                                <button type="button" id="btnEdit"
-                                                        class="btn btn-block btn-primary btn-sm"
-                                                        style="margin-top: 8px"
-                                                ><i class="fas fa-edit"></i>
-                                                </button>
-                                                <button type="button" id="btnDelete"
-                                                        class="btn btn-block btn-danger btn-sm"
-                                                ><i class="fas fa-trash"></i>
-                                                </button>
-                                            </div>
-                                        </td>
+<!--                                        <td>-->
+<!--                                            <div class="btn-group">-->
+<!--                                                <input type="hidden" id="purchaseId" th:value="${purchase.id}">-->
+<!--                                                <button type="button" id="btnView"-->
+<!--                                                        class="btn btn-block btn-info btn-sm"-->
+<!--                                                        style="margin-top: 8px;border-radius: 3px 0 0 3px;"-->
+<!--                                                ><i class="fas fa-eye"></i>-->
+<!--                                                </button>-->
+<!--                                                <button type="button" id="btnEdit"-->
+<!--                                                        class="btn btn-block btn-primary btn-sm"-->
+<!--                                                        style="margin-top: 8px"-->
+<!--                                                ><i class="fas fa-edit"></i>-->
+<!--                                                </button>-->
+<!--                                                <button type="button" id="btnDelete"-->
+<!--                                                        class="btn btn-block btn-danger btn-sm"-->
+<!--                                                ><i class="fas fa-trash"></i>-->
+<!--                                                </button>-->
+<!--                                            </div>-->
+<!--                                        </td>-->
                                     </tr>
                                     </tbody>
                                     <tfoot>
@@ -113,7 +110,7 @@
                                         <th>Unit Price</th>
                                         <th>Total</th>
                                         <th>Expiry Date</th>
-                                        <th>Action</th>
+<!--                                        <th>Action</th>-->
                                     </tr>
                                     </tfoot>
                                 </table>
@@ -125,42 +122,42 @@
                 </div>
             </div>
 
-            <div class="modal fade" id="modal-default">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">Add Purchase</h4>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="quickForm">
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputname">Name</label>
-                                    <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="inputname" name="name"
-                                               placeholder="Enter Indication">
-                                    </div>
-                                </div>
-                                <div class="form-group row">
-                                    <label class="col-sm-3 col-form-label" for="inputdescription">Description</label>
-                                    <div class="col-sm-9">
-                                            <textarea id="inputdescription" name="description" class="form-control" rows="4"
-                                                      cols="50" placeholder="Enter Indication Description"></textarea>
-                                    </div>
-                                </div>
-                                <div class="modal-footer justify-content-between">
-                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                    <button type="submit" class="btn btn-primary">Save</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                    <!-- /.modal-content -->
-                </div>
-                <!-- /.modal-dialog -->
-            </div>
+<!--            <div class="modal fade" id="modal-default">-->
+<!--                <div class="modal-dialog">-->
+<!--                    <div class="modal-content">-->
+<!--                        <div class="modal-header">-->
+<!--                            <h4 class="modal-title">Add Purchase</h4>-->
+<!--                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
+<!--                                <span aria-hidden="true">&times;</span>-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                        <div class="modal-body">-->
+<!--                            <form id="quickForm">-->
+<!--                                <div class="form-group row">-->
+<!--                                    <label class="col-sm-3 col-form-label" for="inputname">Name</label>-->
+<!--                                    <div class="col-sm-9">-->
+<!--                                        <input type="text" class="form-control" id="inputname" name="name"-->
+<!--                                               placeholder="Enter Indication">-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="form-group row">-->
+<!--                                    <label class="col-sm-3 col-form-label" for="inputdescription">Description</label>-->
+<!--                                    <div class="col-sm-9">-->
+<!--                                            <textarea id="inputdescription" name="description" class="form-control" rows="4"-->
+<!--                                                      cols="50" placeholder="Enter Indication Description"></textarea>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                                <div class="modal-footer justify-content-between">-->
+<!--                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>-->
+<!--                                    <button type="submit" class="btn btn-primary">Save</button>-->
+<!--                                </div>-->
+<!--                            </form>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    &lt;!&ndash; /.modal-content &ndash;&gt;-->
+<!--                </div>-->
+<!--                &lt;!&ndash; /.modal-dialog &ndash;&gt;-->
+<!--            </div>-->
             <!-- /.modal -->
         </section>
         <!-- /.content -->
@@ -194,46 +191,47 @@
     <script>
         $(function () {
 
-            $("#example1").DataTable({
+            $("#purchaseTable").DataTable({
                 "responsive": true, "lengthChange": false, "autoWidth": false,
                 "buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"]
-            }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+            }).buttons().container().appendTo('#purchaseTable_wrapper .col-md-6:eq(0)');
 
-            $.validator.setDefaults({
-                submitHandler: function () {
-                    alert("Form successful submitted!");
-                }
-            });
+            // $.validator.setDefaults({
+            //     submitHandler: function () {
+            //         alert("Form successful submitted!");
+            //     }
+            // });
+            //
+            // $('#quickForm').validate({
+            //     rules: {
+            //         name: {
+            //             required: true
+            //         },
+            //         description: {
+            //             required: true
+            //         }
+            //     },
+            //     messages: {
+            //         name: {
+            //             required: "Please enter name"
+            //         },
+            //         description: {
+            //             required: "Please enter description"
+            //         }
+            //     },
+            //     errorElement: 'span',
+            //     errorPlacement: function (error, element) {
+            //         error.addClass('invalid-feedback');
+            //         element.closest('.form-group').append(error);
+            //     },
+            //     highlight: function (element, errorClass, validClass) {
+            //         $(element).addClass('is-invalid');
+            //     },
+            //     unhighlight: function (element, errorClass, validClass) {
+            //         $(element).removeClass('is-invalid');
+            //     }
+            // });
 
-            $('#quickForm').validate({
-                rules: {
-                    name: {
-                        required: true
-                    },
-                    description: {
-                        required: true
-                    }
-                },
-                messages: {
-                    name: {
-                        required: "Please enter name"
-                    },
-                    description: {
-                        required: "Please enter description"
-                    }
-                },
-                errorElement: 'span',
-                errorPlacement: function (error, element) {
-                    error.addClass('invalid-feedback');
-                    element.closest('.form-group').append(error);
-                },
-                highlight: function (element, errorClass, validClass) {
-                    $(element).addClass('is-invalid');
-                },
-                unhighlight: function (element, errorClass, validClass) {
-                    $(element).removeClass('is-invalid');
-                }
-            });
         });
     </script>
 </th:block>
