@@ -11,7 +11,7 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="app_user")
+@Table(name="app_user") //       For Postgres
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
