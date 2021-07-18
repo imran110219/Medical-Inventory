@@ -31,9 +31,10 @@ public class TestApplication implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        List<Stock> stocks = stockService.getOutOfStock();
-        for (Stock stock: stocks) {
-            System.out.println(stock.getPurchase().getBrand().getName());
-        }
+//        List<Stock> stocks = stockService.getOutOfStock();
+//        for (Stock stock: stocks) {
+//            System.out.println(stock.getPurchase().getBrand().getName());
+//        }
+        System.out.println("run");
     }
 }
