@@ -16,7 +16,8 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
     @Query("SELECT sum(total) FROM Sale")
     double getTotalSaleAmount();
 
-    @Query("SELECT stock.purchase.brand.name, sum(quantity) FROM Sale group by stock order by quantity desc")
+//    @Query("SELECT stock.purchase.brand.name, sum(quantity) FROM Sale group by stock order by quantity desc")
+    @Query("SELECT stock.purchase.brand.name, quantity FROM Sale order by quantity desc")
     List<Map<String, Long>> getHighestSale();
 
 }

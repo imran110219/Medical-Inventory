@@ -61,6 +61,7 @@ public class StockServiceImpl implements StockService {
     }
 
     public List<Stock> getOutOfStock(){
-        return repository.getOutOfStock();
+//        return repository.getOutOfStock();
+        return repository.findAll();
     }
 }
