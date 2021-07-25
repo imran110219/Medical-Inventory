@@ -27,7 +27,7 @@ public class UserController {
     @Autowired
     RoleService roleService;
 
-    @GetMapping(value={"/login"})
+    @GetMapping(value={"/login","/"})
     public ModelAndView login(){
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("login");
