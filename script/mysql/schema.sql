@@ -22,8 +22,8 @@ DROP TABLE IF EXISTS `brand`;
 
 CREATE TABLE `brand` (
     `id` INT(11),
-    `name` VARCHAR(100) NOT NULL,
-    `strength` VARCHAR(100) NOT NULL,
+    `name` VARCHAR(200) NOT NULL,
+    `strength` VARCHAR(200) NOT NULL,
     `dosage_form_id` INT(11) NOT NULL,
     `generic_id` INT(11) NOT NULL,
     `manufacturer_id` INT(11) NOT NULL,
