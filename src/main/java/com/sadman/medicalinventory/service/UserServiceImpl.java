@@ -101,6 +101,7 @@ public class UserServiceImpl implements UserService {
         String userName = authentication.getName();
         User user = userRepository.findByUserName(userName);
         user.setPassword(passwordEncoder.encode(changePasswordDTO.getNewPassword()));
+        userRepository.save(user);
     }
 
     public void deleteUserById(Long id){
