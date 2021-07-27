@@ -9,6 +9,7 @@ import com.sadman.medicalinventory.model.*;
 import com.sadman.medicalinventory.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -41,6 +42,7 @@ public class POPServiceImpl implements POPService {
     @Autowired
     private LocationRepository locationRepository;
 
+    @Transactional
     public PurchaseInvoice makePayment(PurchaseInvoiceDTO purchaseInvoiceDTO) {
         String serial = String.valueOf(new Timestamp(System.currentTimeMillis()).getTime());
         String invoiceId = "PI" + serial;

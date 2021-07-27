@@ -23,7 +23,7 @@ public class DataUtil {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userName = authentication.getName();
         String role = getUserRole();
-        role = role.substring(1, role.length() - 1);
+//        role = role.substring(1, role.length() - 1);
 
         switch (role) {
             case "SUPER_ADMIN":
