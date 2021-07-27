@@ -16,6 +16,28 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`medical_inventory_release` /*!40100 DEF
 
 USE `medical_inventory_release`;
 
+/*Table structure for table `brand` */
+
+DROP TABLE IF EXISTS `brand`;
+
+CREATE TABLE `brand` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` varchar(200) NOT NULL,
+  `strength` varchar(200) NOT NULL,
+  `dosage_form_id` int NOT NULL,
+  `generic_id` int NOT NULL,
+  `manufacturer_id` int NOT NULL,
+  `purchase_price` double NOT NULL,
+  `sale_price` double NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `dosage_form_id` (`dosage_form_id`),
+  KEY `generic_id` (`generic_id`),
+  KEY `manufacturer_id` (`manufacturer_id`),
+  CONSTRAINT `brand_fk_dosage_form` FOREIGN KEY (`dosage_form_id`) REFERENCES `dosage_form` (`id`),
+  CONSTRAINT `brand_fk_generic` FOREIGN KEY (`generic_id`) REFERENCES `generic` (`id`),
+  CONSTRAINT `brand_fk_manufacturer` FOREIGN KEY (`manufacturer_id`) REFERENCES `manufacturer` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19187 DEFAULT CHARSET=utf8;
+
 /*Data for the table `brand` */
 
 insert  into `brand`(`id`,`name`,`strength`,`dosage_form_id`,`generic_id`,`manufacturer_id`,`purchase_price`,`sale_price`) values

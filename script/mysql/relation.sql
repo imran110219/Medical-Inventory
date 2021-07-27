@@ -141,7 +141,7 @@ ALTER TABLE `purchase`
   ADD CONSTRAINT `purchase_fk_purchase_invoice` FOREIGN KEY (`purchase_invoice_id`) REFERENCES `purchase_invoice` (`id`);
 
 ALTER TABLE `stock`
-  ADD CONSTRAINT `stock_fk_location` FOREIGN KEY (`location_id`) REFERENCES `purchase` (`id`),
+  ADD CONSTRAINT `stock_fk_location` FOREIGN KEY (`location_id`) REFERENCES `location` (`id`),
   ADD CONSTRAINT `stock_fk_purchase` FOREIGN KEY (`purchase_id`) REFERENCES `purchase` (`id`);
 
 ALTER TABLE `returned`
