@@ -41,5 +41,5 @@ public class Purchase {
     @JsonFormat(pattern="dd-MM-yyyy")
     private Date expiryDate;
     @Column(name = "datetime", insertable=false)
-    private String date;
+    private Date date;
 }
