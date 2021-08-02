@@ -3,6 +3,7 @@ package com.sadman.medicalinventory.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -33,5 +34,5 @@ public class Return {
     @Column(name = "wastage")
     private Boolean wastage;
     @Column(name = "datetime", insertable=false)
-    private String date;
+    private Date date;
 }
