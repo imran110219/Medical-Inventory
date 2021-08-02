@@ -64,6 +64,7 @@ public class POSServiceImpl implements POSService {
             MedicineDTO medicineDTO = invoiceDTO.getMedicineDTOList().get(i);
             Stock stock = stockRepository.getOne(medicineDTO.getStockId());
             stock.setQuantity(stock.getQuantity()-medicineDTO.getQuantity());
+            stockRepository.save(stock);
             Sale sale = new Sale();
             sale.setSaleInvoice(saleInvoiceRepository.getOne(invoiceId));
             sale.setStock(stock);

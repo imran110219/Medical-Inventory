@@ -3,6 +3,7 @@ package com.sadman.medicalinventory.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Getter
 @Setter
@@ -25,5 +26,5 @@ public class Stock {
     @Column(name = "quantity")
     private double quantity;
     @Column(name = "datetime", insertable=false)
-    private String date;
+    private Date date;
 }
